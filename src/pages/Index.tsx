@@ -243,31 +243,31 @@ export default function Index() {
             일반 브랜딩 학원은 이론을 가르치고 수료증을 줍니다.<br />
             우리는 기획부터 디자인까지 100% 대행하고, 실제 수익을 만듭니다.
           </p>
-          <div className="max-w-4xl mx-auto bg-white/10 rounded-3xl border border-white/20 overflow-hidden">
+          <div className="max-w-4xl mx-auto bg-white/10 rounded-3xl border border-white/20 overflow-hidden text-white">
             <div className="grid grid-cols-3 p-6 border-b border-white/10 font-bold text-center">
-              <div className="text-white/60">구분</div>
-              <div className="text-white/60">일반 브랜딩 학원</div>
-              <div className="text-accent text-lg">프리미엄 매니지먼트</div>
+              <div>구분</div>
+              <div>일반 브랜딩 학원</div>
+              <div className="text-lg">프리미엄 매니지먼트</div>
             </div>
             <div className="grid grid-cols-3 p-6 border-b border-white/10 text-sm text-center items-center">
-              <div className="font-bold text-white/80">제공 방식</div>
-              <div className="text-white/50">이론 수업 / 피드백</div>
-              <div className="font-bold text-white">100% 대행 제작</div>
+              <div className="font-bold">제공 방식</div>
+              <div>이론 수업 / 피드백</div>
+              <div className="font-bold">100% 대행 제작</div>
             </div>
             <div className="grid grid-cols-3 p-6 border-b border-white/10 text-sm text-center items-center">
-              <div className="font-bold text-white/80">결과물</div>
-              <div className="text-white/50">수료증 / 이력서</div>
-              <div className="font-bold text-white">제안서 · 강연안 · 프로필</div>
+              <div className="font-bold">결과물</div>
+              <div>수료증 / 이력서</div>
+              <div className="font-bold">제안서 · 강연안 · 프로필</div>
             </div>
             <div className="grid grid-cols-3 p-6 border-b border-white/10 text-sm text-center items-center">
-              <div className="font-bold text-white/80">타겟</div>
-              <div className="text-white/50">불특정 다수</div>
-              <div className="font-bold text-white">5060 시니어 전담</div>
+              <div className="font-bold">타겟</div>
+              <div>불특정 다수</div>
+              <div className="font-bold">5060 시니어 전담</div>
             </div>
             <div className="grid grid-cols-3 p-6 text-sm text-center items-center">
-              <div className="font-bold text-white/80">디지털 작업</div>
-              <div className="text-white/50">직접 PPT 작성</div>
-              <div className="font-bold text-accent">노동 제로(0)</div>
+              <div className="font-bold">디지털 작업</div>
+              <div>직접 PPT 작성</div>
+              <div className="font-bold">노동 제로(0)</div>
             </div>
           </div>
         </div>
@@ -341,40 +341,61 @@ export default function Index() {
         <div className="container-prose text-center">
           <NumberedLabel number="04">패키지</NumberedLabel>
           <h2 className="font-serif text-3xl md:text-4xl text-primary leading-snug mt-4 mb-6">
-            필요한 만큼만 선택하세요.
+            필요한 단계에 맞춰 선택하실 수 있습니다.
           </h2>
-          <p className="text-foreground/70 text-lg max-w-2xl mx-auto">어떤 패키지든 대표님이 직접 작업할 일은 없습니다.</p>
+          <p className="text-foreground/70 text-lg max-w-2xl mx-auto">
+            브랜드의 뼈대를 정리할 것인지, 시장 진입까지 완성할 것인지<br />
+            — 두 가지 경로를 제안드립니다.
+          </p>
           <div className="mb-16"></div>
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto text-left">
-            <div className="bg-background border border-border p-8 rounded-3xl shadow-sm flex flex-col">
-              <h3 className="text-xl font-bold text-muted-foreground mb-2">BASIC</h3>
-              <p className="text-primary font-serif text-2xl mb-6">기본 패키지</p>
-              <ul className="space-y-4 mb-10 flex-grow text-sm text-foreground/80">
-                <li className="flex items-start gap-3"><Check size={18} className="text-muted-foreground shrink-0 mt-0.5" /> 진단 및 기획 코칭</li>
-                <li className="flex items-start gap-3"><Check size={18} className="text-muted-foreground shrink-0 mt-0.5" /> 전문가 프로필 1종</li>
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto text-left">
+            <div className="bg-background border border-border p-8 md:p-10 rounded-3xl shadow-sm flex flex-col">
+              <h3 className="text-sm font-bold text-primary mb-2 tracking-widest uppercase">PACKAGE A</h3>
+              <p className="text-primary font-serif text-2xl md:text-3xl font-bold mb-3">브랜드 포지셔닝 패키지</p>
+              <p className="text-foreground/70 text-sm mb-8 break-keep">브랜드의 뼈대와 메시지를 먼저 정리하고 싶은 분</p>
+              
+              <div className="mb-6 flex items-baseline gap-2">
+                <span className="text-4xl md:text-5xl font-serif font-bold text-primary tracking-tight">4,400,000</span>
+                <span className="text-sm text-foreground/70 font-medium">원 (VAT 별도)</span>
+              </div>
+              <p className="text-sm text-foreground/70 mb-8">진행 기간 · 5주</p>
+              
+              <hr className="border-border mb-8" />
+              
+              <ul className="space-y-5 mb-10 flex-grow text-sm text-foreground/80 font-medium">
+                <li className="flex items-start gap-3"><Check size={18} className="text-accent shrink-0 mt-0.5" /> 마스터 브리프</li>
+                <li className="flex items-start gap-3"><Check size={18} className="text-accent shrink-0 mt-0.5" /> 브랜드 언어 자산</li>
+                <li className="flex items-start gap-3"><Check size={18} className="text-accent shrink-0 mt-0.5" /> 브랜드 에셋 12종</li>
+                <li className="flex items-start gap-3"><Check size={18} className="text-accent shrink-0 mt-0.5" /> 채널 기본 세팅 가이드</li>
               </ul>
-              <button className="w-full py-4 rounded-xl font-bold border-2 border-border text-foreground hover:border-primary hover:text-primary transition-colors">문의하기</button>
+              
+              <button className="w-full py-4 rounded-xl font-bold border border-border text-primary hover:border-primary transition-colors">브랜드 매니지먼트 시작하기</button>
             </div>
-            <div className="bg-primary text-white p-8 rounded-3xl shadow-2xl transform md:scale-105 border-2 border-accent flex flex-col relative">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-accent text-white px-4 py-1 rounded-full text-xs font-bold tracking-wider">추천</div>
-              <h3 className="text-xl font-bold text-accent mb-2">PREMIUM</h3>
-              <p className="font-serif text-3xl mb-6">프리미엄 패키지</p>
-              <ul className="space-y-4 mb-10 flex-grow text-sm text-white/90">
-                <li className="flex items-start gap-3"><Check size={18} className="text-accent shrink-0 mt-0.5" /> BASIC 전체 포함</li>
-                <li className="flex items-start gap-3"><Check size={18} className="text-accent shrink-0 mt-0.5" /> B2B 제안서 기획/디자인</li>
-                <li className="flex items-start gap-3"><Check size={18} className="text-accent shrink-0 mt-0.5" /> 시그니처 강연안 제작</li>
-                <li className="flex items-start gap-3"><Check size={18} className="text-accent shrink-0 mt-0.5" /> 1:1 밀착 VVIP 매니지먼트</li>
+
+            <div className="bg-background border border-border p-8 md:p-10 rounded-3xl shadow-xl flex flex-col relative overflow-hidden">
+              <div className="absolute top-0 right-0 bg-primary text-white px-5 py-2 rounded-bl-2xl text-xs font-bold tracking-wider flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent"></span> 꿈몰다 추천
+              </div>
+              <h3 className="text-sm font-bold text-primary mb-2 tracking-widest uppercase mt-4 md:mt-0">PACKAGE B</h3>
+              <p className="text-primary font-serif text-2xl md:text-3xl font-bold mb-3">VVIP 시그니처 매니지먼트</p>
+              <p className="text-foreground/70 text-sm mb-8 break-keep">브랜드부터 강의·제안·시장 진입까지 한 번에 완성하고 싶은 분</p>
+              
+              <div className="mb-6 flex items-baseline gap-2">
+                <span className="text-4xl md:text-5xl font-serif font-bold text-primary tracking-tight">8,800,000</span>
+                <span className="text-sm text-foreground/70 font-medium">원 (VAT 별도)</span>
+              </div>
+              <p className="text-sm text-foreground/70 mb-8">진행 기간 · 8주</p>
+              
+              <hr className="border-border mb-8" />
+              
+              <ul className="space-y-5 mb-10 flex-grow text-sm text-foreground/80 font-medium">
+                <li className="flex items-start gap-3"><Check size={18} className="text-accent shrink-0 mt-0.5" /> Package A 전체 포함</li>
+                <li className="flex items-start gap-3"><Check size={18} className="text-accent shrink-0 mt-0.5" /> 시그니처 강의안 PPT 원본</li>
+                <li className="flex items-start gap-3"><Check size={18} className="text-accent shrink-0 mt-0.5" /> B2B 강의 제안서</li>
+                <li className="flex items-start gap-3"><Check size={18} className="text-accent shrink-0 mt-0.5" /> 1개월 실행 밀착 매니지먼트</li>
               </ul>
-              <button className="w-full py-4 rounded-xl font-bold bg-accent text-white hover:bg-accent/90 transition-colors shadow-lg">신청하기</button>
-            </div>
-            <div className="bg-background border border-border p-8 rounded-3xl shadow-sm flex flex-col">
-              <h3 className="text-xl font-bold text-muted-foreground mb-2">STANDARD</h3>
-              <p className="text-primary font-serif text-2xl mb-6">표준 패키지</p>
-              <ul className="space-y-4 mb-10 flex-grow text-sm text-foreground/80">
-                <li className="flex items-start gap-3"><Check size={18} className="text-muted-foreground shrink-0 mt-0.5" /> BASIC 전체 포함</li>
-                <li className="flex items-start gap-3"><Check size={18} className="text-muted-foreground shrink-0 mt-0.5" /> B2B 제안서 기획/디자인</li>
-              </ul>
-              <button className="w-full py-4 rounded-xl font-bold border-2 border-border text-foreground hover:border-primary hover:text-primary transition-colors">문의하기</button>
+              
+              <button className="w-full py-4 rounded-xl font-bold bg-primary text-white hover:bg-primary/90 transition-colors shadow-lg">브랜드 매니지먼트 시작하기</button>
             </div>
           </div>
         </div>
