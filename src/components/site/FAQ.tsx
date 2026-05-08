@@ -1,0 +1,43 @@
+import { FAQS } from "@/data/content";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+export default function FAQ() {
+  return (
+    <section className="py-24 bg-slate-50">
+      <div className="container-prose max-w-4xl mx-auto">
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <div className="h-px bg-border w-8"></div>
+            <span className="text-primary font-bold tracking-widest text-sm uppercase">FAQ</span>
+            <div className="h-px bg-border w-8"></div>
+          </div>
+          <h2 className="font-serif text-3xl md:text-4xl text-primary leading-snug">
+            자주 묻는 질문
+          </h2>
+        </div>
+
+        <Accordion type="single" collapsible className="space-y-4">
+          {FAQS.map((faq, index) => (
+            <AccordionItem
+              key={index}
+              value={`item-${index}`}
+              className="bg-white border border-border rounded-xl px-6 data-[state=open]:shadow-sm transition-shadow"
+            >
+              <AccordionTrigger className="text-left font-bold text-primary hover:no-underline py-6">
+                {faq.question}
+              </AccordionTrigger>
+              <AccordionContent className="text-foreground/80 leading-relaxed text-base pb-6">
+                {faq.answer}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+    </section>
+  );
+}
