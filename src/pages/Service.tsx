@@ -101,7 +101,7 @@ export default function Service() {
               한끗은 이렇게 작동합니다.
             </h2>
             <p className="text-foreground/70 text-lg max-w-2xl mx-auto">
-              28년의 코칭 경험에서 정제된 3단계 자산화 원리입니다.
+              30년 경험과 노하우에서 정제된 3단계 자산화 원리입니다.
             </p>
           </div>
 
@@ -223,7 +223,7 @@ export default function Service() {
                 <div>
                   <span className="text-3xl font-serif font-bold text-primary">30년</span>
                   <p className="text-sm text-muted-foreground mt-1">프레젠테이션·브랜딩 컨설팅 경력</p>
-                  <p className="text-xs text-foreground/50 mt-1">2003년부터 기업·기관 대상 강의 및 콘텐츠 설계</p>
+                  <p className="text-xs text-foreground/50 mt-1">기업·기관·대학 대상 강의 및 콘텐츠 설계</p>
                 </div>
               </div>
               <div className="bg-card border border-border p-8 rounded-2xl shadow-sm flex items-center gap-6 flex-1">
