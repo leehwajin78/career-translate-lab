@@ -416,16 +416,15 @@ export default function Index() {
       <FAQ />
 
       {/* FINAL CTA */}
-      <section className="py-24 md:py-32 bg-primary text-primary-foreground text-center relative overflow-hidden">
+      <section className="py-16 md:py-24 bg-primary text-primary-foreground text-center relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/20 to-transparent -z-10" />
         <div className="container-prose relative z-10">
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl leading-snug mb-6 max-w-3xl mx-auto">
             당신의 다음 명함은,<br />과거의 직함이 아닙니다.
           </h2>
-          <p className="text-lg md:text-xl text-primary-foreground/80 mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
-            이제 어디에서 일했는지가 아니라<br />
-            무엇을 해줄 수 있는 사람인지가 중요합니다.<br /><br />
-            30년의 경력을 다음 기회로 바꾸고 싶다면, 지금 시작하세요.
+          <p className="text-lg md:text-xl text-primary-foreground/80 mb-10 max-w-3xl mx-auto leading-relaxed break-keep">
+            이제 어디에서 일했는지가 아니라, 무엇을 해줄 수 있는 사람인지가 중요합니다.<br className="hidden md:block" />
+            30년의 경력을 다음 기회로 바꾸고 싶다면 지금 시작하세요.
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-5 mb-8">
             <Link to="/diagnosis" className="w-full sm:w-auto bg-accent text-white border-2 border-white/90 px-10 py-5 rounded-full font-bold text-lg hover:bg-accent/90 transition-all shadow-lg hover:scale-105">
@@ -435,11 +434,8 @@ export default function Index() {
               30분 무료 상담 신청하기
             </Link>
           </div>
-          <p className="text-sm font-bold text-accent/90 tracking-wide bg-accent/10 inline-block px-4 py-2 rounded-full border border-accent/20 mb-8">
+          <p className="text-sm font-bold text-accent/90 tracking-wide bg-accent/10 inline-block px-4 py-2 rounded-full border border-accent/20">
             한끗 진단: 50만 원, 부가세 별도
-          </p>
-          <p className="text-xs text-primary-foreground/60 mt-4 leading-relaxed">
-            📞 070-4090-2161 &nbsp;|&nbsp; ✉️ kkummolda@kkummolda.com &nbsp;|&nbsp; 🌐 https://www.kkummolda.com/
           </p>
         </div>
       </section>
