@@ -57,12 +57,18 @@ export default function Nav() {
         <nav className="hidden lg:flex items-center gap-8">
           {NAV_LINKS.map((l) => renderLink(l.href, l.label))}
         </nav>
-        <div className="hidden lg:block">
+        <div className="hidden lg:flex items-center gap-3">
           <Link
-            to="/consultation"
+            to="/diagnosis"
             className="inline-flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors px-5 py-2.5 text-sm rounded-full shadow-soft"
           >
-            무료 사전 상담 신청하기
+            경력 가치 무료 진단
+          </Link>
+          <Link
+            to="/consultation"
+            className="inline-flex items-center gap-2 border border-primary/30 text-primary hover:bg-primary/5 transition-colors px-5 py-2.5 text-sm rounded-full"
+          >
+            무료 상담 신청
           </Link>
         </div>
         <button className="lg:hidden p-2 -mr-2" onClick={() => setOpen((v) => !v)} aria-label="menu">
@@ -73,12 +79,20 @@ export default function Nav() {
         <div className="lg:hidden border-t border-border bg-background">
           <div className="container-prose py-6 flex flex-col gap-4">
             {NAV_LINKS.map((l) => renderLink(l.href, l.label))}
-            <Link
-              to="/consultation"
-              className="mt-2 inline-flex items-center justify-center bg-primary text-primary-foreground px-5 py-3 text-sm rounded-full"
-            >
-              무료 사전 상담 신청하기
-            </Link>
+            <div className="mt-2 flex flex-col gap-3">
+              <Link
+                to="/diagnosis"
+                className="inline-flex items-center justify-center bg-primary text-primary-foreground px-5 py-3 text-sm rounded-full"
+              >
+                경력 가치 무료 진단
+              </Link>
+              <Link
+                to="/consultation"
+                className="inline-flex items-center justify-center border border-primary/30 text-primary px-5 py-3 text-sm rounded-full"
+              >
+                무료 상담 신청
+              </Link>
+            </div>
           </div>
         </div>
       )}

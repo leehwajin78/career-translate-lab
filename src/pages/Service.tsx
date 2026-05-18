@@ -1,36 +1,42 @@
 import CTAButton from "@/components/site/CTAButton";
 import { NumberedLabel } from "@/components/site/Editorial";
-import { Check, Sparkles, Users, Award, Building } from "lucide-react";
+import { Check, Sparkles, Users, Award, Building, ArrowRight, Download } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Service() {
   return (
     <>
-      {/* SECTION 1: HERO */}
+      {/* SECTION 1: HERO — 문제 공감 → 해결책 제시 */}
       <section className="relative overflow-hidden">
         <div className="container-prose relative z-10 pt-20 md:pt-32 pb-24 md:pb-40">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-bold mb-8 border border-accent/20 shadow-sm">
             <Sparkles size={16} />
-            <span>한끗 방법론</span>
+            <span>한끗 프로젝트</span>
           </div>
           <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[1.15] text-primary fade-in tracking-tight break-keep">
-            경력은 사라지는 것이 아니라,<br />
-            <span className="inline-block">번역되어야 살아남습니다.</span>
+            30년 경력을 시장의 언어로<br />
+            <span className="inline-block">번역하는 서비스입니다.</span>
           </h1>
           <p className="mt-8 max-w-3xl text-lg md:text-xl text-foreground/80 leading-relaxed font-medium break-keep">
-            30년의 경험은 그 자체로 가치가 있습니다. 단, 시장이 그 가치를 알아보려면 번역이 필요합니다.<br className="hidden md:block" />
-            한끗프로젝트는 당신의 경력을 강의·제안서·프로필이라는 시장 언어로 옮기는 방법론입니다.
+            당신만을 위한 1:1 맞춤 과정으로, 경험 속 가장 강력한 이야기를 꺼내 6주 안에 프로필·강의안·제안서로 만들어 드립니다.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
-            <CTAButton to="/diagnosis" variant="primary">내 경력의 가치 진단 받기</CTAButton>
+            <CTAButton to="/diagnosis" variant="primary">내 경력 가치 진단받기</CTAButton>
             <CTAButton to="/consultation" variant="ghost">30분 무료 상담 신청하기</CTAButton>
+            <a
+              href="#"
+              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors border-b border-dashed border-muted-foreground/40 pb-0.5"
+            >
+              <Download size={14} />
+              서비스 소개서 받아보기
+            </a>
           </div>
         </div>
         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1/2 h-[80vh] bg-gradient-to-bl from-accent/20 to-transparent blur-3xl -z-10 rounded-full" />
         <div className="absolute -left-20 bottom-0 w-96 h-96 bg-primary/5 blur-3xl -z-10 rounded-full" />
       </section>
 
-      {/* SECTION 2: 차별 포지셔닝 */}
+      {/* SECTION 2: 카테고리 차별화 — 비교 축 강화 */}
       <section className="py-24 bg-secondary/40">
         <div className="container-prose">
           <div className="text-center mb-16">
@@ -43,48 +49,52 @@ export default function Service() {
             </p>
           </div>
 
+          {/* 비교 테이블 — 모바일 대응 카드 + 데스크탑 그리드 */}
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {/* 카드 1 */}
+            {/* 카드 1: 강사 양성 과정 */}
             <div className="bg-background border border-border p-8 rounded-2xl shadow-sm flex flex-col">
-              <p className="text-xs font-bold text-muted-foreground tracking-widest uppercase mb-4">강사 양성 과정</p>
-              <div className="space-y-4 text-sm text-foreground/80 flex-grow">
+              <p className="text-xs font-bold text-muted-foreground tracking-widest uppercase mb-5">강사 양성 과정</p>
+              <div className="space-y-5 text-sm text-foreground/80 flex-grow">
                 <div><span className="font-bold text-primary">대상</span><p className="mt-1">강의 경험이 없는 분</p></div>
-                <div><span className="font-bold text-primary">방법</span><p className="mt-1">표준 커리큘럼 + 강사 풀</p></div>
-                <div><span className="font-bold text-primary">결과</span><p className="mt-1">수료증</p></div>
+                <div><span className="font-bold text-primary">진단</span><p className="mt-1">없음</p></div>
+                <div><span className="font-bold text-primary">결과물</span><p className="mt-1">수료증, 강사 풀 등록</p></div>
+                <div><span className="font-bold text-primary">활용처</span><p className="mt-1">강사 활동 한정</p></div>
               </div>
               <div className="mt-6 pt-5 border-t border-border">
                 <p className="text-xs text-accent font-bold leading-relaxed break-keep">
-                  "한끗은 가르치지 않습니다. 이미 가진 경력을 콘텐츠로 만듭니다."
+                  "한끗은 강의를 가르치지 않습니다."
                 </p>
               </div>
             </div>
 
-            {/* 카드 2 */}
+            {/* 카드 2: 일반 브랜딩 컨설팅 */}
             <div className="bg-background border border-border p-8 rounded-2xl shadow-sm flex flex-col">
-              <p className="text-xs font-bold text-muted-foreground tracking-widest uppercase mb-4">일반 브랜딩 컨설팅</p>
-              <div className="space-y-4 text-sm text-foreground/80 flex-grow">
+              <p className="text-xs font-bold text-muted-foreground tracking-widest uppercase mb-5">일반 브랜딩 컨설팅</p>
+              <div className="space-y-5 text-sm text-foreground/80 flex-grow">
                 <div><span className="font-bold text-primary">대상</span><p className="mt-1">사업체·창업자</p></div>
-                <div><span className="font-bold text-primary">방법</span><p className="mt-1">시각 디자인 + 카피</p></div>
-                <div><span className="font-bold text-primary">결과</span><p className="mt-1">로고·웹사이트</p></div>
+                <div><span className="font-bold text-primary">진단</span><p className="mt-1">시장 분석 중심</p></div>
+                <div><span className="font-bold text-primary">결과물</span><p className="mt-1">로고, 웹사이트</p></div>
+                <div><span className="font-bold text-primary">활용처</span><p className="mt-1">디지털 채널</p></div>
               </div>
               <div className="mt-6 pt-5 border-t border-border">
                 <p className="text-xs text-accent font-bold leading-relaxed break-keep">
-                  "한끗은 디자인이 아니라, 시장에서 통하는 강의안과 제안서를 만듭니다."
+                  "한끗은 디자인이 아닙니다."
                 </p>
               </div>
             </div>
 
-            {/* 카드 3 — 강조 */}
+            {/* 카드 3: 한끗프로젝트 — 강조 */}
             <div className="bg-primary text-white p-8 rounded-2xl shadow-xl flex flex-col border border-primary-foreground/10">
-              <p className="text-xs font-bold text-white/80 tracking-widest uppercase mb-4">한끗프로젝트</p>
-              <div className="space-y-4 text-sm text-white/90 flex-grow">
+              <p className="text-xs font-bold text-white/80 tracking-widest uppercase mb-5">한끗프로젝트</p>
+              <div className="space-y-5 text-sm text-white/90 flex-grow">
                 <div><span className="font-bold text-white">대상</span><p className="mt-1">20~30년 경력 전문가</p></div>
-                <div><span className="font-bold text-white">방법</span><p className="mt-1">1:1 디렉팅 + 자산 설계</p></div>
-                <div><span className="font-bold text-white">결과</span><p className="mt-1">프로필 + 강의안 + 제안서</p></div>
+                <div><span className="font-bold text-white">진단</span><p className="mt-1">개인의 경력 자산 추출 중심</p></div>
+                <div><span className="font-bold text-white">결과물</span><p className="mt-1">프로필, 강의안, 제안서</p></div>
+                <div><span className="font-bold text-white">활용처</span><p className="mt-1">강의·제안·프로필 전 채널</p></div>
               </div>
               <div className="mt-6 pt-5 border-t border-white/20">
                 <p className="text-xs text-white/80 font-bold leading-relaxed break-keep">
-                  "이미 가진 것을 시장 언어로 번역합니다."
+                  "한끗은 이미 가진 것을 시장 언어로 번역합니다."
                 </p>
               </div>
             </div>
@@ -92,7 +102,7 @@ export default function Service() {
         </div>
       </section>
 
-      {/* SECTION 3: 한끗 방법론 3단계 */}
+      {/* SECTION 3: 한끗 방법론 3단계 + Before/After */}
       <section className="py-24 md:py-32">
         <div className="container-prose">
           <div className="text-center mb-16">
@@ -158,7 +168,7 @@ export default function Service() {
         </div>
       </section>
 
-      {/* SECTION 4: 산출물 7가지 */}
+      {/* SECTION 4: 산출물 6가지 */}
       <section id="deliverables" className="py-24 bg-primary/5">
         <div className="container-prose">
           <div className="text-center mb-16">
@@ -231,7 +241,7 @@ export default function Service() {
                   <Users size={28} />
                 </div>
                 <div>
-                  <span className="text-3xl font-serif font-bold text-primary">100+</span>
+                  <span className="text-3xl font-serif font-bold text-primary">300+</span>
                   <p className="text-sm text-muted-foreground mt-1">누적 코칭 사례</p>
                   <p className="text-xs text-foreground/50 mt-1">임원·전문가·강사의 브랜딩과 콘텐츠를 함께 설계</p>
                 </div>
@@ -256,15 +266,15 @@ export default function Service() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/20 to-transparent -z-10" />
         <div className="container-prose relative z-10">
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl leading-snug mb-6 max-w-3xl mx-auto">
-            준비가 되셨다면,<br />한끗 진단부터 시작하세요.
+            준비가 되셨다면,<br />내 경력의 가치부터 확인해 보세요.
           </h2>
           <p className="text-lg md:text-xl text-primary-foreground/80 mb-12 max-w-2xl mx-auto leading-relaxed font-medium break-keep">
-            50만 원의 1주 진단으로 당신의 경력이<br className="hidden md:block" />
-            시장에서 어떤 자산이 될 수 있는지 확인하세요.
+            30년의 경험이 시장에서 어떤 자산이 될 수 있는지,<br className="hidden md:block" />
+            간단한 진단과 무료 상담을 통해 명확한 방향을 잡아드립니다.
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-5 mb-8">
-            <Link to="/#packages" className="w-full sm:w-auto bg-accent text-white border-2 border-white/90 px-10 py-5 rounded-full font-bold text-lg hover:bg-accent/90 transition-all shadow-lg hover:scale-105">
-              한끗 진단 신청하기
+            <Link to="/diagnosis" className="w-full sm:w-auto bg-accent text-white border-2 border-white/90 px-10 py-5 rounded-full font-bold text-lg hover:bg-accent/90 transition-all shadow-lg hover:scale-105">
+              경력 가치 무료 진단받기
             </Link>
             <Link to="/consultation" className="w-full sm:w-auto bg-white text-primary px-10 py-5 rounded-full font-bold text-lg hover:bg-white/90 transition-all shadow-lg hover:scale-105">
               30분 무료 상담 신청하기

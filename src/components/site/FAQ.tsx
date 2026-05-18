@@ -6,17 +6,15 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+import { NumberedLabel } from "@/components/site/Editorial";
+
 export default function FAQ() {
   return (
-    <section className="py-24 bg-slate-50">
+    <section className="py-24 bg-background">
       <div className="container-prose max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="h-px bg-border w-8"></div>
-            <span className="text-primary font-bold tracking-widest text-sm uppercase">FAQ</span>
-            <div className="h-px bg-border w-8"></div>
-          </div>
-          <h2 className="font-serif text-3xl md:text-4xl text-primary leading-snug">
+        <div className="text-center mb-16">
+          <NumberedLabel number="05">FAQ</NumberedLabel>
+          <h2 className="font-serif text-3xl md:text-4xl text-primary leading-snug mt-4 mb-6">
             자주 묻는 질문
           </h2>
         </div>

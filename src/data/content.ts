@@ -125,11 +125,8 @@ export const TRUST = [
 
 export const NAV_LINKS = [
   { href: "/service", label: "서비스 소개" },
-  { href: "/diagnosis", label: "진단받기" },
   { href: "#process", label: "진행 과정" },
-  { href: "#deliverables", label: "결과물" },
-  { href: "#packages", label: "단계별 상품" },
-  { href: "/consultation", label: "상담 신청" },
+  { href: "#packages", label: "가격 안내" },
 ];
 
 export const PURPOSE_OPTIONS = ["강의", "자문", "컨설팅", "코칭", "콘텐츠", "출판", "창업", "기타"];

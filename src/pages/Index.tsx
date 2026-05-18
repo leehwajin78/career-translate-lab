@@ -19,11 +19,11 @@ export default function Index() {
             <span className="inline-block">나를 소개하는 <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-primary/80">한 문장</span>이 없습니다.</span>
           </h1>
           <p className="mt-8 max-w-3xl text-lg md:text-xl text-foreground/80 leading-relaxed font-medium break-keep">
-            한끗프로젝트가 당신의 경력을 시장이 선택하는 자산으로 만듭니다.<br className="hidden md:block" />
-            한끗 빌드 과정에서 <strong>강의안, 제안서, 프로필</strong>을 6주 안에 완성합니다.
+            30년 경력은 충분합니다. 부족한 건 그 경험을 시장의 언어로 옮기는 작업입니다.<br />
+            한끗 프로젝트가 당신의 경력을 시장이 선택하는 자산으로 만들어 드리겠습니다.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
-            <CTAButton to="/diagnosis" variant="primary">내 경력의 가치 진단받기</CTAButton>
+            <CTAButton to="/diagnosis" variant="primary">경력 가치 무료 진단받기</CTAButton>
             <CTAButton to="/consultation" variant="ghost">30분 무료 상담 신청하기</CTAButton>
           </div>
 
@@ -239,7 +239,7 @@ export default function Index() {
       </section>
 
       {/* SECTION 5: PROCESS */}
-      <section className="py-24">
+      <section id="process" className="py-24">
         <div className="container-prose">
           <div className="text-center mb-6">
             <NumberedLabel number="02">진행 과정</NumberedLabel>
@@ -335,7 +335,7 @@ export default function Index() {
                 <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 자산화 로드맵 1장</li>
                 <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 30분 해석 미팅</li>
               </ul>
-              <Link to="/consultation" className="w-full py-3.5 rounded-xl font-bold bg-accent text-white hover:bg-accent/90 transition-colors shadow-lg text-center text-sm">진단 신청하기</Link>
+              <Link to="/consultation" className="w-full py-3.5 rounded-xl font-bold bg-accent text-white hover:bg-accent/90 transition-colors shadow-lg text-center text-sm">한끗 진단 신청하기</Link>
             </div>
 
             {/* 카드 2: 한끗 빌드 */}
@@ -358,7 +358,7 @@ export default function Index() {
                 <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 채널 전략 가이드</li>
                 <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 주 1회 코칭, 총 6회</li>
               </ul>
-              <Link to="/consultation" className="w-full py-3.5 rounded-xl font-bold border border-border text-primary hover:border-primary transition-colors text-center text-sm">빌드 상담 신청하기</Link>
+              <Link to="/consultation" className="w-full py-3.5 rounded-xl font-bold border border-border text-primary hover:border-primary transition-colors text-center text-sm">한끗 빌드 신청하기</Link>
             </div>
 
             {/* 카드 3: 한끗 론칭 */}
@@ -379,7 +379,7 @@ export default function Index() {
                 <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 강의·자문 제안처 발굴 및 소개 지원</li>
                 <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 3개월 론칭 코칭, 월 2회</li>
               </ul>
-              <Link to="/consultation" className="w-full py-3.5 rounded-xl font-bold border border-border text-primary hover:border-primary transition-colors text-center text-sm">론칭 상담 신청하기</Link>
+              <Link to="/consultation" className="w-full py-3.5 rounded-xl font-bold border border-border text-primary hover:border-primary transition-colors text-center text-sm">한끗 론칭 신청하기</Link>
             </div>
 
             {/* 카드 4: 한끗 파트너 */}
@@ -400,15 +400,11 @@ export default function Index() {
                 <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 신규 기회 탐색 및 소개 지원</li>
                 <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 분기별 브랜드 점검 리포트</li>
               </ul>
-              <Link to="/consultation" className="w-full py-3.5 rounded-xl font-bold border border-border text-primary hover:border-primary transition-colors text-center text-sm">파트너 상담 신청하기</Link>
+              <Link to="/consultation" className="w-full py-3.5 rounded-xl font-bold border border-border text-primary hover:border-primary transition-colors text-center text-sm">한끗 파트너 신청하기</Link>
             </div>
 
           </div>
-          <p className="mt-12 text-foreground/60 text-sm max-w-2xl mx-auto leading-relaxed">
-            모든 가격은 부가세 별도입니다.<br />
-            진단부터 시작하시면 방향이 명확해집니다.<br />
-            한 번에 큰 결정을 내리실 필요 없습니다.
-          </p>
+
         </div>
       </section>
 
@@ -428,15 +424,13 @@ export default function Index() {
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-5 mb-8">
             <Link to="/diagnosis" className="w-full sm:w-auto bg-accent text-white border-2 border-white/90 px-10 py-5 rounded-full font-bold text-lg hover:bg-accent/90 transition-all shadow-lg hover:scale-105">
-              한끗 진단 신청하기
+              경력 가치 무료 진단받기
             </Link>
             <Link to="/consultation" className="w-full sm:w-auto bg-white text-primary px-10 py-5 rounded-full font-bold text-lg hover:bg-white/90 transition-all shadow-lg hover:scale-105">
               30분 무료 상담 신청하기
             </Link>
           </div>
-          <p className="text-sm font-bold text-accent/90 tracking-wide bg-accent/10 inline-block px-4 py-2 rounded-full border border-accent/20">
-            한끗 진단: 50만 원, 부가세 별도
-          </p>
+
         </div>
       </section>
     </>
