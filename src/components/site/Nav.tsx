@@ -62,7 +62,7 @@ export default function Nav() {
             to="/diagnosis"
             className="inline-flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors px-5 py-2.5 text-sm rounded-full shadow-soft"
           >
-            경력 가치 무료 진단
+            경력 가치 진단
           </Link>
           <Link
             to="/consultation"
@@ -84,7 +84,7 @@ export default function Nav() {
                 to="/diagnosis"
                 className="inline-flex items-center justify-center bg-primary text-primary-foreground px-5 py-3 text-sm rounded-full"
               >
-                경력 가치 무료 진단
+                경력 가치 진단
               </Link>
               <Link
                 to="/consultation"

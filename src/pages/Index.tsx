@@ -12,7 +12,7 @@ export default function Index() {
         <div className="container-prose relative z-10 pt-20 md:pt-32 pb-24 md:pb-40">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-bold mb-8 border border-accent/20 shadow-sm">
             <Sparkles size={16} />
-            <span>30년 경력 자산화 서비스</span>
+            <span>경력 번역 서비스</span>
           </div>
           <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[1.15] text-primary fade-in tracking-tight break-keep">
             30년을 일했는데, <br />
