@@ -5,7 +5,7 @@ export default function Footer() {
         
         {/* 좌측 정보 영역 */}
         <div className="space-y-4">
-          <p className="text-lg md:text-xl font-bold">한끗 프로젝트</p>
+          <p className="text-lg md:text-xl font-bold">꿈몰다 | 한끗프로젝트</p>
           <div className="space-y-0.5 text-[#0123b4]/80 text-sm break-keep leading-tight">
             <p>
               전화. 070-4090-2161 <span className="mx-1.5 opacity-50">|</span> 
