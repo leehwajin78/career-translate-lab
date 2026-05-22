@@ -180,3 +180,113 @@ export const FAQS = [
     answer: "산출물, 즉 프로필·강의안·제안서는 6주 과정 안에 완성됩니다. 다만 시장 반응과 수익은 개인 경력과 실행에 따라 차이가 있습니다. 실제 무대 연결을 원하시면 한끗 론칭 패키지에서 강의·자문 기회 탐색과 소개 연결을 별도로 지원합니다."
   }
 ];
+
+// ─── 무료 진단 (7문항) 전용 데이터 ────────────────────────────────
+
+export type FreeDiagnosticArea =
+  | "identity"
+  | "coreValues"
+  | "strengths"
+  | "authority"
+  | "targetAudience"
+  | "differentiation"
+  | "message";
+
+export interface FreeDiagnosticQuestion {
+  id: number;
+  question: string;
+  hint: string;
+  placeholder: string;
+  diagnosticArea: FreeDiagnosticArea;
+}
+
+export const FREE_DIAGNOSTIC_QUESTIONS: FreeDiagnosticQuestion[] = [
+  {
+    id: 1,
+    question: "지금 이 순간, 직함이나 회사 이름 없이 나는 어떤 사람이라고 소개하겠습니까?",
+    hint: "직업이나 역할이 아닌, 나라는 사람의 본질을 표현해 주세요",
+    placeholder: "예: 사람들의 잠재력을 끌어내는 것을 좋아하는 사람...",
+    diagnosticArea: "identity",
+  },
+  {
+    id: 2,
+    question: "지금까지 살아오면서 가장 자랑스러웠던 순간 3가지를 들려주세요. 결과보다 그 순간 어떤 감정이었는지를요.",
+    hint: "크고 거창한 성취가 아니어도 됩니다. 혼자만 아는 자랑스러움도 소중한 자산입니다",
+    placeholder: "예: 1. 처음으로 팀원이 성장하는 모습을 봤을 때...",
+    diagnosticArea: "coreValues",
+  },
+  {
+    id: 3,
+    question: "남들보다 자연스럽게 잘 되는 것, 에너지가 드는 게 아니라 그냥 되는 것 3가지는?",
+    hint: "\"잘하는 것\"을 묻는 게 아닙니다. 다른 사람들은 힘들어하는데 나는 그냥 되는 것이요",
+    placeholder: "예: 1. 복잡한 상황을 정리해서 설명하는 것...",
+    diagnosticArea: "strengths",
+  },
+  {
+    id: 4,
+    question: "사람들이 나에게 조언이나 도움을 구하러 오는 분야는 주로 무엇인가요?",
+    hint: "직업과 관련 없는 분야도 포함해서 써주세요",
+    placeholder: "예: 커리어 방향 결정, 조직 갈등 해결...",
+    diagnosticArea: "authority",
+  },
+  {
+    id: 5,
+    question: "나는 어떤 사람에게 가장 도움이 되고 싶나요? 직업이나 나이보다 어떤 마음 상태인지로요.",
+    hint: "\"50대 CEO\" 같은 정보 말고, 그 사람이 어떤 마음 상태인지로요",
+    placeholder: "예: 능력은 있는데 어디서부터 시작해야 할지 막막한 사람...",
+    diagnosticArea: "targetAudience",
+  },
+  {
+    id: 6,
+    question: "같은 경력을 가진 사람들 중, 당신만이 가진 차별점은 무엇이라고 생각하세요?",
+    hint: "\"더 잘한다\"가 아닌 \"다르다\"로 생각해 주세요. 모르겠다면 그것도 솔직하게",
+    placeholder: "예: 기술과 사람 사이를 연결하는 시각...",
+    diagnosticArea: "differentiation",
+  },
+  {
+    id: 7,
+    question: "내가 세상에 전하고 싶은 핵심 메시지는 무엇인가요? 한 문장으로요.",
+    hint: "없거나 모르겠어도 괜찮습니다. 지금 이 순간 가장 솔직한 답을 써주세요",
+    placeholder: "예: 경험은 나이가 아니라 관점의 깊이입니다...",
+    diagnosticArea: "message",
+  },
+];
+
+export const CAREER_YEAR_OPTIONS = [
+  "5년 미만", "5~10년", "10~15년", "15~20년",
+  "20~25년", "25~30년", "30년 이상",
+];
+
+export type FreeDiagnosisType = "explorer" | "preparer" | "transitioner" | "executor";
+
+export const FREE_DIAGNOSIS_TYPES: Record<FreeDiagnosisType, {
+  name: string;
+  emoji: string;
+  description: string;
+  ctaMessage: string;
+}> = {
+  explorer: {
+    name: "탐색형 브랜더",
+    emoji: "🔍",
+    description: "아직 방향을 찾는 중. 경력의 가치가 있다는 건 알지만 어떻게 표현해야 할지 모릅니다.",
+    ctaMessage: "한끗 진단으로 방향을 찾아드립니다",
+  },
+  preparer: {
+    name: "준비형 브랜더",
+    emoji: "📦",
+    description: "재료는 있지만 정리가 안 됐습니다. 강점도 있고 경험도 있는데 하나의 언어로 묶이지 않은 상태.",
+    ctaMessage: "한끗 진단으로 정리해드립니다",
+  },
+  transitioner: {
+    name: "전환형 브랜더",
+    emoji: "🔄",
+    description: "변화의 시기에 있습니다. 지금까지와 다른 다음 챕터를 알고 있지만 구체적 언어가 없습니다.",
+    ctaMessage: "한끗 진단으로 전환을 설계합니다",
+  },
+  executor: {
+    name: "실행형 브랜더",
+    emoji: "🚀",
+    description: "실행만 남았습니다. 자신이 누구인지 알고 누구를 돕는지도 압니다. 다만 세상이 알아듣는 언어로 정리되지 않았습니다.",
+    ctaMessage: "한끗 진단으로 완성합니다",
+  },
+};

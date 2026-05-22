@@ -127,7 +127,7 @@ export default function Result() {
             <div className="mt-10 flex flex-wrap justify-center gap-3">
               <button
                 onClick={() => navigate("/consultation")}
-                className="inline-flex items-center gap-2 bg-accent text-white px-7 py-3.5 rounded-full text-sm"
+                className="inline-flex items-center gap-2 bg-accent text-white border border-primary-foreground/30 px-7 py-3.5 rounded-full text-sm"
               >
                 진단 결과 기반 1:1 상담 신청 →
               </button>
