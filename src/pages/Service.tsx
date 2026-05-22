@@ -11,7 +11,7 @@ export default function Service() {
         <div className="container-prose relative z-10 pt-20 md:pt-32 pb-24 md:pb-40">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-bold mb-8 border border-accent/20 shadow-sm">
             <Sparkles size={16} />
-            <span>한끗 프로젝트</span>
+            <span>1:1 맞춤 6주 과정</span>
           </div>
           <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[1.15] text-primary fade-in tracking-tight break-keep">
             30년 경력을 시장의 언어로<br />
@@ -21,14 +21,14 @@ export default function Service() {
             당신만을 위한 1:1 맞춤 과정으로, 경험 속 가장 강력한 이야기를 꺼내 6주 안에 프로필·강의안·제안서로 만들어 드립니다.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
-            <CTAButton to="/diagnosis" variant="primary">내 경력 가치 진단받기</CTAButton>
+            <CTAButton to="/diagnosis" variant="primary">경력 가치 무료 진단받기</CTAButton>
             <CTAButton to="/consultation" variant="ghost">30분 무료 상담 신청하기</CTAButton>
             <a
               href="#"
-              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors border-b border-dashed border-muted-foreground/40 pb-0.5"
+              className="inline-flex items-center gap-2 px-7 py-3.5 text-sm md:text-base rounded-full border border-primary/10 bg-primary/5 text-primary hover:bg-primary/10 hover:border-primary/20 transition-all shadow-sm font-medium"
             >
-              <Download size={14} />
-              서비스 소개서 받아보기
+              <Download size={16} />
+              프로그램 상세 안내서 다운로드
             </a>
           </div>
         </div>

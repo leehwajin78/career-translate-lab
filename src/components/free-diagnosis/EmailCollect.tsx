@@ -51,16 +51,16 @@ export default function EmailCollect({ onNext }: Props) {
 
         {/* Headline */}
         <h1 className="font-serif text-3xl md:text-5xl text-primary leading-[1.2] tracking-tight break-keep">
-          30년을 일했는데,{" "}
+          내 경력의 진짜 가치를 증명할{" "}
           <br className="hidden md:block" />
-          나를 소개하는{" "}
+          나만의{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-primary/80">
             한 문장
           </span>
-          이 없습니다.
+          을 찾아서
         </h1>
         <p className="mt-6 text-lg text-foreground/70 leading-relaxed break-keep">
-          5~8분 안에 내 경력의 숨겨진 가치를 발견합니다.
+          단 7개의 질문으로 내 경력의 빛나는 순간과 숨겨진 핵심 자산을 진단해 보세요.
         </p>
 
         {/* Form */}
