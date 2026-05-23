@@ -392,7 +392,10 @@ export default function Index() {
                 <span className="text-2xl md:text-3xl font-serif font-bold text-primary tracking-tight">1,000,000</span>
                 <span className="text-xs text-foreground/70 font-medium">원</span>
               </div>
-              <p className="text-xs text-foreground/70 mb-5">부가세 별도 · 월 단위 (3개월 약정 권장)</p>
+              <p className="text-xs text-foreground/70 mb-5">
+                부가세 별도 · 월 단위 <br />
+                (3개월 이상 시 할인)
+              </p>
               <hr className="border-border mb-5" />
               <ul className="space-y-3 mb-8 flex-grow text-xs text-foreground/80 font-medium">
                 <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 월 2회 코칭</li>

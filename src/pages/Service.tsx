@@ -24,7 +24,9 @@ export default function Service() {
             <CTAButton to="/diagnosis" variant="primary">경력 가치 무료 진단받기</CTAButton>
             <CTAButton to="/consultation" variant="ghost">30분 무료 상담 신청하기</CTAButton>
             <a
-              href="#"
+              href="https://drive.google.com/file/d/1871MRxG1L2_ft-xe_z5vCmpFdQm24sv1/view?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-7 py-3.5 text-sm md:text-base rounded-full border border-primary/10 bg-primary/5 text-primary hover:bg-primary/10 hover:border-primary/20 transition-all shadow-sm font-medium"
             >
               <Download size={16} />
