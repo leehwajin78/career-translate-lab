@@ -70,6 +70,12 @@ export default function Nav() {
           >
             무료 상담 신청
           </Link>
+          <Link
+            to="/login"
+            className="text-xs text-foreground/50 hover:text-primary transition-colors underline underline-offset-4 ml-1"
+          >
+            로그인
+          </Link>
         </div>
         <button className="lg:hidden p-2 -mr-2" onClick={() => setOpen((v) => !v)} aria-label="menu">
           {open ? <X size={20} /> : <Menu size={20} />}
@@ -91,6 +97,12 @@ export default function Nav() {
                 className="inline-flex items-center justify-center border border-primary/30 text-primary px-5 py-3 text-sm rounded-full"
               >
                 무료 상담 신청
+              </Link>
+              <Link
+                to="/login"
+                className="text-center text-xs text-foreground/50 hover:text-primary transition-colors underline underline-offset-4 mt-2"
+              >
+                로그인
               </Link>
             </div>
           </div>

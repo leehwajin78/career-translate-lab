@@ -10,6 +10,7 @@ import Diagnosis from "./pages/Diagnosis.tsx";
 import Result from "./pages/Result.tsx";
 import Consultation from "./pages/Consultation.tsx";
 import Admin from "./pages/Admin.tsx";
+import Login from "./pages/Login.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/result" element={<Result />} />
             <Route path="/consultation" element={<Consultation />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/login" element={<Login />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

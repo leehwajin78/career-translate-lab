@@ -14,20 +14,21 @@ export default function Service() {
             <span>1:1 맞춤 6주 과정</span>
           </div>
           <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[1.15] text-primary fade-in tracking-tight break-keep">
-            30년 경력을 시장의 언어로<br />
-            <span className="inline-block">번역하는 서비스입니다.</span>
+            30년 경력을 시장의 <br />
+            언어로 번역하는 <br />
+            서비스입니다.
           </h1>
           <p className="mt-8 max-w-3xl text-lg md:text-xl text-foreground/80 leading-relaxed font-medium break-keep">
             당신만을 위한 1:1 맞춤 과정으로, 경험 속 가장 강력한 이야기를 꺼내 6주 안에 프로필·강의안·제안서로 만들어 드립니다.
           </p>
-          <div className="mt-10 flex flex-wrap gap-4">
-            <CTAButton to="/diagnosis" variant="primary">경력 가치 무료 진단받기</CTAButton>
-            <CTAButton to="/consultation" variant="ghost">30분 무료 상담 신청하기</CTAButton>
+          <div className="mt-10 flex flex-col sm:flex-row gap-4">
+            <CTAButton to="/diagnosis" variant="primary" className="w-full sm:w-auto justify-center">경력 가치 무료 진단받기</CTAButton>
+            <CTAButton to="/consultation" variant="ghost" className="w-full sm:w-auto justify-center">30분 무료 상담 신청하기</CTAButton>
             <a
               href="https://drive.google.com/file/d/1871MRxG1L2_ft-xe_z5vCmpFdQm24sv1/view?usp=drive_link"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-7 py-3.5 text-sm md:text-base rounded-full border border-primary/10 bg-primary/5 text-primary hover:bg-primary/10 hover:border-primary/20 transition-all shadow-sm font-medium"
+              className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-7 py-3.5 text-sm md:text-base rounded-full border border-primary/10 bg-primary/5 text-primary hover:bg-primary/10 hover:border-primary/20 transition-all shadow-sm font-medium"
             >
               <Download size={16} />
               프로그램 상세 안내서 다운로드
@@ -54,49 +55,88 @@ export default function Service() {
           {/* 비교 테이블 — 모바일 대응 카드 + 데스크탑 그리드 */}
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {/* 카드 1: 강사 양성 과정 */}
-            <div className="bg-background border border-border p-8 rounded-2xl shadow-sm flex flex-col">
-              <p className="text-xs font-bold text-muted-foreground tracking-widest uppercase mb-5">강사 양성 과정</p>
-              <div className="space-y-5 text-sm text-foreground/80 flex-grow">
-                <div><span className="font-bold text-primary">대상</span><p className="mt-1">강의 경험이 없는 분</p></div>
-                <div><span className="font-bold text-primary">진단</span><p className="mt-1">없음</p></div>
-                <div><span className="font-bold text-primary">결과물</span><p className="mt-1">수료증, 강사 풀 등록</p></div>
-                <div><span className="font-bold text-primary">활용처</span><p className="mt-1">강사 활동 한정</p></div>
+            <div className="bg-background border border-border p-6 md:p-8 rounded-2xl shadow-sm flex flex-col">
+              <h3 className="text-xl md:text-2xl font-extrabold text-foreground mb-6">강사 양성 과정</h3>
+              <hr className="border-border mb-6" />
+              <div className="space-y-4 md:space-y-5 text-base md:text-lg flex-grow">
+                <div className="grid grid-cols-[60px_1fr] gap-2 items-start">
+                  <span className="font-bold text-foreground shrink-0">대상</span>
+                  <span className="text-foreground leading-relaxed break-keep">강의 경험이 없는 분</span>
+                </div>
+                <div className="grid grid-cols-[60px_1fr] gap-2 items-start">
+                  <span className="font-bold text-foreground shrink-0">진단</span>
+                  <span className="text-foreground leading-relaxed break-keep">없음</span>
+                </div>
+                <div className="grid grid-cols-[60px_1fr] gap-2 items-start">
+                  <span className="font-bold text-foreground shrink-0">결과물</span>
+                  <span className="text-foreground leading-relaxed break-keep">수료증, 강사 풀 등록</span>
+                </div>
+                <div className="grid grid-cols-[60px_1fr] gap-2 items-start">
+                  <span className="font-bold text-foreground shrink-0">활용처</span>
+                  <span className="text-foreground leading-relaxed break-keep">강사 활동 한정</span>
+                </div>
               </div>
-              <div className="mt-6 pt-5 border-t border-border">
-                <p className="text-xs text-accent font-bold leading-relaxed break-keep">
+              <div className="mt-8 pt-5 border-t border-border">
+                <p className="text-base md:text-lg text-accent font-bold leading-relaxed break-keep">
                   "한끗은 강의를 가르치지 않습니다."
                 </p>
               </div>
             </div>
 
             {/* 카드 2: 일반 브랜딩 컨설팅 */}
-            <div className="bg-background border border-border p-8 rounded-2xl shadow-sm flex flex-col">
-              <p className="text-xs font-bold text-muted-foreground tracking-widest uppercase mb-5">일반 브랜딩 컨설팅</p>
-              <div className="space-y-5 text-sm text-foreground/80 flex-grow">
-                <div><span className="font-bold text-primary">대상</span><p className="mt-1">사업체·창업자</p></div>
-                <div><span className="font-bold text-primary">진단</span><p className="mt-1">시장 분석 중심</p></div>
-                <div><span className="font-bold text-primary">결과물</span><p className="mt-1">로고, 웹사이트</p></div>
-                <div><span className="font-bold text-primary">활용처</span><p className="mt-1">디지털 채널</p></div>
+            <div className="bg-background border border-border p-6 md:p-8 rounded-2xl shadow-sm flex flex-col">
+              <h3 className="text-xl md:text-2xl font-extrabold text-foreground mb-6">일반 브랜딩 컨설팅</h3>
+              <hr className="border-border mb-6" />
+              <div className="space-y-4 md:space-y-5 text-base md:text-lg flex-grow">
+                <div className="grid grid-cols-[60px_1fr] gap-2 items-start">
+                  <span className="font-bold text-foreground shrink-0">대상</span>
+                  <span className="text-foreground leading-relaxed break-keep">사업체·창업자</span>
+                </div>
+                <div className="grid grid-cols-[60px_1fr] gap-2 items-start">
+                  <span className="font-bold text-foreground shrink-0">진단</span>
+                  <span className="text-foreground leading-relaxed break-keep">시장 분석 중심</span>
+                </div>
+                <div className="grid grid-cols-[60px_1fr] gap-2 items-start">
+                  <span className="font-bold text-foreground shrink-0">결과물</span>
+                  <span className="text-foreground leading-relaxed break-keep">로고, 웹사이트</span>
+                </div>
+                <div className="grid grid-cols-[60px_1fr] gap-2 items-start">
+                  <span className="font-bold text-foreground shrink-0">활용처</span>
+                  <span className="text-foreground leading-relaxed break-keep">디지털 채널</span>
+                </div>
               </div>
-              <div className="mt-6 pt-5 border-t border-border">
-                <p className="text-xs text-accent font-bold leading-relaxed break-keep">
+              <div className="mt-8 pt-5 border-t border-border">
+                <p className="text-base md:text-lg text-accent font-bold leading-relaxed break-keep">
                   "한끗은 디자인이 아닙니다."
                 </p>
               </div>
             </div>
 
             {/* 카드 3: 한끗프로젝트 — 강조 */}
-            <div className="bg-primary text-white p-8 rounded-2xl shadow-xl flex flex-col border border-primary-foreground/10">
-              <p className="text-xs font-bold text-white/80 tracking-widest uppercase mb-5">한끗프로젝트</p>
-              <div className="space-y-5 text-sm text-white/90 flex-grow">
-                <div><span className="font-bold text-white">대상</span><p className="mt-1">20~30년 경력 전문가</p></div>
-                <div><span className="font-bold text-white">진단</span><p className="mt-1">개인의 경력 자산 추출 중심</p></div>
-                <div><span className="font-bold text-white">결과물</span><p className="mt-1">프로필, 강의안, 제안서</p></div>
-                <div><span className="font-bold text-white">활용처</span><p className="mt-1">강의·제안·프로필 전 채널</p></div>
+            <div className="bg-primary text-white p-6 md:p-8 rounded-2xl shadow-xl flex flex-col border border-primary-foreground/10">
+              <h3 className="text-xl md:text-2xl font-extrabold text-white mb-6">한끗프로젝트</h3>
+              <hr className="border-white/20 mb-6" />
+              <div className="space-y-4 md:space-y-5 text-base md:text-lg flex-grow">
+                <div className="grid grid-cols-[60px_1fr] gap-2 items-start">
+                  <span className="font-bold text-white shrink-0">대상</span>
+                  <span className="text-white/95 leading-relaxed break-keep">20~30년 경력 전문가</span>
+                </div>
+                <div className="grid grid-cols-[60px_1fr] gap-2 items-start">
+                  <span className="font-bold text-white shrink-0">진단</span>
+                  <span className="text-white/95 leading-relaxed break-keep">개인의 경력 자산 추출 중심</span>
+                </div>
+                <div className="grid grid-cols-[60px_1fr] gap-2 items-start">
+                  <span className="font-bold text-white shrink-0">결과물</span>
+                  <span className="text-white/95 leading-relaxed break-keep">프로필, 강의안, 제안서</span>
+                </div>
+                <div className="grid grid-cols-[60px_1fr] gap-2 items-start">
+                  <span className="font-bold text-white shrink-0">활용처</span>
+                  <span className="text-white/95 leading-relaxed break-keep">강의·제안·프로필 전 채널</span>
+                </div>
               </div>
-              <div className="mt-6 pt-5 border-t border-white/20">
-                <p className="text-xs text-white/80 font-bold leading-relaxed break-keep">
-                  "한끗은 이미 가진 것을 시장 언어로 번역합니다."
+              <div className="mt-8 pt-5 border-t border-white/20">
+                <p className="text-base md:text-lg text-white/90 font-bold leading-relaxed break-keep">
+                  "한끗은 경력을 시장 언어로 번역합니다."
                 </p>
               </div>
             </div>
@@ -119,13 +159,17 @@ export default function Service() {
 
           <div className="space-y-6 max-w-4xl mx-auto">
             {/* 1단계 */}
-            <div className="bg-card border border-border rounded-3xl p-8 md:p-10 shadow-sm">
+            <div className="bg-card border border-border rounded-3xl p-8 md:p-10 shadow-sm hover:shadow-md transition-shadow">
               <div className="grid md:grid-cols-[100px_1fr] gap-6 items-start">
-                <span className="font-serif text-5xl md:text-6xl text-accent/30 font-bold leading-none">01</span>
+                <span className="font-serif text-6xl md:text-7xl text-accent/30 font-bold leading-none">01</span>
                 <div>
-                  <h3 className="font-serif text-xl md:text-2xl text-primary mb-2">추출 <span className="text-muted-foreground text-base font-normal">Extraction</span></h3>
-                  <p className="text-accent font-bold text-sm mb-4">경력에서 시장이 원할 만한 것을 골라냅니다.</p>
-                  <p className="text-foreground/70 leading-relaxed break-keep">
+                  <h3 className="font-serif text-3xl md:text-4xl font-extrabold text-primary mb-2">
+                    추출 <span className="text-muted-foreground text-base md:text-lg font-normal ml-1">Extraction</span>
+                  </h3>
+                  <p className="text-accent font-extrabold text-lg md:text-xl mb-4 leading-normal">
+                    경력에서 시장이 원할 만한 것을 골라냅니다.
+                  </p>
+                  <p className="text-base md:text-lg text-foreground/90 font-medium leading-relaxed break-keep">
                     30년 경력 안에는 수백 가지 경험이 쌓여 있습니다.
                     그 중에서 시장이 돈을 낼 만한 핵심을 골라내는 것이 첫 단계입니다.
                     '무엇을 했는가'가 아니라 '무엇을 줄 수 있는가'의 관점으로 재정렬합니다.
@@ -135,13 +179,17 @@ export default function Service() {
             </div>
 
             {/* 2단계 */}
-            <div className="bg-card border border-border rounded-3xl p-8 md:p-10 shadow-sm">
+            <div className="bg-card border border-border rounded-3xl p-8 md:p-10 shadow-sm hover:shadow-md transition-shadow">
               <div className="grid md:grid-cols-[100px_1fr] gap-6 items-start">
-                <span className="font-serif text-5xl md:text-6xl text-accent/30 font-bold leading-none">02</span>
+                <span className="font-serif text-6xl md:text-7xl text-accent/30 font-bold leading-none">02</span>
                 <div>
-                  <h3 className="font-serif text-xl md:text-2xl text-primary mb-2">번역 <span className="text-muted-foreground text-base font-normal">Translation</span></h3>
-                  <p className="text-accent font-bold text-sm mb-4">전문가 언어를 고객 언어로 옮깁니다.</p>
-                  <p className="text-foreground/70 leading-relaxed break-keep">
+                  <h3 className="font-serif text-3xl md:text-4xl font-extrabold text-primary mb-2">
+                    번역 <span className="text-muted-foreground text-base md:text-lg font-normal ml-1">Translation</span>
+                  </h3>
+                  <p className="text-accent font-extrabold text-lg md:text-xl mb-4 leading-normal">
+                    전문가 언어를 고객 언어로 옮깁니다.
+                  </p>
+                  <p className="text-base md:text-lg text-foreground/90 font-medium leading-relaxed break-keep">
                     회사 내부에서 통했던 직함과 KPI 언어는 외부 시장에서는 통하지 않습니다.
                     '30년 차 임원'이 아니라 '어떤 문제를 어떻게 해결해주는 사람'으로 다시 정의합니다.
                     이 번역의 결과가 바로 프로필 한 문장이고, 강의 제목이며, 제안서 첫 페이지입니다.
@@ -151,13 +199,17 @@ export default function Service() {
             </div>
 
             {/* 3단계 */}
-            <div className="bg-card border border-border rounded-3xl p-8 md:p-10 shadow-sm">
+            <div className="bg-card border border-border rounded-3xl p-8 md:p-10 shadow-sm hover:shadow-md transition-shadow">
               <div className="grid md:grid-cols-[100px_1fr] gap-6 items-start">
-                <span className="font-serif text-5xl md:text-6xl text-accent/30 font-bold leading-none">03</span>
+                <span className="font-serif text-6xl md:text-7xl text-accent/30 font-bold leading-none">03</span>
                 <div>
-                  <h3 className="font-serif text-xl md:text-2xl text-primary mb-2">자산화 <span className="text-muted-foreground text-base font-normal">Asset-building</span></h3>
-                  <p className="text-accent font-bold text-sm mb-4">한 번 만들면 계속 쓸 수 있는 형태로 만듭니다.</p>
-                  <p className="text-foreground/70 leading-relaxed break-keep">
+                  <h3 className="font-serif text-3xl md:text-4xl font-extrabold text-primary mb-2">
+                    자산화 <span className="text-muted-foreground text-base md:text-lg font-normal ml-1">Asset-building</span>
+                  </h3>
+                  <p className="text-accent font-extrabold text-lg md:text-xl mb-4 leading-normal">
+                    한 번 만들면 계속 쓸 수 있는 형태로 만듭니다.
+                  </p>
+                  <p className="text-base md:text-lg text-foreground/90 font-medium leading-relaxed break-keep">
                     PPT 한 번 만들고 끝이 아닙니다.
                     강의안은 주제 변경에 맞춰 변형 가능한 모듈로,
                     제안서는 다양한 클라이언트에 맞게 조정 가능한 템플릿으로,
@@ -176,10 +228,12 @@ export default function Service() {
           <div className="text-center mb-16">
             <NumberedLabel number="03">산출물</NumberedLabel>
             <h2 className="font-serif text-3xl md:text-4xl text-primary leading-snug mt-4 mb-6">
-              한끗을 마치면 손에 쥐는 것.
+              한끗을 마치면 <br />
+              손에 쥐는 것.
             </h2>
             <p className="text-foreground/70 text-lg max-w-2xl mx-auto">
-              한끗 빌드 6주 종료 시 모두 편집 가능한 원본 파일로 제공됩니다.
+              한끗 빌드 6주 종료 시 모두 편집 가능한 <br />
+              원본 파일로 제공됩니다.
             </p>
           </div>
 
@@ -192,10 +246,10 @@ export default function Service() {
               { n: "05", title: "채널 전략 가이드", desc: "어디서 시작할지, 어떤 콘텐츠를 만들지에 대한 로드맵. 온라인·오프라인 모두 다룹니다." },
               { n: "06", title: "소개 멘트 30초·60초", desc: "BNI·CEO 모임·강의 후 인사 등 다양한 자리에서 사용할 30초 / 60초 / 90초 자기소개 스크립트." },
             ].map((d) => (
-              <div key={d.n} className="bg-background border border-border p-8 rounded-2xl shadow-sm">
-                <p className="font-mono text-xs text-accent font-bold">D{d.n}</p>
-                <h3 className="font-serif text-lg text-primary mt-3 mb-3 leading-snug">{d.title}</h3>
-                <p className="text-foreground/70 text-sm leading-relaxed break-keep">{d.desc}</p>
+              <div key={d.n} className="bg-background border border-border p-6 md:p-8 rounded-2xl shadow-sm">
+                <p className="font-mono text-sm md:text-base text-accent font-bold">D{d.n}</p>
+                <h3 className="font-serif text-2xl md:text-3xl font-extrabold text-primary mt-3 mb-4 leading-snug">{d.title}</h3>
+                <p className="text-base md:text-lg text-foreground/80 leading-relaxed break-keep">{d.desc}</p>
               </div>
             ))}
           </div>
@@ -208,7 +262,8 @@ export default function Service() {
           <div className="text-center mb-16">
             <NumberedLabel number="04">신뢰</NumberedLabel>
             <h2 className="font-serif text-3xl md:text-4xl text-primary leading-snug mt-4 mb-6">
-              30년 동안 이 일만 해왔습니다.
+              30년 동안 <br />
+              이 일만 해왔습니다.
             </h2>
             <p className="text-foreground/70 text-lg max-w-2xl mx-auto">
               꿈몰다 이화진 대표의 현장 경험이 한끗프로젝트의 기반입니다.
@@ -268,7 +323,9 @@ export default function Service() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/20 to-transparent -z-10" />
         <div className="container-prose relative z-10">
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl leading-snug mb-6 max-w-3xl mx-auto">
-            준비가 되셨다면,<br />내 경력의 가치부터 확인해 보세요.
+            준비가 되셨다면,<br />
+            내 경력의 가치부터<br />
+            확인해 보세요.
           </h2>
           <p className="text-lg md:text-xl text-primary-foreground/80 mb-12 max-w-2xl mx-auto leading-relaxed font-medium break-keep">
             30년의 경험이 시장에서 어떤 자산이 될 수 있는지,<br className="hidden md:block" />

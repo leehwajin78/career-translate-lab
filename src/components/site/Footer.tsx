@@ -6,17 +6,13 @@ export default function Footer() {
         {/* 좌측 정보 영역 */}
         <div className="space-y-4">
           <p className="text-lg md:text-xl font-bold">꿈몰다 | 한끗프로젝트</p>
-          <div className="space-y-0.5 text-[#0123b4]/80 text-sm break-keep leading-tight">
-            <p>
-              전화. 070-4090-2161 <span className="mx-1.5 opacity-50">|</span> 
-              메일. kkummolda@kkummolda.com <span className="mx-1.5 opacity-50">|</span> 
-              주소. 화성시 동탄대로 683 SH스퀘어2, 312호
-            </p>
-            <p>
-              사업자등록번호. 133-13-04664 <span className="mx-1.5 opacity-50">|</span> 
-              통신판매업 신고번호. 제 2022-수원영통-0965호
-            </p>
-            <p>
+          <div className="space-y-1 text-[#0123b4]/80 text-sm break-keep leading-relaxed">
+            <p>전화. 070-4090-2161</p>
+            <p>메일. kkummolda@kkummolda.com</p>
+            <p>주소. 화성시 동탄대로 683 SH스퀘어2, 312호</p>
+            <p>사업자등록번호. 133-13-04664</p>
+            <p>통신판매업 신고번호. 제 2022-수원영통-0965호</p>
+            <p className="pt-3 text-[#0123b4]/60 text-xs">
               Copyright © 2021 kkummolda All rights reserved
             </p>
           </div>
