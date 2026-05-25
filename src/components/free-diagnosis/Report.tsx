@@ -181,15 +181,23 @@ export default function Report({ onSendEmail }: Props) {
             <div className="locked-content">
               <p className="text-foreground leading-relaxed">{result.locked.oneLiner}</p>
             </div>
-            <div className="locked-overlay bg-background/60">
-              <Lock size={32} className="text-accent" />
-              <p className="font-bold text-primary text-sm">한끗 진단에서만 완성됩니다</p>
-              <Link
-                to="/consultation"
-                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-full text-sm font-bold hover:bg-primary/90 transition-colors mt-2"
-              >
-                한끗 진단 신청하기
-              </Link>
+            <div className="locked-overlay bg-background/60 p-4 text-center">
+              <Lock size={32} className="text-accent mb-2" />
+              <p className="font-bold text-primary text-sm mb-3">1:1 무료 해석 상담 또는 정식 진단에서 해제됩니다</p>
+              <div className="flex flex-wrap gap-2 justify-center">
+                <Link
+                  to="/consultation?type=free"
+                  className="bg-accent text-white px-5 py-2.5 rounded-full text-xs font-bold hover:bg-accent/90 transition-colors shadow-sm"
+                >
+                  30분 무료 해석 상담 신청
+                </Link>
+                <Link
+                  to="/consultation?type=paid"
+                  className="bg-primary text-primary-foreground px-5 py-2.5 rounded-full text-xs font-bold hover:bg-primary/90 transition-colors shadow-sm"
+                >
+                  정식 한끗 진단 신청 (유료)
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -205,15 +213,23 @@ export default function Report({ onSendEmail }: Props) {
             <div className="locked-content">
               <p className="text-foreground leading-relaxed">{result.locked.persona}</p>
             </div>
-            <div className="locked-overlay bg-background/60">
-              <Lock size={32} className="text-accent" />
-              <p className="font-bold text-primary text-sm">한끗 진단에서만 완성됩니다</p>
-              <Link
-                to="/consultation"
-                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-full text-sm font-bold hover:bg-primary/90 transition-colors mt-2"
-              >
-                한끗 진단 신청하기
-              </Link>
+            <div className="locked-overlay bg-background/60 p-4 text-center">
+              <Lock size={32} className="text-accent mb-2" />
+              <p className="font-bold text-primary text-sm mb-3">1:1 무료 해석 상담 또는 정식 진단에서 해제됩니다</p>
+              <div className="flex flex-wrap gap-2 justify-center">
+                <Link
+                  to="/consultation?type=free"
+                  className="bg-accent text-white px-5 py-2.5 rounded-full text-xs font-bold hover:bg-accent/90 transition-colors shadow-sm"
+                >
+                  30분 무료 해석 상담 신청
+                </Link>
+                <Link
+                  to="/consultation?type=paid"
+                  className="bg-primary text-primary-foreground px-5 py-2.5 rounded-full text-xs font-bold hover:bg-primary/90 transition-colors shadow-sm"
+                >
+                  정식 한끗 진단 신청 (유료)
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -230,16 +246,22 @@ export default function Report({ onSendEmail }: Props) {
           <p className="mt-6 text-primary-foreground/80 text-lg max-w-2xl mx-auto leading-relaxed">
             브랜드 원라이너, 고객 페르소나, 핵심 메시지 — 한끗 코칭에서 완성합니다.
           </p>
-          <div className="mt-10 flex flex-wrap justify-center gap-4">
+          <div className="mt-10 flex flex-wrap justify-center items-center gap-4 max-w-3xl mx-auto">
             <Link
-              to="/consultation"
-              className="inline-flex items-center gap-2 bg-white text-primary px-8 py-4 rounded-full text-base font-bold hover:bg-white/90 transition-colors shadow-lg"
+              to="/consultation?type=free"
+              className="inline-flex items-center justify-center bg-accent text-white px-6 py-3.5 rounded-full text-sm md:text-base font-bold hover:bg-accent/90 transition-colors shadow-lg hover:scale-105 transition-transform whitespace-nowrap shrink-0"
             >
-              한끗 진단 신청하기
+              30분 무료 해석 상담 신청
+            </Link>
+            <Link
+              to="/consultation?type=paid"
+              className="inline-flex items-center justify-center bg-white text-primary px-6 py-3.5 rounded-full text-sm md:text-base font-bold hover:bg-white/90 transition-colors shadow-lg hover:scale-105 transition-transform border-2 border-white/20 whitespace-nowrap shrink-0"
+            >
+              정식 한끗 진단 신청 (유료)
             </Link>
             <button
               onClick={onSendEmail}
-              className="inline-flex items-center gap-2 border border-primary-foreground/30 text-primary-foreground px-8 py-4 rounded-full text-base hover:bg-primary-foreground/10 transition-colors"
+              className="inline-flex items-center justify-center border border-primary-foreground/30 text-primary-foreground px-6 py-3.5 rounded-full text-sm md:text-base hover:bg-primary-foreground/10 transition-colors whitespace-nowrap shrink-0"
             >
               레포트 이메일로 받기
             </button>

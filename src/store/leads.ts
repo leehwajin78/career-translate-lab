@@ -32,8 +32,15 @@ export interface Lead {
   outcomes: string[];
   channel: string;
   diagnosticScore?: number;
-  diagnosticType?: DiagnosisType;
-  recommendedPackage?: PackageKey;
+  diagnosticType?: string;
+  recommendedPackage?: string;
+  answers?: Record<string, string>;
+  scores?: {
+    identity: number;
+    strengths: number;
+    target: number;
+    differentiation: number;
+  };
   status: LeadStatus;
   memo: string;
 }
