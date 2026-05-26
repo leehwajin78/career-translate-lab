@@ -56,7 +56,7 @@ export default function Service() {
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {/* 카드 1: 강사 양성 과정 */}
             <div className="bg-background border border-border p-6 md:p-8 rounded-2xl shadow-sm flex flex-col">
-              <h3 className="text-xl md:text-2xl font-extrabold text-foreground mb-6">강사 양성 과정</h3>
+              <h3 className="text-2xl md:text-3xl font-extrabold text-foreground mb-6 tracking-tight break-keep leading-tight">강사 양성 과정</h3>
               <hr className="border-border mb-6" />
               <div className="space-y-4 md:space-y-5 text-base md:text-lg flex-grow">
                 <div className="grid grid-cols-[60px_1fr] gap-2 items-start">
@@ -85,7 +85,7 @@ export default function Service() {
 
             {/* 카드 2: 일반 브랜딩 컨설팅 */}
             <div className="bg-background border border-border p-6 md:p-8 rounded-2xl shadow-sm flex flex-col">
-              <h3 className="text-xl md:text-2xl font-extrabold text-foreground mb-6">일반 브랜딩 컨설팅</h3>
+              <h3 className="text-2xl md:text-3xl font-extrabold text-foreground mb-6 tracking-tight break-keep leading-tight">일반 브랜딩 컨설팅</h3>
               <hr className="border-border mb-6" />
               <div className="space-y-4 md:space-y-5 text-base md:text-lg flex-grow">
                 <div className="grid grid-cols-[60px_1fr] gap-2 items-start">
@@ -114,7 +114,7 @@ export default function Service() {
 
             {/* 카드 3: 한끗프로젝트 — 강조 */}
             <div className="bg-primary text-white p-6 md:p-8 rounded-2xl shadow-xl flex flex-col border border-primary-foreground/10">
-              <h3 className="text-xl md:text-2xl font-extrabold text-white mb-6">한끗프로젝트</h3>
+              <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-6 tracking-tight break-keep leading-tight">한끗프로젝트</h3>
               <hr className="border-white/20 mb-6" />
               <div className="space-y-4 md:space-y-5 text-base md:text-lg flex-grow">
                 <div className="grid grid-cols-[60px_1fr] gap-2 items-start">
