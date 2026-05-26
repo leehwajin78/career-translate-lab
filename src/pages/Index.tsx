@@ -134,9 +134,9 @@ export default function Index() {
               <div className="w-16 h-16 bg-muted-foreground/10 rounded-full flex items-center justify-center text-muted-foreground mb-6">
                 <Clock size={32} />
               </div>
-              <h3 className="font-bold text-primary text-lg mb-2">혼자 준비할 때</h3>
-              <p className="text-2xl font-serif font-bold text-muted-foreground mb-4">6개월 이상 <span className="text-sm font-normal">(24주~)</span></p>
-              <p className="text-foreground/70 text-sm leading-relaxed break-keep">
+              <h3 className="font-extrabold text-muted-foreground text-xl md:text-2xl mb-2 tracking-tight break-keep">혼자 준비할 때</h3>
+              <p className="text-2xl md:text-3xl font-serif font-extrabold text-muted-foreground mb-4 tracking-tight break-keep">6개월 이상 <span className="text-sm md:text-base font-normal">(24주~)</span></p>
+              <p className="text-foreground/85 text-base md:text-lg leading-relaxed break-keep font-medium">
                 무엇부터 시작할지 막막한 채<br />
                 시행착오를 반복하는 시간입니다.<br />
                 시작도 끝도 보이지 않습니다.
@@ -148,9 +148,9 @@ export default function Index() {
               <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center text-accent mb-6">
                 <ArrowRightLeft size={32} />
               </div>
-              <h3 className="font-bold text-primary text-lg mb-2">한끗과 함께</h3>
-              <p className="text-2xl font-serif font-bold text-accent mb-4">6주 <span className="text-sm font-normal text-primary">(핵심 자산 완성)</span></p>
-              <p className="text-foreground/70 text-sm leading-relaxed break-keep">
+              <h3 className="font-extrabold text-primary text-xl md:text-2xl mb-2 tracking-tight break-keep">한끗과 함께</h3>
+              <p className="text-2xl md:text-3xl font-serif font-extrabold text-accent mb-4 tracking-tight break-keep">6주 <span className="text-sm md:text-base font-normal text-primary">(핵심 자산 완성)</span></p>
+              <p className="text-foreground/85 text-base md:text-lg leading-relaxed break-keep font-medium">
                 1주 진단으로 방향을 잡고,<br />
                 6주 빌드로 강의안·제안서·프로필을<br />
                 손에 쥐고 시장으로 나갑니다.
@@ -162,9 +162,9 @@ export default function Index() {
               <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center text-red-400 mb-6">
                 <AlertTriangle size={32} />
               </div>
-              <h3 className="font-bold text-primary text-lg mb-2">가장 큰 손실</h3>
-              <p className="text-2xl font-serif font-bold text-red-400 mb-4">시작하지 못한 시간</p>
-              <p className="text-foreground/70 text-sm leading-relaxed break-keep">
+              <h3 className="font-extrabold text-red-400 text-xl md:text-2xl mb-2 tracking-tight break-keep">가장 큰 손실</h3>
+              <p className="text-2xl md:text-3xl font-serif font-extrabold text-red-400 mb-4 tracking-tight break-keep">시작하지 못한 시간</p>
+              <p className="text-foreground/85 text-base md:text-lg leading-relaxed break-keep font-medium">
                 가장 위험한 것은 끔찍하게 바쁘게,<br />
                 아무것도 시작하지 못한 시간입니다.<br />
                 오늘이 가장 빠른 날입니다.
