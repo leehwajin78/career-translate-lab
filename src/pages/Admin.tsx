@@ -22,9 +22,61 @@ const PRODUCT_LABELS: Record<string, string> = {
   partner: "한끗 파트너 (월 100만원)",
 };
 
+const getApplyCategory = (lead: any) => {
+  const outcomes = lead.outcomes || [];
+  const memo = lead.memo || "";
+  
+  if (outcomes.includes("한끗 파트너") || memo.includes("한끗 파트너") || memo.includes("apply-partner")) {
+    return {
+      label: "한끗 파트너",
+      className: "bg-emerald-50 text-emerald-700 border border-emerald-200",
+    };
+  }
+  if (outcomes.includes("한끗 론칭") || memo.includes("한끗 론칭") || memo.includes("apply-launch")) {
+    return {
+      label: "한끗 론칭",
+      className: "bg-rose-50 text-rose-700 border border-rose-200",
+    };
+  }
+  if (outcomes.includes("한끗 빌드") || memo.includes("한끗 빌드") || memo.includes("apply-build")) {
+    return {
+      label: "한끗 빌드",
+      className: "bg-amber-50 text-amber-700 border border-amber-200",
+    };
+  }
+  if (
+    outcomes.includes("한끗 진단") || 
+    memo.includes("한끗 진단") || 
+    memo.includes("정식 유료 진단") || 
+    memo.includes("apply-diagnosis")
+  ) {
+    return {
+      label: "한끗 진단",
+      className: "bg-blue-50 text-blue-700 border border-blue-200",
+    };
+  }
+  
+  return {
+    label: "무료상담",
+    className: "bg-purple-50 text-purple-700 border border-purple-200",
+  };
+};
+
 export default function Admin() {
   const { leads, updateStatus, updateMemo } = useLeadsStore();
   const [expandedLeadId, setExpandedLeadId] = useState<string | null>(null);
+  const [categoryFilter, setCategoryFilter] = useState<string>("all");
+
+  const filteredLeads = leads.filter((l) => {
+    if (categoryFilter === "all") return true;
+    const cat = getApplyCategory(l);
+    if (categoryFilter === "free") return cat.label === "무료상담";
+    if (categoryFilter === "diagnosis") return cat.label === "한끗 진단";
+    if (categoryFilter === "build") return cat.label === "한끗 빌드";
+    if (categoryFilter === "launch") return cat.label === "한끗 론칭";
+    if (categoryFilter === "partner") return cat.label === "한끗 파트너";
+    return true;
+  });
 
   // Auth & Coaching stores
   const members = useAuthStore((s) => s.members);
@@ -180,9 +232,43 @@ ${member.name}님의 나다운 브랜딩 코칭을 위한 멤버 전용 계정�
 
           {/* 1. Leads Management Tab */}
           <TabsContent value="leads" className="space-y-4">
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-center mb-2">
               <h2 className="text-xl font-bold text-primary font-serif">상담 신청 리드 관리</h2>
-              <p className="text-xs text-muted-foreground">총 {leads.length}건의 리드가 존재합니다.</p>
+              <p className="text-xs text-muted-foreground">
+                {categoryFilter !== "all"
+                  ? `필터 검색 결과: ${filteredLeads.length}건 (전체 ${leads.length}건)`
+                  : `총 ${leads.length}건의 리드가 존재합니다.`}
+              </p>
+            </div>
+
+            {/* Category Filter Pills */}
+            <div className="flex flex-wrap gap-2 mb-4 bg-secondary/15 p-2 rounded-xl border border-border/60">
+              {[
+                { key: "all", label: "전체", count: leads.length },
+                { key: "free", label: "무료상담", count: leads.filter(l => getApplyCategory(l).label === "무료상담").length },
+                { key: "diagnosis", label: "한끗 진단", count: leads.filter(l => getApplyCategory(l).label === "한끗 진단").length },
+                { key: "build", label: "한끗 빌드", count: leads.filter(l => getApplyCategory(l).label === "한끗 빌드").length },
+                { key: "launch", label: "한끗 론칭", count: leads.filter(l => getApplyCategory(l).label === "한끗 론칭").length },
+                { key: "partner", label: "한끗 파트너", count: leads.filter(l => getApplyCategory(l).label === "한끗 파트너").length },
+              ].map((item) => (
+                <button
+                  key={item.key}
+                  type="button"
+                  onClick={() => setCategoryFilter(item.key)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                    categoryFilter === item.key
+                      ? "bg-primary text-white shadow-soft"
+                      : "hover:bg-secondary/40 text-muted-foreground"
+                  }`}
+                >
+                  <span>{item.label}</span>
+                  <span className={`font-mono text-[10px] rounded-full px-1.5 ${
+                    categoryFilter === item.key ? "bg-white/20 text-white" : "bg-secondary text-muted-foreground"
+                  }`}>
+                    {item.count}
+                  </span>
+                </button>
+              ))}
             </div>
 
             <div className="overflow-x-auto border border-border rounded-[var(--radius)] bg-card shadow-soft">
@@ -195,6 +281,7 @@ ${member.name}님의 나다운 브랜딩 코칭을 위한 멤버 전용 계정�
                   <thead className="bg-secondary/60 text-xs tracking-widest text-muted-foreground">
                     <tr className="text-left border-b border-border">
                       <th className="px-4 py-3 font-medium">이름</th>
+                      <th className="px-4 py-3 font-medium">신청 구분</th>
                       <th className="px-4 py-3 font-medium">연락처</th>
                       <th className="px-4 py-3 font-medium">점수</th>
                       <th className="px-4 py-3 font-medium">진단 유형</th>
@@ -206,12 +293,29 @@ ${member.name}님의 나다운 브랜딩 코칭을 위한 멤버 전용 계정�
                     </tr>
                   </thead>
                   <tbody>
-                    {leads.map((l) => (
-                      <React.Fragment key={l.id}>
+                    {filteredLeads.length === 0 ? (
+                      <tr>
+                        <td colSpan={10} className="p-16 text-center text-muted-foreground text-xs italic">
+                          해당 신청 구분에 접수된 리드가 존재하지 않습니다.
+                        </td>
+                      </tr>
+                    ) : (
+                      filteredLeads.map((l) => (
+                        <React.Fragment key={l.id}>
                         <tr className="border-t border-border align-top">
                           <td className="px-4 py-4">
                             <p className="font-medium text-primary">{l.name}</p>
                             <p className="text-xs text-muted-foreground">{l.field}</p>
+                          </td>
+                          <td className="px-4 py-4">
+                            {(() => {
+                              const cat = getApplyCategory(l);
+                              return (
+                                <span className={`inline-flex items-center text-[10px] font-bold px-2.5 py-0.5 rounded-full ${cat.className}`}>
+                                  {cat.label}
+                                </span>
+                              );
+                            })()}
                           </td>
                           <td className="px-4 py-4">
                             <p>{l.phone}</p>
@@ -257,7 +361,7 @@ ${member.name}님의 나다운 브랜딩 코칭을 위한 멤버 전용 계정�
                         </tr>
                         {expandedLeadId === l.id && (
                           <tr className="bg-secondary/15 border-t border-border">
-                            <td colSpan={9} className="px-6 py-6 text-foreground">
+                            <td colSpan={10} className="px-6 py-6 text-foreground">
                               <div className="grid gap-6 md:grid-cols-2">
                                 {/* 1. 영역별 자산 점수 및 요구사항 */}
                                 <div>
@@ -312,7 +416,8 @@ ${member.name}님의 나다운 브랜딩 코칭을 위한 멤버 전용 계정�
                           </tr>
                         )}
                       </React.Fragment>
-                    ))}
+                    ))
+                  )}
                   </tbody>
                 </table>
               )}
