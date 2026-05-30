@@ -259,6 +259,100 @@ export const CAREER_YEAR_OPTIONS = [
 
 export type FreeDiagnosisType = "explorer" | "preparer" | "transitioner" | "executor";
 
+// ─── 신청 페이지 상품 데이터 ────────────────────────────────
+
+export type ApplyProductKey = "diagnosis" | "build" | "launch" | "partner";
+
+export interface ApplyProduct {
+  key: ApplyProductKey;
+  step: string;
+  stepLabel: string;
+  name: string;
+  price: string;
+  pricePrefix?: string;
+  priceSuffix: string;
+  duration: string;
+  tagline: string;
+  includes: string[];
+  formName: string;
+}
+
+export const APPLY_PRODUCTS: Record<ApplyProductKey, ApplyProduct> = {
+  diagnosis: {
+    key: "diagnosis",
+    step: "STEP 1",
+    stepLabel: "시작은 여기서",
+    name: "한끗 진단",
+    price: "500,000",
+    priceSuffix: "원",
+    duration: "부가세 별도 · 1주",
+    tagline: "내 경력이 시장에서 어디에 서 있는지 명확하게 진단합니다",
+    includes: [
+      "1:1 인터뷰 60분",
+      "경력 자산 진단 리포트 A4 3~5장",
+      "자산화 로드맵 1장",
+      "30분 해석 미팅",
+    ],
+    formName: "apply-diagnosis",
+  },
+  build: {
+    key: "build",
+    step: "STEP 2",
+    stepLabel: "핵심 자산 완성",
+    name: "한끗 빌드",
+    price: "3,500,000",
+    priceSuffix: "원",
+    duration: "부가세 별도 · 6주",
+    tagline: "강의안·프로필·제안서를 손에 쥐고 시장으로 나갑니다",
+    includes: [
+      "1:1 심층 인터뷰 2회",
+      "브랜드 메시지 설계",
+      "전문가 프로필 1페이지",
+      "대표 강의안 1개, 60분",
+      "B2B 제안서 템플릿",
+      "채널 전략 가이드",
+      "주 1회 코칭, 총 6회",
+    ],
+    formName: "apply-build",
+  },
+  launch: {
+    key: "launch",
+    step: "STEP 3",
+    stepLabel: "시장 진입",
+    name: "한끗 론칭",
+    price: "7,000,000",
+    priceSuffix: "원",
+    duration: "부가세 별도 · 3개월",
+    tagline: "실제 무대와 수익 기회에 접근하도록 지원합니다",
+    includes: [
+      "한끗 빌드 전체 포함",
+      "강의 리허설·피드백 2회",
+      "온라인 프로필 페이지 제작",
+      "강의·자문 제안처 발굴 및 소개 지원",
+      "3개월 론칭 코칭, 월 2회",
+    ],
+    formName: "apply-launch",
+  },
+  partner: {
+    key: "partner",
+    step: "후속 리테이너",
+    stepLabel: "지속 관리",
+    name: "한끗 파트너",
+    price: "1,000,000",
+    pricePrefix: "월",
+    priceSuffix: "원",
+    duration: "부가세 별도 · 월 단위 (3개월 이상 시 할인)",
+    tagline: "매월 점검하고, 다음 기회를 설계합니다",
+    includes: [
+      "월 2회 코칭",
+      "콘텐츠 리뷰 및 업데이트",
+      "신규 기회 탐색 및 소개 지원",
+      "분기별 브랜드 점검 리포트",
+    ],
+    formName: "apply-partner",
+  },
+};
+
 export const FREE_DIAGNOSIS_TYPES: Record<FreeDiagnosisType, {
   name: string;
   emoji: string;

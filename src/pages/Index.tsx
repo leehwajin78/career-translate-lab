@@ -368,7 +368,7 @@ export default function Index() {
                 <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 자산화 로드맵 1장</li>
                 <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 30분 해석 미팅</li>
               </ul>
-              <Link to="/consultation" className="w-full py-3.5 rounded-xl font-bold bg-accent text-white hover:bg-accent/90 transition-colors shadow-lg text-center text-sm">한끗 진단 신청하기</Link>
+              <Link to="/apply/diagnosis" className="w-full py-3.5 rounded-xl font-bold bg-accent text-white hover:bg-accent/90 transition-colors shadow-lg text-center text-sm">한끗 진단 신청하기</Link>
             </div>
 
             {/* 카드 2: 한끗 빌드 */}
@@ -391,7 +391,7 @@ export default function Index() {
                 <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 채널 전략 가이드</li>
                 <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 주 1회 코칭, 총 6회</li>
               </ul>
-              <Link to="/consultation" className="w-full py-3.5 rounded-xl font-bold border border-border text-primary hover:border-primary transition-colors text-center text-sm">한끗 빌드 신청하기</Link>
+              <Link to="/apply/build" className="w-full py-3.5 rounded-xl font-bold border border-border text-primary hover:border-primary transition-colors text-center text-sm">한끗 빌드 신청하기</Link>
             </div>
 
             {/* 카드 3: 한끗 론칭 */}
@@ -412,7 +412,7 @@ export default function Index() {
                 <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 강의·자문 제안처 발굴 및 소개 지원</li>
                 <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 3개월 론칭 코칭, 월 2회</li>
               </ul>
-              <Link to="/consultation" className="w-full py-3.5 rounded-xl font-bold border border-border text-primary hover:border-primary transition-colors text-center text-sm">한끗 론칭 신청하기</Link>
+              <Link to="/apply/launch" className="w-full py-3.5 rounded-xl font-bold border border-border text-primary hover:border-primary transition-colors text-center text-sm">한끗 론칭 신청하기</Link>
             </div>
 
             {/* 카드 4: 한끗 파트너 */}
@@ -436,7 +436,7 @@ export default function Index() {
                 <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 신규 기회 탐색 및 소개 지원</li>
                 <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 분기별 브랜드 점검 리포트</li>
               </ul>
-              <Link to="/consultation" className="w-full py-3.5 rounded-xl font-bold border border-border text-primary hover:border-primary transition-colors text-center text-sm">한끗 파트너 신청하기</Link>
+              <Link to="/apply/partner" className="w-full py-3.5 rounded-xl font-bold border border-border text-primary hover:border-primary transition-colors text-center text-sm">한끗 파트너 신청하기</Link>
             </div>
 
           </div>

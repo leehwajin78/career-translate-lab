@@ -12,6 +12,11 @@ import Consultation from "./pages/Consultation.tsx";
 import Admin from "./pages/Admin.tsx";
 import Login from "./pages/Login.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import ApplyDiagnosis from "./pages/apply/ApplyDiagnosis.tsx";
+import ApplyBuild from "./pages/apply/ApplyBuild.tsx";
+import ApplyLaunch from "./pages/apply/ApplyLaunch.tsx";
+import ApplyPartner from "./pages/apply/ApplyPartner.tsx";
+import ApplyThankYou from "./pages/apply/ApplyThankYou.tsx";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +35,11 @@ const App = () => (
             <Route path="/consultation" element={<Consultation />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/apply/diagnosis" element={<ApplyDiagnosis />} />
+            <Route path="/apply/build" element={<ApplyBuild />} />
+            <Route path="/apply/launch" element={<ApplyLaunch />} />
+            <Route path="/apply/partner" element={<ApplyPartner />} />
+            <Route path="/apply/thank-you" element={<ApplyThankYou />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
@@ -39,3 +49,4 @@ const App = () => (
 );
 
 export default App;
+
