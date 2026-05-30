@@ -7,6 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import type { ApplyProductKey } from "@/data/content";
 import { APPLY_PRODUCTS } from "@/data/content";
+import { useLeadsStore } from "@/store/leads";
 
 /* ─── 유효성 스키마 ─── */
 
@@ -172,6 +173,29 @@ export default function ApplyForm({ productKey }: ApplyFormProps) {
       });
     } catch {
       /* Netlify가 없는 개발 환경에서는 무시 */
+    }
+
+    /* 로컬 어드민 관리 페이지(/admin)용 리드 추가 */
+    try {
+      const addLead = useLeadsStore.getState().addLead;
+      addLead({
+        name: parsed.data.name,
+        phone: parsed.data.phone,
+        email: parsed.data.email,
+        field: `[신청] ${product.name}`,
+        career: `[시작 희망 시기] ${parsed.data.startTiming}`,
+        purposes: [parsed.data.contactMethod, ...(parsed.data.contactTimes || [])],
+        challenge: parsed.data.situation || "입력 없음",
+        outcomes: [product.name],
+        channel: parsed.data.contactMethod,
+        status: "신규 리드",
+        memo: `[신청 상품: ${product.name}]
+- 연락 편한 방법: ${parsed.data.contactMethod}${parsed.data.kakaoId ? ` (ID: ${parsed.data.kakaoId})` : ""}
+- 연락 편한 시간대: ${(parsed.data.contactTimes as string[]).join(", ")}
+- 세금계산서: ${parsed.data.needInvoice}${parsed.data.needInvoice === "네, 발행이 필요합니다" ? ` (사업자번호: ${parsed.data.bizNumber}, 상호: ${parsed.data.bizName})` : ""}`,
+      });
+    } catch (err) {
+      console.error("Local leads store update failed:", err);
     }
 
     navigate(`/apply/thank-you?product=${productKey}`);
