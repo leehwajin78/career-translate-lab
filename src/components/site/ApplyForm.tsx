@@ -72,11 +72,38 @@ const START_TIMINGS = [
   "아직 정하지 않음",
 ];
 
-/* ─── 컴포넌트 ─── */
+/* ─── 공통 라벨 래퍼 (IME 입력 버그 방지를 위해 컴포넌트 외부로 분리) ─── */
+interface FieldProps {
+  id: string;
+  label: string;
+  required?: boolean;
+  hint?: string;
+  error?: string;
+  children: React.ReactNode;
+}
+
+function Field({ id, label, required, hint, error, children }: FieldProps) {
+  return (
+    <div id={`field-${id}`} className="scroll-mt-24">
+      <label htmlFor={id} className="block text-base font-bold text-foreground mb-1">
+        {label}
+        {required && <span className="text-red-500 ml-0.5">*</span>}
+      </label>
+      {hint && (
+        <p className="text-sm text-foreground/50 mb-2 leading-relaxed break-keep">{hint}</p>
+      )}
+      <div className="mt-1.5">{children}</div>
+      {error && (
+        <p className="mt-1.5 text-sm text-red-500 font-medium">{error}</p>
+      )}
+    </div>
+  );
+}
 
 interface ApplyFormProps {
   productKey: ApplyProductKey;
 }
+
 
 export default function ApplyForm({ productKey }: ApplyFormProps) {
   const navigate = useNavigate();
@@ -150,34 +177,6 @@ export default function ApplyForm({ productKey }: ApplyFormProps) {
     navigate(`/apply/thank-you?product=${productKey}`);
   };
 
-  /* ─── 공통 라벨 래퍼 ─── */
-  const Field = ({
-    id,
-    label,
-    required,
-    hint,
-    children,
-  }: {
-    id: string;
-    label: string;
-    required?: boolean;
-    hint?: string;
-    children: React.ReactNode;
-  }) => (
-    <div id={`field-${id}`} className="scroll-mt-24">
-      <label htmlFor={id} className="block text-base font-bold text-foreground mb-1">
-        {label}
-        {required && <span className="text-red-500 ml-0.5">*</span>}
-      </label>
-      {hint && (
-        <p className="text-sm text-foreground/50 mb-2 leading-relaxed break-keep">{hint}</p>
-      )}
-      <div className="mt-1.5">{children}</div>
-      {errors[id] && (
-        <p className="mt-1.5 text-sm text-red-500 font-medium">{errors[id]}</p>
-      )}
-    </div>
-  );
 
   return (
     <section className="mb-16">
@@ -210,7 +209,7 @@ export default function ApplyForm({ productKey }: ApplyFormProps) {
 
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* 1. 성함 */}
-        <Field id="name" label="성함" required>
+        <Field id="name" label="성함" required error={errors.name}>
           <Input
             id="name"
             value={form.name}
@@ -221,7 +220,7 @@ export default function ApplyForm({ productKey }: ApplyFormProps) {
         </Field>
 
         {/* 2. 연락처 */}
-        <Field id="phone" label="연락처" required>
+        <Field id="phone" label="연락처" required error={errors.phone}>
           <Input
             id="phone"
             type="tel"
@@ -233,7 +232,7 @@ export default function ApplyForm({ productKey }: ApplyFormProps) {
         </Field>
 
         {/* 3. 이메일 */}
-        <Field id="email" label="이메일" required>
+        <Field id="email" label="이메일" required error={errors.email}>
           <Input
             id="email"
             type="email"
@@ -245,7 +244,7 @@ export default function ApplyForm({ productKey }: ApplyFormProps) {
         </Field>
 
         {/* 4. 연락 받기 편한 방법 */}
-        <Field id="contactMethod" label="연락 받기 편한 방법" required>
+        <Field id="contactMethod" label="연락 받기 편한 방법" required error={errors.contactMethod}>
           <RadioGroup
             value={form.contactMethod}
             onValueChange={(v) => update("contactMethod", v)}
@@ -280,7 +279,7 @@ export default function ApplyForm({ productKey }: ApplyFormProps) {
         </Field>
 
         {/* 5. 연락 받기 편한 시간대 */}
-        <Field id="contactTimes" label="연락 받기 편한 시간대" required hint="여러 개 선택 가능합니다">
+        <Field id="contactTimes" label="연락 받기 편한 시간대" required hint="여러 개 선택 가능합니다" error={errors.contactTimes}>
           <div className="grid gap-3 sm:grid-cols-2 mt-1">
             {CONTACT_TIMES.map((t) => (
               <label key={t} className="flex items-center gap-2.5 cursor-pointer text-base">
@@ -299,6 +298,7 @@ export default function ApplyForm({ productKey }: ApplyFormProps) {
           id="situation"
           label="현재 어떤 상황이신지 간단히 알려주세요"
           hint="선택 항목입니다. 미리 알려주시면 더 깊이 있는 상담이 가능합니다."
+          error={errors.situation}
         >
           <Textarea
             id="situation"
@@ -311,7 +311,7 @@ export default function ApplyForm({ productKey }: ApplyFormProps) {
         </Field>
 
         {/* 7. 시작 희망 시기 */}
-        <Field id="startTiming" label="시작 희망 시기" required>
+        <Field id="startTiming" label="시작 희망 시기" required error={errors.startTiming}>
           <RadioGroup
             value={form.startTiming}
             onValueChange={(v) => update("startTiming", v)}
@@ -327,7 +327,7 @@ export default function ApplyForm({ productKey }: ApplyFormProps) {
         </Field>
 
         {/* 8. 세금계산서 발행 */}
-        <Field id="needInvoice" label="세금계산서 발행이 필요하신가요?" required>
+        <Field id="needInvoice" label="세금계산서 발행이 필요하신가요?" required error={errors.needInvoice}>
           <RadioGroup
             value={form.needInvoice}
             onValueChange={(v) => update("needInvoice", v)}
