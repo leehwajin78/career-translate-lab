@@ -1,3 +1,6 @@
+import CoachingDashboard from "./pages/coaching/CoachingDashboard";
+import CoachingQuestions from "./pages/coaching/CoachingQuestions";
+import CoachingReview from "./pages/coaching/CoachingReview";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -40,6 +43,10 @@ const App = () => (
             <Route path="/apply/launch" element={<ApplyLaunch />} />
             <Route path="/apply/partner" element={<ApplyPartner />} />
             <Route path="/apply/thank-you" element={<ApplyThankYou />} />
+            <Route path="/coaching" element={<CoachingDashboard />} />
+            <Route path="/coaching/questions" element={<CoachingQuestions />} />
+            <Route path="/coaching/question" element={<CoachingQuestions />} />
+            <Route path="/coaching/review" element={<CoachingReview />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
