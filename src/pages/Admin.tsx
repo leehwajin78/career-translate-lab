@@ -46,6 +46,13 @@ export default function Admin() {
   const [formSuccess, setFormSuccess] = useState("");
   const [expandedMemberId, setExpandedMemberId] = useState<string | null>(null);
 
+  // State for copy notification
+  const [issuedInfo, setIssuedInfo] = useState<{
+    name: string;
+    email: string;
+    password: string;
+  } | null>(null);
+
   const handleCreateMember = (e: React.FormEvent) => {
     e.preventDefault();
     setFormError("");
@@ -80,6 +87,12 @@ export default function Admin() {
       productKey,
     });
 
+    setIssuedInfo({
+      name: name.trim(),
+      email: email.trim(),
+      password: password.trim(),
+    });
+
     setFormSuccess(`${name}님의 계정이 발급되었습니다.`);
     setNewMember({
       name: "",
@@ -106,6 +119,27 @@ export default function Admin() {
         variant: "destructive",
       });
     }
+  };
+
+  const copyMemberNotice = (member: any) => {
+    const loginUrl = `${window.location.origin}/login`;
+    const message = `안녕하세요 ${member.name}님, 한끗프로젝트입니다.
+
+${member.name}님의 나다운 브랜딩 코칭을 위한 멤버 전용 계정이 다음과 같이 발급되었습니다.
+
+■ 로그인 주소: ${loginUrl}
+■ 로그인 ID (이메일): ${member.email}
+■ 임시 비밀번호: ${member.password}
+
+💡 스마트폰에서 본 메시지의 아이디와 비밀번호를 꾹 눌러 복사하신 후 로그인 창에 차례로 붙여넣으시면 편리하게 접속하실 수 있습니다.
+
+감사합니다.`;
+
+    navigator.clipboard.writeText(message);
+    toast({
+      title: "안내 문구 복사 완료",
+      description: `${member.name}님의 계정 정보 안내문이 복사되었습니다.`,
+    });
   };
 
   return (
@@ -391,6 +425,68 @@ export default function Admin() {
                   </button>
                 </form>
 
+                {issuedInfo && (
+                  <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-xs space-y-3 mt-4">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-emerald-800 flex items-center gap-1">
+                        <CheckCircle className="h-4 w-4" />
+                        발급 완료 및 복사
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setIssuedInfo(null)}
+                        className="text-[10px] text-muted-foreground hover:underline"
+                      >
+                        숨기기
+                      </button>
+                    </div>
+                    
+                    <div className="bg-white p-3 rounded-lg border border-emerald-100 font-mono text-[9px] text-foreground/80 leading-relaxed whitespace-pre-wrap select-all">
+                      {`안녕하세요 ${issuedInfo.name}님, 한끗프로젝트입니다.
+
+${issuedInfo.name}님의 나다운 브랜딩 코칭을 위한 멤버 전용 계정이 다음과 같이 발급되었습니다.
+
+■ 로그인 주소: ${window.location.origin}/login
+■ 로그인 ID (이메일): ${issuedInfo.email}
+■ 임시 비밀번호: ${issuedInfo.password}
+
+💡 스마트폰에서 본 메시지의 아이디와 비밀번호를 꾹 눌러 복사하신 후 로그인 창에 차례로 붙여넣으시면 편리하게 접속하실 수 있습니다.
+
+감사합니다.`}
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const loginUrl = `${window.location.origin}/login`;
+                        const message = `안녕하세요 ${issuedInfo.name}님, 한끗프로젝트입니다.
+
+${issuedInfo.name}님의 나다운 브랜딩 코칭을 위한 멤버 전용 계정이 다음과 같이 발급되었습니다.
+
+■ 로그인 주소: ${loginUrl}
+■ 로그인 ID (이메일): ${issuedInfo.email}
+■ 임시 비밀번호: ${issuedInfo.password}
+
+💡 스마트폰에서 본 메시지의 아이디와 비밀번호를 꾹 눌러 복사하신 후 로그인 창에 차례로 붙여넣으시면 편리하게 접속하실 수 있습니다.
+
+감사합니다.`;
+                        navigator.clipboard.writeText(message);
+                        toast({
+                          title: "안내 문구 복사 완료",
+                          description: `${issuedInfo.name}님께 카카오톡이나 문자로 전송해 보세요!`,
+                        });
+                      }}
+                      className="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold flex items-center justify-center gap-1 transition-colors"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                        <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                      </svg>
+                      카카오톡 안내문 복사
+                    </button>
+                  </div>
+                )}
+
                 <div className="mt-6 pt-5 border-t border-border/80 text-[11px] text-muted-foreground leading-relaxed">
                   <p className="font-semibold text-foreground/80 mb-1">💡 테스트 팁:</p>
                   이메일 ID와 비밀번호를 직접 설정하고 생성한 뒤, <a href="/login" target="_blank" className="text-primary underline font-bold">로그인 페이지</a>에서 로그인하여 고객용 42문항 자가 진단 및 대시보드를 직접 테스트할 수 있습니다.
@@ -467,6 +563,13 @@ export default function Admin() {
                                   )}
                                 </td>
                                 <td className="px-4 py-4 text-right space-x-2">
+                                  <button
+                                    onClick={() => copyMemberNotice(m)}
+                                    className="text-xs font-bold text-emerald-600 hover:underline whitespace-nowrap"
+                                    title="안내문구 복사"
+                                  >
+                                    안내문 복사
+                                  </button>
                                   <button
                                     onClick={() =>
                                       setExpandedMemberId(
