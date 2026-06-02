@@ -44,7 +44,7 @@ export default function Consultation() {
   const typeParam = searchParams.get("type"); // "free" or "paid"
 
   // 자가 무료 진단 스토어에서 결과를 가져옴
-  const { result: freeResult, lead: freeLead, answers: freeAnswers } = useFreeDiagnosticStore();
+  const { result: freeResult, lead: freeLead, answers: freeAnswers, outputAssets: freeOutputAssets } = useFreeDiagnosticStore();
   const result = freeResult;
 
   useEffect(() => {
@@ -135,6 +135,7 @@ export default function Consultation() {
       diagnosticType: result?.typeInfo?.name || result?.type,
       recommendedPackage: typeParam === "paid" ? "positioning" : undefined,
       answers: freeAnswers,
+      outputAssets: freeOutputAssets,
       scores: freeResult?.scores,
       status: "신규 리드",
       memo: typeParam === "paid" ? "[정식 유료 진단 신청 리드]" : "[1:1 무료 해석 상담 신청 리드]",

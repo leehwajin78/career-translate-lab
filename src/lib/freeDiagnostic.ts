@@ -42,6 +42,8 @@ export interface FreeDiagnosticResult {
     oneLiner: string;
     persona: string;
   };
+  outputAssets?: string[];
+  outputAssetScore: number;
 }
 
 // ─── 내부 헬퍼 ────────────────────────────────
@@ -91,7 +93,7 @@ function extractStrengths(text: string | undefined): string[] {
 
 // ─── 메인 분석 함수 ────────────────────────────────
 
-export function analyzeFree(answers: Record<number, string>): FreeDiagnosticResult {
+export function analyzeFree(answers: Record<number, string>, outputAssets?: string[]): FreeDiagnosticResult {
   const q1 = answers[1] ?? "";
   const q2 = answers[2] ?? "";
   const q3 = answers[3] ?? "";
@@ -206,6 +208,11 @@ export function analyzeFree(answers: Record<number, string>): FreeDiagnosticResu
     persona: `이상적 고객 페르소나: ${q5.trim().length > 10 ? q5.trim().slice(0, 80) : "능력은 있지만 방향이 보이지 않는 전문가"}. 이 고객은 당신의 경험에서 가장 큰 가치를 느끼는 사람이며, 한끗 코칭에서 구체적인 접근 전략과 함께 완성됩니다.`,
   };
 
+  const isNoneSelected = !outputAssets || outputAssets.includes("none") || outputAssets.length === 0;
+  const outputAssetScore = isNoneSelected
+    ? 0
+    : Math.max(0, Math.min(100, Math.round((outputAssets.filter(a => a !== "none").length / 5) * 100)));
+
   return {
     totalScore,
     type,
@@ -217,5 +224,7 @@ export function analyzeFree(answers: Record<number, string>): FreeDiagnosticResu
     naturalAuthority,
     gaps,
     locked,
+    outputAssets,
+    outputAssetScore,
   };
 }

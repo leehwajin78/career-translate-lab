@@ -1,6 +1,6 @@
 import { useFreeDiagnosticStore } from "@/store/freeDiagnosticStore";
 import { Link } from "react-router-dom";
-import { Lock, AlertTriangle, Star, Users, Target, Lightbulb, Award } from "lucide-react";
+import { Lock, AlertTriangle, Star, Users, Target, Lightbulb, Award, Check, Minus } from "lucide-react";
 
 interface Props {
   onSendEmail: () => void;
@@ -171,6 +171,59 @@ export default function Report({ onSendEmail }: Props) {
         </div>
       </section>
 
+      {/* ── Section 5.5: 지금 손에 쥔 것 vs 아직 없는 것 ── */}
+      <section className="py-16 bg-background border-t border-b border-border/60">
+        <div className="container-prose max-w-4xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+            <h2 className="font-serif text-2xl md:text-3xl text-primary">
+              지금 손에 쥔 것 vs 아직 없는 것
+            </h2>
+            <div className="bg-accent/10 border border-accent/20 px-4 py-2 rounded-xl text-primary font-bold text-sm">
+              산출물 보유 점수: <span className="font-serif text-lg text-accent">{result.outputAssetScore}</span> / 100점
+            </div>
+          </div>
+
+          <div className="bg-secondary/25 border border-border rounded-2xl p-6 md:p-8 space-y-4">
+            {[
+              { key: "oneliner", label: "한 문장 소개" },
+              { key: "profile", label: "전문가 프로필" },
+              { key: "lecture", label: "대표 강의안" },
+              { key: "proposal", label: "B2B 제안서" },
+              { key: "online", label: "온라인 소개 페이지" }
+            ].map((item) => {
+              const hasAsset = result.outputAssets && result.outputAssets.includes(item.key) && !result.outputAssets.includes("none");
+              return (
+                <div
+                  key={item.key}
+                  className={`flex items-center justify-between p-4 rounded-xl border transition-all ${
+                    hasAsset
+                      ? "bg-background border-accent/30 text-primary"
+                      : "bg-background/40 border-border/60 text-muted-foreground"
+                  }`}
+                >
+                  <span className="text-base font-semibold">{item.label}</span>
+                  <div className="flex items-center gap-2">
+                    {hasAsset ? (
+                      <span className="inline-flex items-center gap-1.5 text-accent text-sm font-bold bg-accent/10 px-3 py-1 rounded-full">
+                        <Check size={14} /> ✓ 보유
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5 text-muted-foreground/70 text-sm bg-secondary/50 px-3 py-1 rounded-full">
+                        <Minus size={14} /> — 아직 없음
+                      </span>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <p className="mt-6 text-sm text-muted-foreground/80 text-center">
+            경력 가치는 충분합니다. 다만 시장이 읽을 형태로 아직 만들어지지 않았습니다.
+          </p>
+        </div>
+      </section>
+
       {/* ── Section 6: 잠금 — 브랜드 원라이너 ── */}
       <section className="editorial-section">
         <div className="container-prose max-w-4xl mx-auto">
@@ -241,10 +294,10 @@ export default function Report({ onSendEmail }: Props) {
           <h2 className="font-serif text-3xl md:text-4xl leading-snug max-w-3xl mx-auto">
             경력 가치는 있습니다.
             <br />
-            아직 언어가 없을 뿐입니다.
+            아직 시장이 읽을 형태가 없을 뿐입니다.
           </h2>
           <p className="mt-6 text-primary-foreground/80 text-lg max-w-2xl mx-auto leading-relaxed">
-            브랜드 원라이너, 고객 페르소나, 핵심 메시지 — 한끗 코칭에서 완성합니다.
+            6주 뒤, 강의안·제안서·프로필을 손에 쥡니다.
           </p>
           <div className="mt-10 flex flex-wrap justify-center items-center gap-4 max-w-3xl mx-auto">
             <Link

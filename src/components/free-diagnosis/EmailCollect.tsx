@@ -60,7 +60,7 @@ export default function EmailCollect({ onNext }: Props) {
           을 찾아서
         </h1>
         <p className="mt-6 text-lg text-foreground/70 leading-relaxed break-keep">
-          단 7개의 질문으로 내 경력의 빛나는 순간과 숨겨진 핵심 자산을 진단해 보세요.
+          단 8개의 질문으로 내 경력의 빛나는 순간과 숨겨진 핵심 자산을 진단해 보세요.
         </p>
 
         {/* Form */}

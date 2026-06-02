@@ -250,7 +250,24 @@ export const FREE_DIAGNOSTIC_QUESTIONS: FreeDiagnosticQuestion[] = [
     placeholder: "예: 경험은 나이가 아니라 관점의 깊이입니다...",
     diagnosticArea: "message",
   },
+  {
+    id: 8,
+    question: "지금 누군가 '강의 한번 해주세요' 또는 '제안서 보내주세요'라고 한다면, 바로 보낼 수 있는 자료를 모두 골라주세요.",
+    hint: "없는 게 정상입니다. 머릿속엔 다 있는데, 아직 꺼낼 형태가 없을 뿐입니다.",
+    placeholder: "",
+    diagnosticArea: "differentiation",
+  },
 ];
+
+export const Q8_OPTIONS = [
+  { key: "oneliner", label: "나를 한 문장으로 소개하는 메시지" },
+  { key: "profile", label: "전문가 프로필 (A4 1장)" },
+  { key: "lecture", label: "대표 강의안" },
+  { key: "proposal", label: "기업·기관에 보낼 B2B 제안서" },
+  { key: "online", label: "온라인에 정리된 소개 페이지" },
+  { key: "none", label: "아직 정리된 자료가 없습니다" },
+];
+
 
 export const CAREER_YEAR_OPTIONS = [
   "5년 미만", "5~10년", "10~15년", "15~20년",

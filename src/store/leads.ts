@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { DiagnosisType, PackageKey } from "@/data/content";
+import { notifyLead } from "@/lib/notifyLead";
 
 export type LeadStatus =
   | "신규 리드"
@@ -35,6 +36,7 @@ export interface Lead {
   diagnosticType?: string;
   recommendedPackage?: string;
   answers?: Record<string, string>;
+  outputAssets?: string[];
   scores?: {
     identity: number;
     strengths: number;
@@ -65,6 +67,13 @@ export const useLeadsStore = create<LeadsState>()(
           ...data,
         };
         set((s) => ({ leads: [lead, ...s.leads] }));
+        
+        // Asynchronously trigger Web3Forms operator email notification.
+        // It runs in the background and gracefully degrades on failure.
+        notifyLead(lead).catch((err) => {
+          console.error("Graceful degradation: operator notification failed.", err);
+        });
+
         return lead;
       },
       updateStatus: (id, status) =>
