@@ -1,6 +1,9 @@
 import CoachingDashboard from "./pages/coaching/CoachingDashboard";
 import CoachingQuestions from "./pages/coaching/CoachingQuestions";
 import CoachingReview from "./pages/coaching/CoachingReview";
+import CoachingAnalyzing from "./pages/coaching/CoachingAnalyzing";
+import CoachingReport from "./pages/coaching/CoachingReport";
+import CoachingWorkspace from "./pages/coaching/CoachingWorkspace";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -47,6 +50,9 @@ const App = () => (
             <Route path="/coaching/questions" element={<CoachingQuestions />} />
             <Route path="/coaching/question" element={<CoachingQuestions />} />
             <Route path="/coaching/review" element={<CoachingReview />} />
+            <Route path="/coaching/analyzing" element={<CoachingAnalyzing />} />
+            <Route path="/coaching/report" element={<CoachingReport />} />
+            <Route path="/coaching/workspace/:memberId" element={<CoachingWorkspace />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

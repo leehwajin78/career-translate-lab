@@ -25,12 +25,11 @@ export default function CoachingReview() {
   const session = getSession(member.id);
   const completedCount = getCompletedCount(member.id);
   const unansweredCount = TOTAL_QUESTIONS - completedCount;
-  const isSubmitted = session.status === "submitted";
+  const isSubmitted = session.status !== "in-progress";
 
   const handleSubmit = () => {
-    submit(member.id);
     setShowConfirm(false);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    navigate("/coaching/analyzing");
   };
 
   const goToQuestion = (id: number) => {
@@ -38,39 +37,10 @@ export default function CoachingReview() {
     navigate("/coaching/questions");
   };
 
-  // 제출 완료 화면
+  // 이미 제출된 상태라면 대시보드로 이동
   if (isSubmitted) {
-    return (
-      <div className="container-prose py-20 md:py-32 fade-in">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="w-20 h-20 rounded-full bg-emerald-50 flex items-center justify-center mx-auto mb-6">
-            <CheckCircle2 size={40} className="text-emerald-600" />
-          </div>
-          <h1 className="font-serif text-3xl md:text-4xl text-[#1E2D8C] mb-4">
-            응답이 제출되었습니다
-          </h1>
-          <p className="text-base text-foreground/60 leading-relaxed mb-8 break-keep">
-            {member.name}님의 42문항 응답이 운영자에게 전달되었습니다.
-            <br />
-            운영자가 검토 후 1:1 인터뷰 일정을 안내드리겠습니다.
-          </p>
-          {session.submittedAt && (
-            <p className="text-sm text-foreground/40 mb-8">
-              제출 시각:{" "}
-              {new Date(session.submittedAt).toLocaleString("ko-KR")}
-            </p>
-          )}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Link
-              to="/coaching"
-              className="bg-[#1E2D8C] text-white px-8 py-4 rounded-2xl font-bold text-base hover:bg-[#1E2D8C]/90 transition-all shadow-lg"
-            >
-              대시보드로 돌아가기
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
+    navigate("/coaching");
+    return null;
   }
 
   return (

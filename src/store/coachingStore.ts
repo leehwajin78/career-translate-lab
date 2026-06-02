@@ -24,29 +24,58 @@ export interface QuestionAnswer {
   updatedAt: string;
 }
 
-export type SubmissionStatus = "in-progress" | "submitted";
+export type SubmissionStatus = "in-progress" | "submitted" | "analyzing" | "analyzed" | "finalized";
+
+export interface AIDraft {
+  brandProfile: {
+    oneLiner: string;
+    coreValues: string[];
+    strengthStatement: string;
+    targetPersona: string;
+    brandStory: string;
+    coreMessage: string;
+    channelStrategy: string;
+    brandWhy: string;
+  };
+  questionInsights: {
+    questionId: number;
+    matchedPattern: string;
+    brandingSignal: string;
+    coachingMessage: string;
+    profileConnection: string;
+  }[];
+}
+
+export interface FinalProfile {
+  oneLiner: string;
+  coreValues: string[];
+  strengthStatement: string;
+  targetPersona: string;
+  brandStory: string;
+  coreMessage: string;
+  channelStrategy: string;
+  brandWhy: string;
+  coachComment?: string;
+}
+
+interface CoachingSession {
+  answers: Record<number, QuestionAnswer>;
+  currentQuestion: number;
+  status: SubmissionStatus;
+  lastSavedAt: string;
+  submittedAt?: string;
+  aiDraft?: AIDraft;
+  finalProfile?: FinalProfile;
+  coachNotes?: Record<number, string>;
+  finalizedAt?: string;
+}
 
 interface CoachingState {
   /** 멤버 ID → 응답 데이터 매핑 */
-  responses: Record<
-    string,
-    {
-      answers: Record<number, QuestionAnswer>;
-      currentQuestion: number;
-      status: SubmissionStatus;
-      lastSavedAt: string;
-      submittedAt?: string;
-    }
-  >;
+  responses: Record<string, CoachingSession>;
 
   /** 특정 멤버의 응답 데이터 가져오기 (없으면 초기화) */
-  getSession: (memberId: string) => {
-    answers: Record<number, QuestionAnswer>;
-    currentQuestion: number;
-    status: SubmissionStatus;
-    lastSavedAt: string;
-    submittedAt?: string;
-  };
+  getSession: (memberId: string) => CoachingSession;
 
   /** 텍스트 답변 저장 */
   saveText: (memberId: string, questionId: number, text: string) => void;
@@ -67,6 +96,18 @@ interface CoachingState {
   /** 최종 제출 */
   submit: (memberId: string) => void;
 
+  /** 진행 상태 변경 */
+  setStatus: (memberId: string, status: SubmissionStatus) => void;
+
+  /** AI 진단 분석 결과(초안) 저장 */
+  saveAiDraft: (memberId: string, aiDraft: AIDraft) => void;
+
+  /** 코치 문항별 필기 메모 저장 */
+  saveCoachNote: (memberId: string, questionId: number, note: string) => void;
+
+  /** 최종 코칭 완료 및 리포트 승인 */
+  finalizeCoaching: (memberId: string, finalProfile: FinalProfile) => void;
+
   /** 응답한 문항 수 */
   getCompletedCount: (memberId: string) => number;
 
@@ -74,10 +115,10 @@ interface CoachingState {
   getProgress: (memberId: string) => number;
 }
 
-const EMPTY_SESSION = {
+const EMPTY_SESSION: CoachingSession = {
   answers: {} as Record<number, QuestionAnswer>,
   currentQuestion: 1,
-  status: "in-progress" as SubmissionStatus,
+  status: "in-progress",
   lastSavedAt: new Date().toISOString(),
 };
 
@@ -196,6 +237,82 @@ export const useCoachingStore = create<CoachingState>()(
                 ...session,
                 status: "submitted",
                 submittedAt: now,
+                lastSavedAt: now,
+              },
+            },
+          };
+        });
+      },
+
+      setStatus: (memberId, status) => {
+        const now = new Date().toISOString();
+        set((s) => {
+          const session = s.responses[memberId] ?? { ...EMPTY_SESSION };
+          return {
+            responses: {
+              ...s.responses,
+              [memberId]: {
+                ...session,
+                status,
+                lastSavedAt: now,
+              },
+            },
+          };
+        });
+      },
+
+      saveAiDraft: (memberId, aiDraft) => {
+        const now = new Date().toISOString();
+        set((s) => {
+          const session = s.responses[memberId] ?? { ...EMPTY_SESSION };
+          return {
+            responses: {
+              ...s.responses,
+              [memberId]: {
+                ...session,
+                aiDraft,
+                // AI 분석이 끝났으므로 status를 analyzed로 변경 (만약 현재 상태가 submitted/analyzing 인 경우)
+                status: session.status === "finalized" ? "finalized" : "analyzed",
+                lastSavedAt: now,
+              },
+            },
+          };
+        });
+      },
+
+      saveCoachNote: (memberId, questionId, note) => {
+        const now = new Date().toISOString();
+        set((s) => {
+          const session = s.responses[memberId] ?? { ...EMPTY_SESSION };
+          const notes = session.coachNotes ?? {};
+          return {
+            responses: {
+              ...s.responses,
+              [memberId]: {
+                ...session,
+                coachNotes: {
+                  ...notes,
+                  [questionId]: note,
+                },
+                lastSavedAt: now,
+              },
+            },
+          };
+        });
+      },
+
+      finalizeCoaching: (memberId, finalProfile) => {
+        const now = new Date().toISOString();
+        set((s) => {
+          const session = s.responses[memberId] ?? { ...EMPTY_SESSION };
+          return {
+            responses: {
+              ...s.responses,
+              [memberId]: {
+                ...session,
+                finalProfile,
+                status: "finalized",
+                finalizedAt: now,
                 lastSavedAt: now,
               },
             },

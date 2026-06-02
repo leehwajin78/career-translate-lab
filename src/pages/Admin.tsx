@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { LEAD_STATUSES, useLeadsStore } from "@/store/leads";
 import { PACKAGES, FREE_DIAGNOSTIC_QUESTIONS } from "@/data/content";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -8,7 +9,12 @@ import { useCoachingStore } from "@/store/coachingStore";
 import { COACHING_QUESTIONS, COACHING_PARTS } from "@/data/coachingQuestions";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/components/ui/use-toast";
-import { Trash2, UserPlus, Key, User, Mail, ShieldAlert, Award, FileText, CheckCircle, Clock, Volume2, Shield } from "lucide-react";
+import { Trash2, UserPlus, Key, User, Mail, ShieldAlert, Award, FileText, CheckCircle, Clock, Volume2, Shield, Bell, Check } from "lucide-react";
+import {
+  useNotificationStore,
+  playChime,
+  requestNotificationPermission,
+} from "@/store/notificationStore";
 
 // AdminGate placeholder — swap with real auth later
 function AdminGate({ children }: { children: React.ReactNode }) {
@@ -62,10 +68,74 @@ const getApplyCategory = (lead: any) => {
   };
 };
 
+// Helper to display relative time for notifications
+const getRelativeTime = (isoString: string) => {
+  const now = new Date();
+  const date = new Date(isoString);
+  const diffMs = now.getTime() - date.getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMins / 60);
+  const diffDays = Math.floor(diffHours / 24);
+
+  if (diffMins < 1) return "방금 전";
+  if (diffMins < 60) return `${diffMins}분 전`;
+  if (diffHours < 24) return `${diffHours}시간 전`;
+  return `${diffDays}일 전`;
+};
+
 export default function Admin() {
   const { leads, updateStatus, updateMemo } = useLeadsStore();
   const [expandedLeadId, setExpandedLeadId] = useState<string | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
+
+  const navigate = useNavigate();
+  const { notifications, markAsRead, markAllAsRead, clearNotifications } = useNotificationStore();
+  const [showNotifications, setShowNotifications] = useState(false);
+  const unreadCount = notifications.filter((n) => !n.isRead).length;
+
+  // 1. Request desktop push notification permission on mount
+  useEffect(() => {
+    requestNotificationPermission().then((granted) => {
+      if (granted) {
+        console.log("Desktop push notification permission granted.");
+      }
+    });
+  }, []);
+
+  // 2. Listen for custom event triggered by BroadcastChannel on submission from other tabs
+  useEffect(() => {
+    const handleNewSubmission = (event: Event) => {
+      const customEvent = event as CustomEvent;
+      const notification = customEvent.detail;
+      if (!notification) return;
+
+      // Play synthesized audio chime (C5 -> E5)
+      playChime();
+
+      // Show in-app Toast
+      toast({
+        title: "🔔 신규 답변 완료 알림",
+        description: `${notification.memberName}님이 42문항 답변을 제출했습니다.`,
+        action: (
+          <button
+            onClick={() => {
+              markAsRead(notification.id);
+              setShowNotifications(false);
+              navigate(`/coaching/workspace/${notification.memberId}`);
+            }}
+            className="bg-primary text-white text-[11px] font-bold px-3 py-1.5 rounded-lg hover:bg-primary/95 transition-all shrink-0"
+          >
+            워크스페이스 이동
+          </button>
+        ),
+      });
+    };
+
+    window.addEventListener("kkummolda-new-submission", handleNewSubmission);
+    return () => {
+      window.removeEventListener("kkummolda-new-submission", handleNewSubmission);
+    };
+  }, [navigate, markAsRead]);
 
   const filteredLeads = leads.filter((l) => {
     if (categoryFilter === "all") return true;
@@ -210,6 +280,97 @@ ${member.name}님의 나다운 브랜딩 코칭을 위한 멤버 전용 계정�
             <p className="mt-2 text-sm text-muted-foreground">
               신청인 상담 리드 목록 및 코칭 멤버들의 42문항 답변 현황을 관리하고 ID를 발급합니다.
             </p>
+          </div>
+
+          {/* 알림 센터 (Premium Notification Center) */}
+          <div className="relative z-50 self-end mb-1">
+            {/* Bell Button */}
+            <button
+              onClick={() => setShowNotifications(!showNotifications)}
+              className="relative p-3 rounded-full hover:bg-secondary/60 transition-all border border-border bg-card shadow-soft text-foreground flex items-center justify-center"
+              title="실시간 제출 알림"
+            >
+              <Bell size={18} className={unreadCount > 0 ? "text-primary animate-bounce" : "text-muted-foreground"} />
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-destructive text-white font-mono text-[9px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-background animate-pulse shadow-md">
+                  {unreadCount}
+                </span>
+              )}
+            </button>
+
+            {/* Dropdown Overlay */}
+            {showNotifications && (
+              <div className="absolute right-0 mt-3 w-80 sm:w-96 bg-white/95 backdrop-blur-md border border-[#1E2D8C]/15 rounded-3xl shadow-xl z-50 py-4 px-4 slide-down overflow-hidden">
+                <div className="flex items-center justify-between border-b border-border pb-3 mb-3">
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-serif text-sm font-extrabold text-[#1E2D8C]">알림 센터</span>
+                    {unreadCount > 0 && (
+                      <span className="text-[10px] bg-[#1E2D8C]/10 text-[#1E2D8C] px-1.5 py-0.5 rounded font-mono font-bold">
+                        {unreadCount}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => markAllAsRead()}
+                      className="text-[10px] text-accent hover:underline font-semibold"
+                    >
+                      모두 읽음
+                    </button>
+                    <span className="text-[10px] text-muted-foreground">|</span>
+                    <button
+                      onClick={() => clearNotifications()}
+                      className="text-[10px] text-destructive hover:underline font-semibold"
+                    >
+                      비우기
+                    </button>
+                  </div>
+                </div>
+
+                {/* Notifications List */}
+                <div className="space-y-2 max-h-[320px] overflow-y-auto pr-1">
+                  {notifications.length === 0 ? (
+                    <div className="py-12 text-center text-xs text-muted-foreground italic">
+                      최근 접수된 알림이 없습니다.
+                    </div>
+                  ) : (
+                    notifications.map((notif) => (
+                      <div
+                        key={notif.id}
+                        onClick={() => {
+                          markAsRead(notif.id);
+                          setShowNotifications(false);
+                          navigate(`/coaching/workspace/${notif.memberId}`);
+                        }}
+                        className={`p-3 rounded-2xl border transition-all cursor-pointer flex items-start justify-between gap-3 text-left ${
+                          notif.isRead
+                            ? "bg-secondary/10 border-border/40 hover:bg-secondary/20"
+                            : "bg-[#F0EFFB]/40 border-[#1E2D8C]/15 hover:bg-[#F0EFFB]/60 shadow-sm"
+                        }`}
+                      >
+                        <div className="space-y-1">
+                          <p className="text-xs font-bold text-foreground">
+                            {notif.memberName}님의 답변 제출 완료
+                          </p>
+                          <p className="text-[10px] text-muted-foreground">
+                            AI 분석 완료 &middot; {getRelativeTime(notif.timestamp)}
+                          </p>
+                        </div>
+                        
+                        <div className="flex items-center gap-2 self-center">
+                          {!notif.isRead && (
+                            <span className="w-2 h-2 rounded-full bg-primary shrink-0" />
+                          )}
+                          <span className="text-[10px] text-accent font-bold group-hover:underline whitespace-nowrap">
+                            이동 &rarr;
+                          </span>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -657,9 +818,17 @@ ${issuedInfo.name}님의 나다운 브랜딩 코칭을 위한 멤버 전용 계�
                                   </div>
                                 </td>
                                 <td className="px-4 py-4">
-                                  {isSubmitted ? (
-                                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
-                                      제출 완료
+                                  {session.status === "finalized" ? (
+                                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-[#C4A265] bg-amber-50 border border-[#C4A265]/20 px-2 py-0.5 rounded-full">
+                                      최종 완료
+                                    </span>
+                                  ) : session.status === "analyzing" ? (
+                                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full animate-pulse">
+                                      분석 중
+                                    </span>
+                                  ) : session.status === "submitted" || session.status === "analyzed" ? (
+                                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-full">
+                                      코칭 대기
                                     </span>
                                   ) : (
                                     <span className="inline-flex items-center gap-1 text-[10px] font-medium text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">
@@ -668,6 +837,14 @@ ${issuedInfo.name}님의 나다운 브랜딩 코칭을 위한 멤버 전용 계�
                                   )}
                                 </td>
                                 <td className="px-4 py-4 text-right space-x-2">
+                                  {session.status !== "in-progress" && session.status !== "analyzing" && (
+                                    <Link
+                                      to={`/coaching/workspace/${m.id}`}
+                                      className="text-xs font-bold text-[#C4A265] hover:underline whitespace-nowrap mr-2"
+                                    >
+                                      {session.status === "finalized" ? "코칭 수정" : "코칭 시작 ➔"}
+                                    </Link>
+                                  )}
                                   <button
                                     onClick={() => copyMemberNotice(m)}
                                     className="text-xs font-bold text-emerald-600 hover:underline whitespace-nowrap"
@@ -795,7 +972,7 @@ ${issuedInfo.name}님의 나다운 브랜딩 코칭을 위한 멤버 전용 계�
                                                               </span>
                                                               <audio
                                                                 controls
-                                                                src={`data:${ans.voice.mimeType};base64,${ans.voice.data}`}
+                                                                src={ans.voice.data}
                                                                 className="h-8 max-w-[200px]"
                                                               />
                                                             </div>

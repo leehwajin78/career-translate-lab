@@ -21,7 +21,10 @@ export default function CoachingDashboard() {
   const session = getSession(member.id);
   const completedCount = getCompletedCount(member.id);
   const progress = getProgress(member.id);
-  const isSubmitted = session.status === "submitted";
+  
+  const isFinalized = session.status === "finalized";
+  const isSubmitted = session.status !== "in-progress" && session.status !== "analyzing";
+  const isAnalyzing = session.status === "analyzing";
 
   const handleLogout = () => {
     logout();
@@ -40,7 +43,7 @@ export default function CoachingDashboard() {
             <h1 className="font-serif text-2xl md:text-3xl text-[#1E2D8C] leading-snug">
               👋 {member.name}님,
               <br />
-              한끗 진단에 오신 것을 환영합니다
+              {isFinalized ? "당신의 브랜드가 마침내 빛을 발합니다" : "한끗 진단에 오신 것을 환영합니다"}
             </h1>
           </div>
           <button
@@ -52,65 +55,123 @@ export default function CoachingDashboard() {
           </button>
         </div>
 
-        {/* 메인 카드: 42문항 진행 상태 */}
-        <div className="bg-white border-2 border-[#1E2D8C]/10 rounded-3xl p-6 md:p-8 shadow-soft mb-8">
-          <div className="flex items-center gap-3 mb-5">
-            <span className="text-2xl">📝</span>
-            <h2 className="text-xl font-bold text-[#1E2D8C]">
-              42문항 코칭 질문
-            </h2>
-            {isSubmitted && (
+        {/* 1. 최종 완료 (리포트 열람 가능) 상태 */}
+        {isFinalized ? (
+          <div className="bg-gradient-to-br from-[#1E2D8C] to-[#1E2D8C]/95 text-white rounded-3xl p-6 md:p-8 shadow-xl mb-8 relative overflow-hidden">
+            {/* Background pattern */}
+            <div className="absolute right-0 bottom-0 opacity-10 font-serif text-[180px] font-bold select-none leading-none translate-y-16 translate-x-12">
+              ✦
+            </div>
+
+            <div className="relative z-10">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-xs font-bold text-[#C4A265] tracking-widest uppercase bg-white/10 px-3 py-1 rounded-full border border-white/10">
+                  COACHING COMPLETE
+                </span>
+                <span className="bg-[#C4A265] text-white text-[10px] font-bold px-2 py-0.5 rounded">
+                  최종 확정
+                </span>
+              </div>
+
+              <h2 className="font-serif text-xl md:text-2xl font-bold mb-3 leading-snug">
+                당신만을 위해 정제된 <br />
+                나다운 브랜드 프로필이 확정되었습니다.
+              </h2>
+              
+              <p className="text-sm text-white/70 leading-relaxed mb-6 break-keep">
+                전문 코치와의 1:1 대화와 성찰을 통해 완성된 {member.name}님의 고유한 브랜드 가치,
+                강점 명제, 브랜드 원라이너와 톤앤매너 리포트가 최종 발급되었습니다.
+              </p>
+
+              <Link
+                to="/coaching/report"
+                className="inline-flex items-center justify-center w-full sm:w-auto bg-[#C4A265] text-white hover:bg-[#C4A265]/90 transition-all font-bold text-base px-10 py-5 rounded-2xl shadow-lg"
+              >
+                ✨ 나의 브랜드 프로필 리포트 보기
+              </Link>
+            </div>
+          </div>
+        ) : isSubmitted ? (
+          /* 2. 제출 완료 및 코칭 인터뷰 대기 상태 */
+          <div className="bg-white border-2 border-[#1E2D8C]/15 rounded-3xl p-6 md:p-8 shadow-soft mb-8">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="text-2xl">💬</span>
+              <h2 className="text-xl font-bold text-[#1E2D8C]">
+                자가 진단 및 분석 완료
+              </h2>
               <span className="ml-auto bg-emerald-50 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full border border-emerald-200">
-                ✓ 제출 완료
-              </span>
-            )}
-          </div>
-
-          {/* 프로그레스 바 */}
-          <div className="mb-5">
-            <div className="h-3 bg-[#F0EFFB] rounded-full overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-[#1E2D8C] to-[#1E2D8C]/70 rounded-full transition-all duration-700"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-            <div className="flex items-center justify-between mt-2">
-              <span className="text-base text-foreground/60">
-                응답 완료:{" "}
-                <span className="font-bold text-[#1E2D8C]">
-                  {completedCount}
-                </span>{" "}
-                / {TOTAL_QUESTIONS}
-              </span>
-              <span className="font-mono text-lg font-bold text-[#C4A265]">
-                {progress}%
+                ✓ 대기 중
               </span>
             </div>
-          </div>
 
-          {/* 마지막 저장 시각 */}
-          {session.lastSavedAt && (
-            <p className="text-sm text-foreground/40 mb-6">
-              마지막 저장:{" "}
-              {new Date(session.lastSavedAt).toLocaleString("ko-KR", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </p>
-          )}
+            <div className="bg-[#F0EFFB]/40 border border-[#1E2D8C]/10 rounded-2xl p-5 mb-6 text-sm text-foreground/75 leading-relaxed break-keep">
+              <p className="font-bold text-[#1E2D8C] mb-2 flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-[#1E2D8C]" />
+                1:1 브랜드 코칭 인터뷰 준비 중
+              </p>
+              {member.name}님이 정성스레 작성하신 42문항 답변에 대한 1차 자동 분석이 완료되었습니다. 
+              현재 코치와의 1:1 대화를 준비하고 있으며, 인터뷰를 마친 후 코치가 최종적으로 정교화한 브랜드 프로필 리포트가 열람 가능하도록 잠금 해제됩니다.
+            </div>
 
-          {/* CTA 버튼 */}
-          {isSubmitted ? (
             <Link
               to="/coaching/review"
               className="block w-full bg-[#F0EFFB] text-[#1E2D8C] text-center py-5 rounded-2xl font-bold text-lg hover:bg-[#F0EFFB]/70 transition-colors"
             >
-              📋 제출한 응답 다시 보기
+              📋 내가 작성한 응답 다시 보기
             </Link>
-          ) : (
+          </div>
+        ) : (
+          /* 3. 작성 중 상태 */
+          <div className="bg-white border-2 border-[#1E2D8C]/10 rounded-3xl p-6 md:p-8 shadow-soft mb-8">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="text-2xl">📝</span>
+              <h2 className="text-xl font-bold text-[#1E2D8C]">
+                42문항 코칭 질문
+              </h2>
+              {isAnalyzing && (
+                <span className="ml-auto bg-blue-50 text-blue-700 text-xs font-bold px-3 py-1 rounded-full border border-blue-200 animate-pulse">
+                  분석 중...
+                </span>
+              )}
+            </div>
+
+            {/* 프로그레스 바 */}
+            <div className="mb-5">
+              <div className="h-3 bg-[#F0EFFB] rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-[#1E2D8C] to-[#1E2D8C]/70 rounded-full transition-all duration-700"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+              <div className="flex items-center justify-between mt-2">
+                <span className="text-base text-foreground/60">
+                  응답 완료:{" "}
+                  <span className="font-bold text-[#1E2D8C]">
+                    {completedCount}
+                  </span>{" "}
+                  / {TOTAL_QUESTIONS}
+                </span>
+                <span className="font-mono text-lg font-bold text-[#C4A265]">
+                  {progress}%
+                </span>
+              </div>
+            </div>
+
+            {/* 마지막 저장 시각 */}
+            {session.lastSavedAt && (
+              <p className="text-sm text-foreground/40 mb-6">
+                마지막 저장:{" "}
+                {new Date(session.lastSavedAt).toLocaleString("ko-KR", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </p>
+            )}
+
+            {/* CTA 버튼 */}
             <Link
               to="/coaching/questions"
               className="block w-full bg-[#1E2D8C] text-white text-center py-5 rounded-2xl font-bold text-lg hover:bg-[#1E2D8C]/90 transition-all shadow-lg hover:shadow-xl"
@@ -119,8 +180,8 @@ export default function CoachingDashboard() {
                 ? "🖊️ 이어서 작성하기"
                 : "🖊️ 작성 시작하기"}
             </Link>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* 파트별 진행 상황 */}
         <div className="grid gap-3 sm:grid-cols-2 mb-8">
