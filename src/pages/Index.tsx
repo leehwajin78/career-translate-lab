@@ -363,10 +363,30 @@ export default function Index() {
               <p className="text-xs text-foreground/70 mb-5">부가세 별도 · 1주</p>
               <hr className="border-border mb-5" />
               <ul className="space-y-3 mb-8 flex-grow text-xs text-foreground/80 font-medium">
-                <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 1:1 인터뷰 60분</li>
-                <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 경력 자산 진단 리포트 A4 3~5장</li>
-                <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 자산화 로드맵 1장</li>
-                <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 30분 해석 미팅</li>
+                <li className="flex items-start gap-2">
+                  <Check size={14} className="text-accent shrink-0 mt-0.5" />
+                  <span>핵심 메시지(원라이너) 1문장 <span className="text-foreground/50 block text-[10px] mt-0.5">(코치 확정 전달, 명함·소개 즉시 사용)</span></span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check size={14} className="text-accent shrink-0 mt-0.5" />
+                  <span>강점 명제문 <span className="text-foreground/50 block text-[10px] mt-0.5">(간략 확정)</span></span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check size={14} className="text-accent shrink-0 mt-0.5" />
+                  <span>나머지 브랜드 요소 6종 미리보기 <span className="text-foreground/50 block text-[10px] mt-0.5">("당신의 경우 이렇게 펼쳐집니다": 핵심 가치 · 타깃 페르소나 · 브랜드 스토리 · 핵심 카피 · 채널 전략 · 브랜드 WHY)</span></span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check size={14} className="text-accent shrink-0 mt-0.5" />
+                  <span>경력 자산 진단 리포트 (A4 3~5장)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check size={14} className="text-accent shrink-0 mt-0.5" />
+                  <span>자산화 로드맵 1장</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check size={14} className="text-accent shrink-0 mt-0.5" />
+                  <span>30분 해석 미팅</span>
+                </li>
               </ul>
               <Link to="/apply/diagnosis" className="w-full py-3.5 rounded-xl font-bold bg-accent text-white hover:bg-accent/90 transition-colors shadow-lg text-center text-sm">한끗 진단 신청하기</Link>
             </div>
@@ -382,14 +402,40 @@ export default function Index() {
               </div>
               <p className="text-xs text-foreground/70 mb-5">부가세 별도 · 6주</p>
               <hr className="border-border mb-5" />
-              <ul className="space-y-3 mb-8 flex-grow text-xs text-foreground/80 font-medium">
-                <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 1:1 심층 인터뷰 2회</li>
-                <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 브랜드 메시지 설계</li>
-                <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 전문가 프로필 1페이지</li>
-                <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 대표 강의안 1개, 60분</li>
-                <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> B2B 제안서 템플릿</li>
-                <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 채널 전략 가이드</li>
-                <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 주 1회 코칭, 총 6회</li>
+              <ul className="space-y-2.5 mb-8 flex-grow text-xs text-foreground/80 font-medium">
+                <li className="font-bold text-primary text-[11px] mt-1 tracking-wider">〈기획 자산〉</li>
+                <li className="flex items-start gap-2 pl-1">
+                  <Check size={14} className="text-accent shrink-0 mt-0.5" />
+                  <span>브랜드 전략 브리프 <span className="text-foreground/50 block text-[10px] mt-0.5">(방향성·메시지 구조 정리본)</span></span>
+                </li>
+                
+                <li className="font-bold text-primary text-[11px] mt-3 tracking-wider">〈브랜드 언어 자산〉</li>
+                <li className="flex items-start gap-2 pl-1">
+                  <Check size={14} className="text-accent shrink-0 mt-0.5" />
+                  <span>확정 핵심 메시지(원라이너) · 브랜드 매니페스토 · 핵심 카피 3종</span>
+                </li>
+                
+                <li className="font-bold text-primary text-[11px] mt-3 tracking-wider">〈실전 도구〉</li>
+                <li className="flex items-start gap-2 pl-1">
+                  <Check size={14} className="text-accent shrink-0 mt-0.5" />
+                  <span>전문가 프로필 1페이지</span>
+                </li>
+                <li className="flex items-start gap-2 pl-1">
+                  <Check size={14} className="text-accent shrink-0 mt-0.5" />
+                  <span>대표 강의안 (60분)</span>
+                </li>
+                <li className="flex items-start gap-2 pl-1">
+                  <Check size={14} className="text-accent shrink-0 mt-0.5" />
+                  <span>B2B 제안서 템플릿</span>
+                </li>
+                <li className="flex items-start gap-2 pl-1">
+                  <Check size={14} className="text-accent shrink-0 mt-0.5" />
+                  <span>채널 전략 가이드</span>
+                </li>
+                <li className="flex items-start gap-2 pl-1">
+                  <Check size={14} className="text-accent shrink-0 mt-0.5" />
+                  <span>소개 멘트 3종</span>
+                </li>
               </ul>
               <Link to="/apply/build" className="w-full py-3.5 rounded-xl font-bold border border-border text-primary hover:border-primary transition-colors text-center text-sm">한끗 빌드 신청하기</Link>
             </div>
@@ -400,10 +446,9 @@ export default function Index() {
               <p className="text-primary font-serif text-3xl md:text-4xl font-extrabold mb-2">한끗 론칭</p>
               <p className="text-foreground/70 text-xs mb-4 break-keep">실제 무대와 수익 기회에 접근하도록 지원합니다</p>
               <div className="mb-4 flex items-baseline gap-1">
-                <span className="text-2xl md:text-3xl font-serif font-bold text-black tracking-tight">7,000,000</span>
-                <span className="text-xs text-foreground/70 font-medium">원</span>
+                <span className="text-2xl md:text-3xl font-serif font-bold text-black tracking-tight">별도 문의</span>
               </div>
-              <p className="text-xs text-foreground/70 mb-5">부가세 별도 · 3개월</p>
+              <p className="text-xs text-foreground/70 mb-5">3개월 과정</p>
               <hr className="border-border mb-5" />
               <ul className="space-y-3 mb-8 flex-grow text-xs text-foreground/80 font-medium">
                 <li className="flex items-start gap-2"><Check size={14} className="text-accent shrink-0 mt-0.5" /> 한끗 빌드 전체 포함</li>
@@ -421,13 +466,10 @@ export default function Index() {
               <p className="text-primary font-serif text-3xl md:text-4xl font-extrabold mb-2">한끗 파트너</p>
               <p className="text-foreground/70 text-xs mb-4 break-keep">매월 점검하고, 다음 기회를 설계합니다</p>
               <div className="mb-4 flex items-baseline gap-1">
-                <span className="text-lg text-foreground/70 font-medium mr-1">월</span>
-                <span className="text-2xl md:text-3xl font-serif font-bold text-black tracking-tight">1,000,000</span>
-                <span className="text-xs text-foreground/70 font-medium">원</span>
+                <span className="text-2xl md:text-3xl font-serif font-bold text-black tracking-tight">별도 문의</span>
               </div>
               <p className="text-xs text-foreground/70 mb-5">
-                부가세 별도 · 월 단위 <br />
-                (3개월 이상 시 할인)
+                월 단위 리테이너
               </p>
               <hr className="border-border mb-5" />
               <ul className="space-y-3 mb-8 flex-grow text-xs text-foreground/80 font-medium">

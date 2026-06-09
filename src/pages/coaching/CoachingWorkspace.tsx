@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
 import { useCoachingStore, FinalProfile, AIDraft } from "@/store/coachingStore";
 import { COACHING_QUESTIONS, COACHING_PARTS } from "@/data/coachingQuestions";
-import { ArrowLeft, Save, Send, Volume2, Sparkles, RotateCcw, HelpCircle, Check, Award, FileText } from "lucide-react";
+import { ArrowLeft, Save, Send, Volume2, Sparkles, RotateCcw, HelpCircle, Check, Award, FileText, Lock } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 
 export default function CoachingWorkspace() {
@@ -22,6 +22,23 @@ export default function CoachingWorkspace() {
   // 상태 변수들
   const [selectedQId, setSelectedQId] = useState<number>(1);
   const [localNotes, setLocalNotes] = useState<Record<number, string>>({});
+  const [mode, setMode] = useState<"diagnosis" | "build">(() => {
+    const saved = memberId ? localStorage.getItem(`workspace-mode:${memberId}`) : null;
+    return (saved as "diagnosis" | "build") || "diagnosis";
+  });
+
+  const handleModeChange = (newMode: "diagnosis" | "build") => {
+    setMode(newMode);
+    if (memberId) {
+      localStorage.setItem(`workspace-mode:${memberId}`, newMode);
+    }
+    toast({
+      title: `${newMode === "diagnosis" ? "진단 모드" : "빌드 모드"}로 전환`,
+      description: newMode === "diagnosis" 
+        ? "진단 단계에 필요한 원라이너와 강점만 활성화됩니다." 
+        : "모든 브랜드 자산의 편집이 활성화됩니다.",
+    });
+  };
   
   // 브랜드 프로필 에디터 상태
   const [oneLiner, setOneLiner] = useState("");
@@ -135,10 +152,12 @@ export default function CoachingWorkspace() {
   const handleFinalize = () => {
     if (!memberId) return;
 
-    if (!oneLiner.trim() || !strengthStatement.trim() || !coreValue1.trim()) {
+    if (!oneLiner.trim() || !strengthStatement.trim() || (mode === "build" && !coreValue1.trim())) {
       toast({
         title: "필수 정보 부족",
-        description: "브랜드 원라이너, 강점 명제문, 핵심 가치는 최종 확정 시 반드시 작성되어야 합니다.",
+        description: mode === "build" 
+          ? "브랜드 원라이너, 강점 명제문, 핵심 가치는 최종 확정 시 반드시 작성되어야 합니다."
+          : "진단 모드에서는 브랜드 원라이너와 강점 명제문이 작성되어야 합니다.",
         variant: "destructive",
       });
       return;
@@ -223,6 +242,31 @@ export default function CoachingWorkspace() {
               {targetMember.name} 회원 세션
             </span>
           </h1>
+          <span className="h-4 w-px bg-slate-200" />
+
+          {/* Segmented Toggle [ 진단 모드 | 빌드 모드 ] */}
+          <div className="flex bg-slate-100 p-0.5 rounded-xl border border-slate-200/50 select-none">
+            <button
+              onClick={() => handleModeChange("diagnosis")}
+              className={`px-3.5 py-1 rounded-lg text-xs font-bold transition-all ${
+                mode === "diagnosis"
+                  ? "bg-[#1E2D8C] text-white shadow-sm"
+                  : "text-slate-500 hover:text-slate-800"
+              }`}
+            >
+              진단 모드
+            </button>
+            <button
+              onClick={() => handleModeChange("build")}
+              className={`px-3.5 py-1 rounded-lg text-xs font-bold transition-all ${
+                mode === "build"
+                  ? "bg-[#1E2D8C] text-white shadow-sm"
+                  : "text-slate-500 hover:text-slate-800"
+              }`}
+            >
+              빌드 모드
+            </button>
+          </div>
         </div>
 
         <div className="flex items-center gap-3">
@@ -238,7 +282,9 @@ export default function CoachingWorkspace() {
             className="flex items-center gap-1.5 bg-[#C4A265] text-white hover:bg-[#C4A265]/90 px-5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-md"
           >
             <Send size={14} />
-            {isFinalized ? "프로필 수정 및 적용" : "최종 확정 및 전달"}
+            {mode === "diagnosis"
+              ? (isFinalized ? "진단 결과 수정 및 적용" : "진단 결과 확정 및 전달")
+              : (isFinalized ? "최종 브랜드 프로필 수정 및 적용" : "최종 브랜드 프로필 확정 및 전달")}
           </button>
         </div>
       </header>
@@ -428,8 +474,9 @@ export default function CoachingWorkspace() {
               브랜드 프로필 빌더 (최종 편집)
             </h2>
             <p className="text-xs text-slate-400 mt-1 leading-relaxed break-keep">
-              AI 초안을 디딤돌 삼아, 코치 인터뷰 대화를 반영한 최종 브랜드 결과물을 정교화합니다.
-              각 요소를 근거 질문과 매칭해 보완하세요.
+              {mode === "diagnosis"
+                ? "진단 단계 — 원라이너와 강점만 확정합니다. 나머지는 빌드에서 펼쳐집니다."
+                : "AI 초안을 디딤돌 삼아, 코치 인터뷰 대화를 반영한 최종 브랜드 결과물을 정교화합니다. 각 요소를 근거 질문과 매칭해 보완하세요."}
             </p>
           </div>
 
@@ -481,7 +528,9 @@ export default function CoachingWorkspace() {
             </div>
 
             {/* 2. 핵심 가치 3가지 */}
-            <div className="border border-slate-100 rounded-2xl p-4.5 bg-slate-50/50 space-y-3">
+            <div className={`border border-slate-100 rounded-2xl p-4.5 bg-slate-50/50 space-y-3 transition-opacity ${
+              mode === "diagnosis" ? "opacity-60" : ""
+            }`}>
               <div className="flex justify-between items-center">
                 <label className="text-xs font-extrabold text-[#1E2D8C] flex items-center gap-1">
                   <span>✦ 2. 핵심 가치 3가지</span>
@@ -493,19 +542,28 @@ export default function CoachingWorkspace() {
                   </button>
                 </label>
                 <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setShowOriginal((prev) => ({ ...prev, coreValues: !prev.coreValues }))}
-                    className="text-[10px] text-slate-500 hover:underline"
-                  >
-                    {showOriginal.coreValues ? "에디터 보기" : "🤖 초안대조"}
-                  </button>
-                  <button
-                    onClick={() => restoreToAi("coreValues")}
-                    className="text-slate-400 hover:text-[#1E2D8C]"
-                    title="초안으로 되돌리기"
-                  >
-                    <RotateCcw size={11} />
-                  </button>
+                  {mode === "diagnosis" ? (
+                    <div className="flex items-center gap-1 bg-[#F1F5F9] text-slate-400 border border-slate-200/60 px-2.5 py-0.5 rounded-full text-[10px] font-bold select-none">
+                      <Lock size={10} />
+                      <span>빌드 단계에서 작성됩니다</span>
+                    </div>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => setShowOriginal((prev) => ({ ...prev, coreValues: !prev.coreValues }))}
+                        className="text-[10px] text-slate-500 hover:underline"
+                      >
+                        {showOriginal.coreValues ? "에디터 보기" : "🤖 초안대조"}
+                      </button>
+                      <button
+                        onClick={() => restoreToAi("coreValues")}
+                        className="text-slate-400 hover:text-[#1E2D8C]"
+                        title="초안으로 되돌리기"
+                      >
+                        <RotateCcw size={11} />
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -520,21 +578,24 @@ export default function CoachingWorkspace() {
                     value={coreValue1}
                     onChange={(e) => setCoreValue1(e.target.value)}
                     placeholder="가치 1"
-                    className="text-xs p-2.5 rounded-lg border border-slate-200 text-center"
+                    disabled={mode === "diagnosis"}
+                    className="text-xs p-2.5 rounded-lg border border-slate-200 text-center disabled:bg-slate-100/50 disabled:text-slate-400"
                   />
                   <input
                     type="text"
                     value={coreValue2}
                     onChange={(e) => setCoreValue2(e.target.value)}
                     placeholder="가치 2"
-                    className="text-xs p-2.5 rounded-lg border border-slate-200 text-center"
+                    disabled={mode === "diagnosis"}
+                    className="text-xs p-2.5 rounded-lg border border-slate-200 text-center disabled:bg-slate-100/50 disabled:text-slate-400"
                   />
                   <input
                     type="text"
                     value={coreValue3}
                     onChange={(e) => setCoreValue3(e.target.value)}
                     placeholder="가치 3"
-                    className="text-xs p-2.5 rounded-lg border border-slate-200 text-center"
+                    disabled={mode === "diagnosis"}
+                    className="text-xs p-2.5 rounded-lg border border-slate-200 text-center disabled:bg-slate-100/50 disabled:text-slate-400"
                   />
                 </div>
               )}
@@ -585,7 +646,9 @@ export default function CoachingWorkspace() {
             </div>
 
             {/* 4. 타깃 페르소나 */}
-            <div className="border border-slate-100 rounded-2xl p-4.5 bg-slate-50/50 space-y-3">
+            <div className={`border border-slate-100 rounded-2xl p-4.5 bg-slate-50/50 space-y-3 transition-opacity ${
+              mode === "diagnosis" ? "opacity-60" : ""
+            }`}>
               <div className="flex justify-between items-center">
                 <label className="text-xs font-extrabold text-[#1E2D8C] flex items-center gap-1">
                   <span>✦ 4. 타깃 페르소나</span>
@@ -597,19 +660,28 @@ export default function CoachingWorkspace() {
                   </button>
                 </label>
                 <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setShowOriginal((prev) => ({ ...prev, targetPersona: !prev.targetPersona }))}
-                    className="text-[10px] text-slate-500 hover:underline"
-                  >
-                    {showOriginal.targetPersona ? "에디터 보기" : "🤖 초안대조"}
-                  </button>
-                  <button
-                    onClick={() => restoreToAi("targetPersona")}
-                    className="text-slate-400 hover:text-[#1E2D8C]"
-                    title="초안으로 되돌리기"
-                  >
-                    <RotateCcw size={11} />
-                  </button>
+                  {mode === "diagnosis" ? (
+                    <div className="flex items-center gap-1 bg-[#F1F5F9] text-slate-400 border border-slate-200/60 px-2.5 py-0.5 rounded-full text-[10px] font-bold select-none">
+                      <Lock size={10} />
+                      <span>빌드 단계에서 작성됩니다</span>
+                    </div>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => setShowOriginal((prev) => ({ ...prev, targetPersona: !prev.targetPersona }))}
+                        className="text-[10px] text-slate-500 hover:underline"
+                      >
+                        {showOriginal.targetPersona ? "에디터 보기" : "🤖 초안대조"}
+                      </button>
+                      <button
+                        onClick={() => restoreToAi("targetPersona")}
+                        className="text-slate-400 hover:text-[#1E2D8C]"
+                        title="초안으로 되돌리기"
+                      >
+                        <RotateCcw size={11} />
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -622,14 +694,17 @@ export default function CoachingWorkspace() {
                   rows={3}
                   value={targetPersona}
                   onChange={(e) => setTargetPersona(e.target.value)}
+                  disabled={mode === "diagnosis"}
                   placeholder="이상적인 브랜드 고객층을 심리적 결핍/인구통계적으로 묘사하세요..."
-                  className="w-full text-xs p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-[#C4A265] leading-relaxed"
+                  className="w-full text-xs p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-[#C4A265] leading-relaxed disabled:bg-slate-100/50 disabled:text-slate-400"
                 />
               )}
             </div>
 
             {/* 5. 브랜드 스토리 */}
-            <div className="border border-slate-100 rounded-2xl p-4.5 bg-slate-50/50 space-y-3">
+            <div className={`border border-slate-100 rounded-2xl p-4.5 bg-slate-50/50 space-y-3 transition-opacity ${
+              mode === "diagnosis" ? "opacity-60" : ""
+            }`}>
               <div className="flex justify-between items-center">
                 <label className="text-xs font-extrabold text-[#1E2D8C] flex items-center gap-1">
                   <span>✦ 5. 브랜드 스토리</span>
@@ -641,19 +716,28 @@ export default function CoachingWorkspace() {
                   </button>
                 </label>
                 <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setShowOriginal((prev) => ({ ...prev, brandStory: !prev.brandStory }))}
-                    className="text-[10px] text-slate-500 hover:underline"
-                  >
-                    {showOriginal.brandStory ? "에디터 보기" : "🤖 초안대조"}
-                  </button>
-                  <button
-                    onClick={() => restoreToAi("brandStory")}
-                    className="text-slate-400 hover:text-[#1E2D8C]"
-                    title="초안으로 되돌리기"
-                  >
-                    <RotateCcw size={11} />
-                  </button>
+                  {mode === "diagnosis" ? (
+                    <div className="flex items-center gap-1 bg-[#F1F5F9] text-slate-400 border border-slate-200/60 px-2.5 py-0.5 rounded-full text-[10px] font-bold select-none">
+                      <Lock size={10} />
+                      <span>빌드 단계에서 작성됩니다</span>
+                    </div>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => setShowOriginal((prev) => ({ ...prev, brandStory: !prev.brandStory }))}
+                        className="text-[10px] text-slate-500 hover:underline"
+                      >
+                        {showOriginal.brandStory ? "에디터 보기" : "🤖 초안대조"}
+                      </button>
+                      <button
+                        onClick={() => restoreToAi("brandStory")}
+                        className="text-slate-400 hover:text-[#1E2D8C]"
+                        title="초안으로 되돌리기"
+                      >
+                        <RotateCcw size={11} />
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -666,14 +750,17 @@ export default function CoachingWorkspace() {
                   rows={3}
                   value={brandStory}
                   onChange={(e) => setBrandStory(e.target.value)}
-                  placeholder="고객이 깊이 신뢰할 핵심적인 삶의 전화위복 에피소드를 요약하세요..."
-                  className="w-full text-xs p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-[#C4A265] leading-relaxed"
+                  disabled={mode === "diagnosis"}
+                  placeholder="고객이 깊이 신뢰할 핵심적인 삶의 전환위복 에피소드를 요약하세요..."
+                  className="w-full text-xs p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-[#C4A265] leading-relaxed disabled:bg-slate-100/50 disabled:text-slate-400"
                 />
               )}
             </div>
 
             {/* 6. 핵심 메시지 */}
-            <div className="border border-slate-100 rounded-2xl p-4.5 bg-slate-50/50 space-y-3">
+            <div className={`border border-slate-100 rounded-2xl p-4.5 bg-slate-50/50 space-y-3 transition-opacity ${
+              mode === "diagnosis" ? "opacity-60" : ""
+            }`}>
               <div className="flex justify-between items-center">
                 <label className="text-xs font-extrabold text-[#1E2D8C] flex items-center gap-1">
                   <span>✦ 6. 핵심 메시지</span>
@@ -685,19 +772,28 @@ export default function CoachingWorkspace() {
                   </button>
                 </label>
                 <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setShowOriginal((prev) => ({ ...prev, coreMessage: !prev.coreMessage }))}
-                    className="text-[10px] text-slate-500 hover:underline"
-                  >
-                    {showOriginal.coreMessage ? "에디터 보기" : "🤖 초안대조"}
-                  </button>
-                  <button
-                    onClick={() => restoreToAi("coreMessage")}
-                    className="text-slate-400 hover:text-[#1E2D8C]"
-                    title="초안으로 되돌리기"
-                  >
-                    <RotateCcw size={11} />
-                  </button>
+                  {mode === "diagnosis" ? (
+                    <div className="flex items-center gap-1 bg-[#F1F5F9] text-slate-400 border border-slate-200/60 px-2.5 py-0.5 rounded-full text-[10px] font-bold select-none">
+                      <Lock size={10} />
+                      <span>빌드 단계에서 작성됩니다</span>
+                    </div>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => setShowOriginal((prev) => ({ ...prev, coreMessage: !prev.coreMessage }))}
+                        className="text-[10px] text-slate-500 hover:underline"
+                      >
+                        {showOriginal.coreMessage ? "에디터 보기" : "🤖 초안대조"}
+                      </button>
+                      <button
+                        onClick={() => restoreToAi("coreMessage")}
+                        className="text-slate-400 hover:text-[#1E2D8C]"
+                        title="초안으로 되돌리기"
+                      >
+                        <RotateCcw size={11} />
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -710,14 +806,17 @@ export default function CoachingWorkspace() {
                   rows={2}
                   value={coreMessage}
                   onChange={(e) => setCoreMessage(e.target.value)}
+                  disabled={mode === "diagnosis"}
                   placeholder="세상에 울리는 단 한 마디의 시그니처 카피문..."
-                  className="w-full text-xs p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-[#C4A265] font-serif leading-relaxed"
+                  className="w-full text-xs p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-[#C4A265] font-serif leading-relaxed disabled:bg-slate-100/50 disabled:text-slate-400"
                 />
               )}
             </div>
 
             {/* 7. 채널 전략 */}
-            <div className="border border-slate-100 rounded-2xl p-4.5 bg-slate-50/50 space-y-3">
+            <div className={`border border-slate-100 rounded-2xl p-4.5 bg-slate-50/50 space-y-3 transition-opacity ${
+              mode === "diagnosis" ? "opacity-60" : ""
+            }`}>
               <div className="flex justify-between items-center">
                 <label className="text-xs font-extrabold text-[#1E2D8C] flex items-center gap-1">
                   <span>✦ 7. 채널 전략</span>
@@ -729,19 +828,28 @@ export default function CoachingWorkspace() {
                   </button>
                 </label>
                 <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setShowOriginal((prev) => ({ ...prev, channelStrategy: !prev.channelStrategy }))}
-                    className="text-[10px] text-slate-500 hover:underline"
-                  >
-                    {showOriginal.channelStrategy ? "에디터 보기" : "🤖 초안대조"}
-                  </button>
-                  <button
-                    onClick={() => restoreToAi("channelStrategy")}
-                    className="text-slate-400 hover:text-[#1E2D8C]"
-                    title="초안으로 되돌리기"
-                  >
-                    <RotateCcw size={11} />
-                  </button>
+                  {mode === "diagnosis" ? (
+                    <div className="flex items-center gap-1 bg-[#F1F5F9] text-slate-400 border border-slate-200/60 px-2.5 py-0.5 rounded-full text-[10px] font-bold select-none">
+                      <Lock size={10} />
+                      <span>빌드 단계에서 작성됩니다</span>
+                    </div>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => setShowOriginal((prev) => ({ ...prev, channelStrategy: !prev.channelStrategy }))}
+                        className="text-[10px] text-slate-500 hover:underline"
+                      >
+                        {showOriginal.channelStrategy ? "에디터 보기" : "🤖 초안대조"}
+                      </button>
+                      <button
+                        onClick={() => restoreToAi("channelStrategy")}
+                        className="text-slate-400 hover:text-[#1E2D8C]"
+                        title="초안으로 되돌리기"
+                      >
+                        <RotateCcw size={11} />
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -754,14 +862,17 @@ export default function CoachingWorkspace() {
                   rows={2}
                   value={channelStrategy}
                   onChange={(e) => setChannelStrategy(e.target.value)}
+                  disabled={mode === "diagnosis"}
                   placeholder="1순위 및 2순위 지식상품 전달 수단 및 표현 미디어를 설정하세요..."
-                  className="w-full text-xs p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-[#C4A265] leading-relaxed"
+                  className="w-full text-xs p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-[#C4A265] leading-relaxed disabled:bg-slate-100/50 disabled:text-slate-400"
                 />
               )}
             </div>
 
             {/* 8. 브랜드 WHY */}
-            <div className="border border-slate-100 rounded-2xl p-4.5 bg-slate-50/50 space-y-3">
+            <div className={`border border-slate-100 rounded-2xl p-4.5 bg-slate-50/50 space-y-3 transition-opacity ${
+              mode === "diagnosis" ? "opacity-60" : ""
+            }`}>
               <div className="flex justify-between items-center">
                 <label className="text-xs font-extrabold text-[#1E2D8C] flex items-center gap-1">
                   <span>✦ 8. 브랜드 WHY</span>
@@ -773,19 +884,28 @@ export default function CoachingWorkspace() {
                   </button>
                 </label>
                 <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setShowOriginal((prev) => ({ ...prev, brandWhy: !prev.brandWhy }))}
-                    className="text-[10px] text-slate-500 hover:underline"
-                  >
-                    {showOriginal.brandWhy ? "에디터 보기" : "🤖 초안대조"}
-                  </button>
-                  <button
-                    onClick={() => restoreToAi("brandWhy")}
-                    className="text-slate-400 hover:text-[#1E2D8C]"
-                    title="초안으로 되돌리기"
-                  >
-                    <RotateCcw size={11} />
-                  </button>
+                  {mode === "diagnosis" ? (
+                    <div className="flex items-center gap-1 bg-[#F1F5F9] text-slate-400 border border-slate-200/60 px-2.5 py-0.5 rounded-full text-[10px] font-bold select-none">
+                      <Lock size={10} />
+                      <span>빌드 단계에서 작성됩니다</span>
+                    </div>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => setShowOriginal((prev) => ({ ...prev, brandWhy: !prev.brandWhy }))}
+                        className="text-[10px] text-slate-500 hover:underline"
+                      >
+                        {showOriginal.brandWhy ? "에디터 보기" : "🤖 초안대조"}
+                      </button>
+                      <button
+                        onClick={() => restoreToAi("brandWhy")}
+                        className="text-slate-400 hover:text-[#1E2D8C]"
+                        title="초안으로 되돌리기"
+                      >
+                        <RotateCcw size={11} />
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -798,8 +918,9 @@ export default function CoachingWorkspace() {
                   rows={2}
                   value={brandWhy}
                   onChange={(e) => setBrandWhy(e.target.value)}
+                  disabled={mode === "diagnosis"}
                   placeholder="최종 평생현역 비즈니스를 관통할 궁극적 철학이자 임팩트 비전..."
-                  className="w-full text-xs p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-[#C4A265] leading-relaxed"
+                  className="w-full text-xs p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-[#C4A265] leading-relaxed disabled:bg-slate-100/50 disabled:text-slate-400"
                 />
               )}
             </div>
@@ -838,7 +959,9 @@ export default function CoachingWorkspace() {
                 className="flex items-center gap-1 bg-[#1E2D8C] text-white hover:bg-[#1E2D8C]/90 px-6 py-2 rounded-xl text-xs font-bold transition-all shadow-md"
               >
                 <Check size={14} />
-                {isFinalized ? "수정완료" : "최종 확정 및 전송"}
+                {mode === "diagnosis"
+                  ? (isFinalized ? "진단 결과 수정완료" : "진단 결과 확정 및 전송")
+                  : (isFinalized ? "최종 프로필 수정완료" : "최종 브랜드 프로필 확정 및 전송")}
               </button>
             </div>
           </div>

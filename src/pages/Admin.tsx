@@ -5,7 +5,7 @@ import { PACKAGES, FREE_DIAGNOSTIC_QUESTIONS } from "@/data/content";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuthStore } from "@/store/authStore";
-import { useCoachingStore } from "@/store/coachingStore";
+import { useCoachingStore, SubmissionStatus } from "@/store/coachingStore";
 import { COACHING_QUESTIONS, COACHING_PARTS } from "@/data/coachingQuestions";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/components/ui/use-toast";
@@ -152,10 +152,19 @@ export default function Admin() {
   const members = useAuthStore((s) => s.members);
   const addMember = useAuthStore((s) => s.addMember);
   const removeMember = useAuthStore((s) => s.removeMember);
+  const updateMember = useAuthStore((s) => s.updateMember);
 
   const getSession = useCoachingStore((s) => s.getSession);
   const getCompletedCount = useCoachingStore((s) => s.getCompletedCount);
   const getProgress = useCoachingStore((s) => s.getProgress);
+  const setStatus = useCoachingStore((s) => s.setStatus);
+
+  const [memberStageFilter, setMemberStageFilter] = useState<string>("all");
+
+  const filteredMembers = members.filter((m) => {
+    if (memberStageFilter === "all") return true;
+    return m.productKey === memberStageFilter;
+  });
 
   // Member management states
   const [newMember, setNewMember] = useState({
@@ -763,13 +772,48 @@ ${issuedInfo.name}님의 나다운 브랜딩 코칭을 위한 멤버 전용 계�
               <div className="lg:col-span-2 space-y-4">
                 <div className="flex justify-between items-center">
                   <h3 className="font-bold text-lg text-primary font-serif">발급된 회원 관리</h3>
-                  <span className="text-xs text-muted-foreground">총 {members.length}명</span>
+                  <span className="text-xs text-muted-foreground">
+                    {memberStageFilter !== "all"
+                      ? `검색 결과: ${filteredMembers.length}명 (전체 ${members.length}명)`
+                      : `총 ${members.length}명`}
+                  </span>
+                </div>
+
+                {/* 회원 단계별 필터 필 */}
+                <div className="flex flex-wrap gap-2 mb-4 bg-secondary/15 p-2 rounded-xl border border-border/60">
+                  {[
+                    { key: "all", label: "전체", count: members.length },
+                    { key: "diagnosis", label: "한끗 진단", count: members.filter(m => m.productKey === "diagnosis").length },
+                    { key: "build", label: "한끗 빌드", count: members.filter(m => m.productKey === "build").length },
+                    { key: "launch", label: "한끗 론칭", count: members.filter(m => m.productKey === "launch").length },
+                    { key: "partner", label: "한끗 파트너", count: members.filter(m => m.productKey === "partner").length },
+                  ].map((item) => (
+                    <button
+                      key={item.key}
+                      type="button"
+                      onClick={() => setMemberStageFilter(item.key)}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                        memberStageFilter === item.key
+                          ? "bg-primary text-white shadow-soft"
+                          : "hover:bg-secondary/40 text-muted-foreground"
+                      }`}
+                    >
+                      <span>{item.label}</span>
+                      <span className={`font-mono text-[10px] rounded-full px-1.5 ${
+                        memberStageFilter === item.key ? "bg-white/20 text-white" : "bg-secondary text-muted-foreground"
+                      }`}>
+                        {item.count}
+                      </span>
+                    </button>
+                  ))}
                 </div>
 
                 <div className="overflow-x-auto border border-border rounded-[var(--radius)] bg-card shadow-soft">
-                  {members.length === 0 ? (
+                  {filteredMembers.length === 0 ? (
                     <div className="p-16 text-center text-muted-foreground text-xs italic">
-                      발급된 회원 계정이 없습니다. 왼쪽 폼에서 첫 회원을 등록하세요.
+                      {memberStageFilter === "all"
+                        ? "발급된 회원 계정이 없습니다. 왼쪽 폼에서 첫 회원을 등록하세요."
+                        : "해당 단계에 등록된 회원이 없습니다."}
                     </div>
                   ) : (
                     <table className="w-full text-xs">
@@ -785,7 +829,7 @@ ${issuedInfo.name}님의 나다운 브랜딩 코칭을 위한 멤버 전용 계�
                         </tr>
                       </thead>
                       <tbody>
-                        {members.map((m) => {
+                        {filteredMembers.map((m) => {
                           const session = getSession(m.id);
                           const completedCount = getCompletedCount(m.id);
                           const progress = getProgress(m.id);
@@ -794,17 +838,54 @@ ${issuedInfo.name}님의 나다운 브랜딩 코칭을 위한 멤버 전용 계�
                           return (
                             <React.Fragment key={m.id}>
                               <tr className="border-t border-border align-middle">
-                                <td className="px-4 py-4 font-semibold text-primary">
-                                  {m.name}
+                                <td className="px-2 py-2">
+                                  <input
+                                    type="text"
+                                    value={m.name}
+                                    onChange={(e) => updateMember(m.id, { name: e.target.value })}
+                                    className="w-24 bg-transparent border border-transparent hover:border-border focus:border-primary focus:bg-background px-2 py-1.5 rounded-lg transition-all font-semibold text-primary text-xs"
+                                  />
                                 </td>
-                                <td className="px-4 py-4 font-mono">{m.email}</td>
-                                <td className="px-4 py-4 font-mono text-muted-foreground">
-                                  {m.password}
+                                <td className="px-2 py-2">
+                                  <input
+                                    type="text"
+                                    value={m.email}
+                                    onChange={(e) => updateMember(m.id, { email: e.target.value })}
+                                    className="w-44 bg-transparent border border-transparent hover:border-border focus:border-primary focus:bg-background px-2 py-1.5 rounded-lg transition-all font-mono text-xs"
+                                  />
                                 </td>
-                                <td className="px-4 py-4">
-                                  {PRODUCT_LABELS[m.productKey] || m.productKey}
+                                <td className="px-2 py-2">
+                                  <input
+                                    type="text"
+                                    value={m.password}
+                                    onChange={(e) => updateMember(m.id, { password: e.target.value })}
+                                    className="w-28 bg-transparent border border-transparent hover:border-border focus:border-primary focus:bg-background px-2 py-1.5 rounded-lg transition-all font-mono text-muted-foreground text-xs"
+                                  />
                                 </td>
-                                <td className="px-4 py-4">
+                                <td className="px-4 py-2">
+                                  <Select
+                                    value={m.productKey}
+                                    onValueChange={(val) => {
+                                      updateMember(m.id, { productKey: val });
+                                      toast({
+                                        title: "가입 서비스 변경",
+                                        description: `${m.name}님의 가입 서비스가 변경되었습니다.`,
+                                      });
+                                    }}
+                                  >
+                                    <SelectTrigger className="h-8 w-[145px] text-xs rounded-lg border-border/80 bg-background">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-white">
+                                      {Object.entries(PRODUCT_LABELS).map(([k, label]) => (
+                                        <SelectItem key={k} value={k} className="text-xs">
+                                          {label}
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
+                                </td>
+                                <td className="px-4 py-2">
                                   <div className="flex items-center gap-2">
                                     <div className="w-16 h-2 bg-secondary rounded-full overflow-hidden">
                                       <div
@@ -817,24 +898,36 @@ ${issuedInfo.name}님의 나다운 브랜딩 코칭을 위한 멤버 전용 계�
                                     </span>
                                   </div>
                                 </td>
-                                <td className="px-4 py-4">
-                                  {session.status === "finalized" ? (
-                                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-[#C4A265] bg-amber-50 border border-[#C4A265]/20 px-2 py-0.5 rounded-full">
-                                      최종 완료
-                                    </span>
-                                  ) : session.status === "analyzing" ? (
-                                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full animate-pulse">
-                                      분석 중
-                                    </span>
-                                  ) : session.status === "submitted" || session.status === "analyzed" ? (
-                                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-full">
-                                      코칭 대기
-                                    </span>
-                                  ) : (
-                                    <span className="inline-flex items-center gap-1 text-[10px] font-medium text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">
-                                      작성 중
-                                    </span>
-                                  )}
+                                <td className="px-4 py-2">
+                                  <Select
+                                    value={session.status}
+                                    onValueChange={(val) => {
+                                      setStatus(m.id, val as SubmissionStatus);
+                                      toast({
+                                        title: "진행 상태 변경",
+                                        description: `${m.name}님의 진행 상태가 변경되었습니다.`,
+                                      });
+                                    }}
+                                  >
+                                    <SelectTrigger className={`h-8 w-[110px] text-xs font-bold rounded-lg border ${
+                                      session.status === "finalized"
+                                        ? "text-[#C4A265] bg-amber-50/50 border-[#C4A265]/35 hover:bg-amber-50"
+                                        : session.status === "analyzing"
+                                        ? "text-blue-700 bg-blue-50/50 border-blue-200 hover:bg-blue-50"
+                                        : session.status === "submitted" || session.status === "analyzed"
+                                        ? "text-indigo-700 bg-indigo-50/50 border-indigo-200 hover:bg-indigo-50"
+                                        : "text-amber-700 bg-amber-50/50 border-amber-200 hover:bg-amber-50"
+                                    }`}>
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-white">
+                                      <SelectItem value="in-progress" className="text-xs">작성 중</SelectItem>
+                                      <SelectItem value="submitted" className="text-xs">제출 완료</SelectItem>
+                                      <SelectItem value="analyzing" className="text-xs">분석 중</SelectItem>
+                                      <SelectItem value="analyzed" className="text-xs">분석 완료</SelectItem>
+                                      <SelectItem value="finalized" className="text-xs">최종 완료</SelectItem>
+                                    </SelectContent>
+                                  </Select>
                                 </td>
                                 <td className="px-4 py-4 text-right space-x-2">
                                   {session.status !== "in-progress" && session.status !== "analyzing" && (

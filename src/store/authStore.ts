@@ -30,6 +30,9 @@ interface AuthState {
 
   /** 관리자: 멤버 삭제 */
   removeMember: (id: string) => void;
+
+  /** 관리자: 멤버 수정 */
+  updateMember: (id: string, updates: Partial<Omit<Member, "id" | "createdAt">>) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -79,6 +82,21 @@ export const useAuthStore = create<AuthState>()(
           currentMember:
             s.currentMember?.id === id ? null : s.currentMember,
         })),
+
+      updateMember: (id, updates) =>
+        set((s) => {
+          const updatedMembers = s.members.map((m) =>
+            m.id === id ? { ...m, ...updates } : m
+          );
+          const currentMember =
+            s.currentMember?.id === id
+              ? { ...s.currentMember, ...updates }
+              : s.currentMember;
+          return {
+            members: updatedMembers,
+            currentMember,
+          };
+        }),
     }),
     { name: "kkummolda-auth" },
   ),
