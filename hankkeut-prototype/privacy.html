@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C-15 개인정보 처리방침 — 한끗프로젝트 프로토타입</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="">
+<div class="proto-bar"><span class="pid">C-15</span><span class="pt">개인정보 처리방침</span><span class="sep">|</span><span class="frwrap"><span class="route">/privacy</span><span class="fr">FR-PRIV-04 · NFR-PRIV</span></span><span class="phase p1">◆ Phase 1 구현 대상</span><nav><a href="pages.html">전체 화면 목록</a><a href="flow-customer.html">고객 흐름</a><a href="flow-coach.html">운영 흐름</a><a href="index.html">프로토타입 홈</a></nav></div>
+
+<div class="cust cust-narrow">
+  <div class="eyebrow">PRIVACY · 개인정보 처리방침</div>
+  <h1 style="margin-top:.6rem">개인정보 처리방침</h1>
+  <p class="lead">한끗프로젝트(꿈몰다)는 아래와 같이 개인정보를 수집·이용합니다.</p>
+  <div class="card" style="padding:1.1rem 1.3rem;margin-top:1rem;border-left:4px solid var(--warn)">
+    <p class="note">◆ [P1] 구현 대상 · FR-PRIV-04 / NFR-PRIV. 아래 문구는 <strong>자리표시</strong>이며, 실제 시행 전 법률 전문가 검토를 거칩니다.</p>
+  </div>
+  <h2>1. 수집 항목</h2>
+  <table class="data card">
+    <tr><th>수집 시점</th><th>항목</th><th>저장 위치</th></tr>
+    <tr><td>무료 진단</td><td>이름, 이메일, 경력연수, 7문항 답변, 동의 시각</td><td>free_diagnostics</td></tr>
+    <tr><td>상담·신청</td><td>이름, 연락처, 이메일, 분야·경력, 고민, 목적·결과물</td><td>leads</td></tr>
+    <tr><td>유료 코칭</td><td>42문항 답변, (추후) 음성 녹음</td><td>coaching_sessions · answers</td></tr>
+  </table>
+  <h2>2. 이용 목적</h2>
+  <p style="font-size:.9rem">경력 자산화 진단·코칭 서비스 제공, 상담 연락, 산출물 제작. 수집 목적 외로 이용하지 않습니다.</p>
+  <h2>3. 보관 기간 및 파기</h2>
+  <p style="font-size:.9rem">서비스 종료 또는 회원 요청 시 지체 없이 파기합니다. (구체 기간은 법률 검토 후 확정)</p>
+  <h2>4. 제3자 제공</h2>
+  <p style="font-size:.9rem">원칙적으로 제3자에게 제공하지 않습니다. 데이터는 Supabase(데이터베이스)에 저장되며 접근은 인증된 운영자로 제한됩니다.</p>
+  <h2>5. 이용자 권리</h2>
+  <p style="font-size:.9rem">본인 정보의 열람·정정·삭제를 요청할 수 있습니다.</p>
+  <h2>6. 문의처</h2>
+  <p style="font-size:.9rem">꿈몰다 · (문의 이메일/연락처 기재)</p>
+  <p class="note" style="margin-top:1.4rem">동의는 각 수집 지점(무료 진단·상담·신청)에서 별도로 받으며, 미동의 시 제출이 차단됩니다 (FR-PRIV-02).</p>
+</div>
+
+</body>
+</html>

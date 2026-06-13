@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>전체 화면 목록 — 한끗프로젝트 프로토타입 v3</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="style.css"></head><body>
+<div class="proto-bar"><span class="pid">한끗</span><span class="pt">전체 화면 목록</span>
+<span class="sep">|</span><span class="route">PRD v3.0 · SRS v2.0</span>
+<nav><a href="pages.html">전체 화면 목록</a><a href="flow-customer.html">고객 흐름</a><a href="flow-coach.html">운영 흐름</a><a href="index.html">프로토타입 홈</a></nav></div>
+<div style="max-width:1240px;margin:0 auto;padding:2.2rem 1.6rem 5rem">
+<h1 style="font-size:1.6rem;font-weight:800">전체 화면 목록 — 34개</h1>
+<p class="note" style="margin-top:.4rem">PRD v3.0 / SRS v2.0 정본. 출시(Phase 1) 화면 20개 + 로드맵 보존 14개. 메타바에 라우트와 SRS 요구사항 ID가 표기됩니다. 카드는 라이브 축소 렌더링이며 클릭 시 이동합니다.</p>
+
+<h2 style="font-size:1.1rem;font-weight:800;margin-top:2rem">① 공개 페이지 <span class="phase cur" style="font-size:.62rem">● 현행</span> <span class="phase p1" style="font-size:.62rem">◆ 일부 P1</span></h2>
+<p class="note">방문자 누구나 접근 — 랜딩·무료 진단·상담·신청. 개인정보 수집 지점은 동의 게이트가 [P1]로 보강됩니다. /privacy 신규.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:1rem;margin:1rem 0 2.2rem"><a class="shot" href="landing.html">
+  <div class="thumb"><iframe src="landing.html" loading="lazy" tabindex="-1" scrolling="no" title="메인 랜딩 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-01 · 메인 랜딩</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
+  <div class="d">Hero+가치제안+비교표+프로세스+산출물+가격+FAQ+CTA 10섹션</div>
+  <div class="codes"><b>/</b></div></div></a><a class="shot" href="service.html">
+  <div class="thumb"><iframe src="service.html" loading="lazy" tabindex="-1" scrolling="no" title="서비스 소개 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-02 · 서비스 소개</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
+  <div class="d">한끗 방법론(추출·번역·자산화), 산출물 6종, 페인포인트</div>
+  <div class="codes"><b>/service</b></div></div></a><a class="shot" href="diagnosis.html">
+  <div class="thumb"><iframe src="diagnosis.html" loading="lazy" tabindex="-1" scrolling="no" title="무료 7문항 진단 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-03 · 무료 7문항 진단</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1] 보강</span></div>
+  <div class="d">이메일 수집 → 7문항 주관식 → 보너스 Q8 체크리스트</div>
+  <div class="codes"><b>/diagnosis</b></div></div></a><a class="shot" href="analyzing-free.html">
+  <div class="thumb"><iframe src="analyzing-free.html" loading="lazy" tabindex="-1" scrolling="no" title="분석 로딩 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-04 · 분석 로딩</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
+  <div class="d">분석 로딩 연출 — analyzeFree() 실행 단계</div>
+  <div class="codes"><b>/diagnosis (loading)</b></div></div></a><a class="shot" href="report-free.html">
+  <div class="thumb"><iframe src="report-free.html" loading="lazy" tabindex="-1" scrolling="no" title="무료 진단 리포트 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-05 · 무료 진단 리포트</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
+  <div class="d">유형 4종 분류 + 종합점수 + 5영역 점수 + 전환 CTA</div>
+  <div class="codes"><b>/diagnosis (report)</b></div></div></a><a class="shot" href="consultation.html">
+  <div class="thumb"><iframe src="consultation.html" loading="lazy" tabindex="-1" scrolling="no" title="무료 상담 신청 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-06 · 무료 상담 신청</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1] 보강</span></div>
+  <div class="d">목적·결과물 복수선택 포함 상담 신청 폼 → leadsStore</div>
+  <div class="codes"><b>/consultation</b></div></div></a><a class="shot" href="apply.html">
+  <div class="thumb"><iframe src="apply.html" loading="lazy" tabindex="-1" scrolling="no" title="유료 상품 신청 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-07 · 유료 상품 신청</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1] 보강</span></div>
+  <div class="d">4상품 확인 카드 + 공통 신청 폼(ApplyForm) — 리드 수집</div>
+  <div class="codes"><b>/apply/*</b></div></div></a><a class="shot" href="apply-thank-you.html">
+  <div class="thumb"><iframe src="apply-thank-you.html" loading="lazy" tabindex="-1" scrolling="no" title="신청 완료 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-08 · 신청 완료</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
+  <div class="d">접수 완료 안내 + 다음 절차</div>
+  <div class="codes"><b>/apply/thank-you</b></div></div></a><a class="shot" href="privacy.html">
+  <div class="thumb"><iframe src="privacy.html" loading="lazy" tabindex="-1" scrolling="no" title="개인정보 처리방침 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-15 · 개인정보 처리방침</span><span class="phase p1" style="font-size:.6rem">◆ Phase 1 구현 대상</span></div>
+  <div class="d">수집 항목·목적·보관·제3자·권리·문의처 — 동의 게이트 근거</div>
+  <div class="codes"><b>/privacy</b></div></div></a><a class="shot" href="login.html">
+  <div class="thumb"><iframe src="login.html" loading="lazy" tabindex="-1" scrolling="no" title="멤버 로그인 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-09 · 멤버 로그인</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1] 보강</span></div>
+  <div class="d">이메일+비밀번호 멤버 인증 → currentMember</div>
+  <div class="codes"><b>/login</b></div></div></a></div>
+
+<h2 style="font-size:1.1rem;font-weight:800">② 멤버 전용 (로그인 필요) <span class="phase curp1" style="font-size:.62rem">● 현행 +P1</span></h2>
+<p class="note">Supabase Auth 로그인 코칭 고객 — 42문항(텍스트 전용) → 제출 → 검수 후 리포트. 데이터 영속·교차 기기 이어쓰기 [P1].</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:1rem;margin:1rem 0 2.2rem"><a class="shot" href="coaching-dashboard.html">
+  <div class="thumb"><iframe src="coaching-dashboard.html" loading="lazy" tabindex="-1" scrolling="no" title="코칭 대시보드 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-10 · 코칭 대시보드</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
+  <div class="d">4파트 진행률 + 이어쓰기 — 로그인 필요</div>
+  <div class="codes"><b>/coaching</b></div></div></a><a class="shot" href="coaching-questions.html">
+  <div class="thumb"><iframe src="coaching-questions.html" loading="lazy" tabindex="-1" scrolling="no" title="42문항 작성 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-11 · 42문항 작성</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1] 보강</span></div>
+  <div class="d">텍스트+음성 이중 입력, QuestionNav, 실시간 자동 저장</div>
+  <div class="codes"><b>/coaching/questions</b></div></div></a><a class="shot" href="coaching-review.html">
+  <div class="thumb"><iframe src="coaching-review.html" loading="lazy" tabindex="-1" scrolling="no" title="답변 리뷰·제출 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-12 · 답변 리뷰·제출</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
+  <div class="d">파트별 답변 검토, 미답변 경고, 최종 제출 잠금</div>
+  <div class="codes"><b>/coaching/review</b></div></div></a><a class="shot" href="coaching-analyzing.html">
+  <div class="thumb"><iframe src="coaching-analyzing.html" loading="lazy" tabindex="-1" scrolling="no" title="AI 분석 진행 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-13 · AI 분석 진행</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
+  <div class="d">submitted→analyzing 상태 연출</div>
+  <div class="codes"><b>/coaching/analyzing</b></div></div></a><a class="shot" href="coaching-report.html">
+  <div class="thumb"><iframe src="coaching-report.html" loading="lazy" tabindex="-1" scrolling="no" title="코칭 리포트 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-14 · 코칭 리포트</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1] 보강</span></div>
+  <div class="d">유료 유형 4종 + 원라이너 초안 + 강점/보완 + 다음 단계</div>
+  <div class="codes"><b>/coaching/report</b></div></div></a></div>
+
+<h2 style="font-size:1.1rem;font-weight:800">③ 관리자 운영 <span class="phase curp1" style="font-size:.62rem">● 현행 +P1</span> <span class="phase p1" style="font-size:.62rem">◆ 인증 P1</span></h2>
+<p class="note">리드 CRM · 멤버 관리(Auth 발급) · 워크스페이스(검수 게이트). 어드민 인증은 [P1] 구현 대상.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:1rem;margin:1rem 0 2.2rem"><a class="shot" href="admin.html">
+  <div class="thumb"><iframe src="admin.html" loading="lazy" tabindex="-1" scrolling="no" title="관리자 콘솔 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>A-01 · 관리자 콘솔</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1] 보강</span></div>
+  <div class="d">리드 CRM + 멤버 계정 발급·진행 추적 2탭</div>
+  <div class="codes"><b>/admin</b></div></div></a><a class="shot" href="admin-lead-detail.html">
+  <div class="thumb"><iframe src="admin-lead-detail.html" loading="lazy" tabindex="-1" scrolling="no" title="리드 상세 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>A-02 · 리드 상세</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
+  <div class="d">7문항 답변 전문 + 영역 점수 + 추천 패키지 + 메모</div>
+  <div class="codes"><b>/admin (lead detail)</b></div></div></a><a class="shot" href="workspace.html">
+  <div class="thumb"><iframe src="workspace.html" loading="lazy" tabindex="-1" scrolling="no" title="코칭 워크스페이스 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>A-03 · 코칭 워크스페이스</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1] 보강</span></div>
+  <div class="d">42문항 심층 검토 + 음성 재생 + AIDraft + FinalProfile 확정</div>
+  <div class="codes"><b>/coaching/workspace/:memberId</b></div></div></a><a class="shot" href="admin-notifications.html">
+  <div class="thumb"><iframe src="admin-notifications.html" loading="lazy" tabindex="-1" scrolling="no" title="알림 시스템 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>A-04 · 알림 시스템</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
+  <div class="d">차임벨·푸시·멀티탭 동기화 알림 관리</div>
+  <div class="codes"><b>/admin (notifications)</b></div></div></a><a class="shot" href="admin-auth.html">
+  <div class="thumb"><iframe src="admin-auth.html" loading="lazy" tabindex="-1" scrolling="no" title="어드민 인증 게이트 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>A-05 · 어드민 인증 게이트</span><span class="phase p1" style="font-size:.6rem">◆ Phase 1 구현 대상</span></div>
+  <div class="d">Supabase Auth 접근 통제 — As-Is/To-Be + 인수조건</div>
+  <div class="codes"><b>/admin (auth)</b></div></div></a></div>
+
+<h2 style="font-size:1.1rem;font-weight:800">④ 출시 직후 보강 <span class="phase p15" style="font-size:.62rem">◇ Phase 1.5</span></h2>
+<p class="note">검수 대기 화면 + 이메일 전송 연계. 음성 클라우드 저장 후 음성 재활성화.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:1rem;margin:1rem 0 2.2rem"><a class="shot" href="report-pending.html">
+  <div class="thumb"><iframe src="report-pending.html" loading="lazy" tabindex="-1" scrolling="no" title="검수 대기 안내 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>R-01 · 검수 대기 안내</span><span class="phase p15" style="font-size:.6rem">◇ Phase 1.5</span></div>
+  <div class="d">코치 확정 전 '검토 중' 대기 — 이메일 알림 연계 [P1.5] (FR-WORK-04 보조)</div>
+  <div class="codes"><b>검수 대기 화면</b></div></div></a></div>
+
+<h2 style="font-size:1.1rem;font-weight:800">⑤ 로드맵 보존 — Phase 2 (AI 연동) <span class="phase p2" style="font-size:.62rem">◇ 10개</span></h2>
+<p class="note">구 기획(PRD v0.4.2/SRS v1.3)에서 보존한 AI 엔진 화면. LLM API 연동 시 재활용할 스펙 자산.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:1rem;margin:1rem 0 2.2rem"><a class="shot" href="admin-brief.html">
+  <div class="thumb"><iframe src="admin-brief.html" loading="lazy" tabindex="-1" scrolling="no" title="마스터 브리프 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>R-02 · 마스터 브리프</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2 로드맵</span></div>
+  <div class="d">42문항 기반 8섹션 브리프 자동 생성 — [P2] LLM 연동</div>
+  <div class="codes"><b>AI 마스터 브리프</b></div></div></a><a class="shot" href="admin-oneliner.html">
+  <div class="thumb"><iframe src="admin-oneliner.html" loading="lazy" tabindex="-1" scrolling="no" title="원라이너 3종 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>R-03 · 원라이너 3종</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2 로드맵</span></div>
+  <div class="d">전문성형·공감형·결과형 3종 — [P2]</div>
+  <div class="codes"><b>원라이너 자동 생성</b></div></div></a><a class="shot" href="admin-questions.html">
+  <div class="thumb"><iframe src="admin-questions.html" loading="lazy" tabindex="-1" scrolling="no" title="질문 아키텍처 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>R-04 · 질문 아키텍처</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2 로드맵</span></div>
+  <div class="d">42문항 분류·트리거 관리 — [P2]</div>
+  <div class="codes"><b>질문 엔진</b></div></div></a><a class="shot" href="admin-patterns.html">
+  <div class="thumb"><iframe src="admin-patterns.html" loading="lazy" tabindex="-1" scrolling="no" title="패턴 분류기 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>R-05 · 패턴 분류기</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2 로드맵</span></div>
+  <div class="d">답변 패턴 자동 분류 — [P2]</div>
+  <div class="codes"><b>답변 패턴 분류</b></div></div></a><a class="shot" href="admin-mapper.html">
+  <div class="thumb"><iframe src="admin-mapper.html" loading="lazy" tabindex="-1" scrolling="no" title="브랜딩 매퍼 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>R-06 · 브랜딩 매퍼</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2 로드맵</span></div>
+  <div class="d">답변→브랜딩 요소 매핑 — [P2]</div>
+  <div class="codes"><b>브랜딩 요소 매핑</b></div></div></a><a class="shot" href="admin-feedback.html">
+  <div class="thumb"><iframe src="admin-feedback.html" loading="lazy" tabindex="-1" scrolling="no" title="코칭 피드백 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>R-07 · 코칭 피드백</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2 로드맵</span></div>
+  <div class="d">코칭 스크립트 — [P2]</div>
+  <div class="codes"><b>코칭 스크립트 엔진</b></div></div></a><a class="shot" href="admin-rules.html">
+  <div class="thumb"><iframe src="admin-rules.html" loading="lazy" tabindex="-1" scrolling="no" title="리포트 룰 엔진 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>R-08 · 리포트 룰 엔진</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2 로드맵</span></div>
+  <div class="d">가설표현 강제 등 룰 — [P2]</div>
+  <div class="codes"><b>리포트 생성 규칙</b></div></div></a><a class="shot" href="admin-crosscheck.html">
+  <div class="thumb"><iframe src="admin-crosscheck.html" loading="lazy" tabindex="-1" scrolling="no" title="교차검증 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>R-09 · 교차검증</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2 로드맵</span></div>
+  <div class="d">답변 일관성 검증 — [P2]</div>
+  <div class="codes"><b>답변 교차검증</b></div></div></a><a class="shot" href="admin-handoff.html">
+  <div class="thumb"><iframe src="admin-handoff.html" loading="lazy" tabindex="-1" scrolling="no" title="휴먼 핸드오프 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>R-10 · 휴먼 핸드오프</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2 로드맵</span></div>
+  <div class="d">AI 한계 감지 시 코치 개입 — [P2]</div>
+  <div class="codes"><b>AI→코치 핸드오프</b></div></div></a><a class="shot" href="admin-airuns.html">
+  <div class="thumb"><iframe src="admin-airuns.html" loading="lazy" tabindex="-1" scrolling="no" title="AI 호출 로그 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>R-11 · AI 호출 로그</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2 로드맵</span></div>
+  <div class="d">호출 한도·로그 — [P2] API 연동 시 필수</div>
+  <div class="codes"><b>AI 호출 관리</b></div></div></a></div>
+
+<h2 style="font-size:1.1rem;font-weight:800">⑥ 로드맵 보존 — Phase 3 (비즈니스 확장) <span class="phase p3" style="font-size:.62rem">◇ 3개</span></h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:1rem;margin:1rem 0 2.2rem"><a class="shot" href="admin-retainer.html">
+  <div class="thumb"><iframe src="admin-retainer.html" loading="lazy" tabindex="-1" scrolling="no" title="리테이너 관리 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>R-12 · 리테이너 관리</span><span class="phase p3" style="font-size:.6rem">◇ Phase 3 로드맵</span></div>
+  <div class="d">한끗 파트너 월 구독 운영 — [P3]</div>
+  <div class="codes"><b>결제·구독 관리</b></div></div></a><a class="shot" href="admin-export.html">
+  <div class="thumb"><iframe src="admin-export.html" loading="lazy" tabindex="-1" scrolling="no" title="PPT Export 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>R-13 · PPT Export</span><span class="phase p3" style="font-size:.6rem">◇ Phase 3 로드맵</span></div>
+  <div class="d">강의안 PPT 자동 출력 — [P3]</div>
+  <div class="codes"><b>산출물 자동 생성</b></div></div></a><a class="shot" href="change-report.html">
+  <div class="thumb"><iframe src="change-report.html" loading="lazy" tabindex="-1" scrolling="no" title="변화 리포트 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>R-14 · 변화 리포트</span><span class="phase p3" style="font-size:.6rem">◇ Phase 3 로드맵</span></div>
+  <div class="d">기간별 브랜드 변화 추적 — [P3]</div>
+  <div class="codes"><b>재진단 비교</b></div></div></a></div>
+</div>
+</body></html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>고객 흐름 — 한끗프로젝트 프로토타입 v3</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="style.css"></head><body>
+<div class="proto-bar"><span class="pid">한끗</span><span class="pt">고객 흐름</span>
+<span class="sep">|</span><span class="route">PRD v3.0 · SRS v2.0</span>
+<nav><a href="pages.html">전체 화면 목록</a><a href="flow-customer.html">고객 흐름</a><a href="flow-coach.html">운영 흐름</a><a href="index.html">프로토타입 홈</a></nav></div>
+<div style="max-width:1240px;margin:0 auto;padding:2.2rem 1.6rem 5rem">
+<h1 style="font-size:1.6rem;font-weight:800">고객 UX 흐름</h1>
+<p class="note" style="margin-top:.4rem">3대 고객 경로 — 무료 진단 / 유료 신청 / 멤버 코칭. 전환 설계: 방문 → 무료 진단 → 상담·신청 → 계약 → 계정 발급 → 코칭 → 검수 → 리포트.</p>
+
+<div class="lane"><div class="lt">LANE 1 — 무료 진단 퍼널 <span class="phase curp1" style="font-size:.6rem">● 현행 +P1 동의</span></div><p class="note" style="margin:.1rem 0 .6rem">방문자가 10분 안에 '내 갭'을 확인하고 리드로 전환되는 핵심 퍼널</p><div class="flowrow"><div class="fstep"><div class="stepno">STEP 1 · 방문</div><a class="shot" href="landing.html">
+  <div class="thumb"><iframe src="landing.html" loading="lazy" tabindex="-1" scrolling="no" title="메인 랜딩 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-01 · 메인 랜딩</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
+  <div class="d">Hero+가치제안+비교표+프로세스+산출물+가격+FAQ+CTA 10섹션</div>
+  <div class="codes"><b>/</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">Hero CTA '경력 가치 무료 진단받기'</p></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">STEP 2 · 7문항 작성</div><a class="shot" href="diagnosis.html">
+  <div class="thumb"><iframe src="diagnosis.html" loading="lazy" tabindex="-1" scrolling="no" title="무료 7문항 진단 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-03 · 무료 7문항 진단</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1] 보강</span></div>
+  <div class="d">이메일 수집 → 7문항 주관식 → 보너스 Q8 체크리스트</div>
+  <div class="codes"><b>/diagnosis</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">동의 → 이메일 → 7문항 + 보너스 Q8 (FR-PRIV·FR-FREE-01)</p></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">STEP 3 · 분석</div><a class="shot" href="analyzing-free.html">
+  <div class="thumb"><iframe src="analyzing-free.html" loading="lazy" tabindex="-1" scrolling="no" title="분석 로딩 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-04 · 분석 로딩</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
+  <div class="d">분석 로딩 연출 — analyzeFree() 실행 단계</div>
+  <div class="codes"><b>/diagnosis (loading)</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">analyzeFree() 스코어링 (FR-FREE-02)</p></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">STEP 4 · 결과 리포트</div><a class="shot" href="report-free.html">
+  <div class="thumb"><iframe src="report-free.html" loading="lazy" tabindex="-1" scrolling="no" title="무료 진단 리포트 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-05 · 무료 진단 리포트</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
+  <div class="d">유형 4종 분류 + 종합점수 + 5영역 점수 + 전환 CTA</div>
+  <div class="codes"><b>/diagnosis (report)</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">유형 4종 + 5영역 점수 + 전환 CTA (FR-FREE-04)</p></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">STEP 5 · 상담 전환</div><a class="shot" href="consultation.html">
+  <div class="thumb"><iframe src="consultation.html" loading="lazy" tabindex="-1" scrolling="no" title="무료 상담 신청 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-06 · 무료 상담 신청</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1] 보강</span></div>
+  <div class="d">목적·결과물 복수선택 포함 상담 신청 폼 → leadsStore</div>
+  <div class="codes"><b>/consultation</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">leads 저장(익명 insert) → 어드민 CRM 유입 (FR-LEAD)</p></div></div></div>
+
+<div class="lane"><div class="lt">LANE 2 — 유료 신청 퍼널 <span class="phase curp1" style="font-size:.6rem">● 현행 +P1 동의</span></div><p class="note" style="margin:.1rem 0 .6rem">계약 확정은 오프라인(전화·미팅), 결제 시스템은 [P3]</p><div class="flowrow"><div class="fstep"><div class="stepno">STEP 1 · 서비스 이해</div><a class="shot" href="service.html">
+  <div class="thumb"><iframe src="service.html" loading="lazy" tabindex="-1" scrolling="no" title="서비스 소개 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-02 · 서비스 소개</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
+  <div class="d">한끗 방법론(추출·번역·자산화), 산출물 6종, 페인포인트</div>
+  <div class="codes"><b>/service</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">방법론·산출물 6종 확인</p></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">STEP 2 · 상품 선택·신청</div><a class="shot" href="apply.html">
+  <div class="thumb"><iframe src="apply.html" loading="lazy" tabindex="-1" scrolling="no" title="유료 상품 신청 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-07 · 유료 상품 신청</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1] 보강</span></div>
+  <div class="d">4상품 확인 카드 + 공통 신청 폼(ApplyForm) — 리드 수집</div>
+  <div class="codes"><b>/apply/*</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">/apply/* 4상품 — 동의 후 리드 수집 (FR-LEAD-02)</p></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">STEP 3 · 접수 완료</div><a class="shot" href="apply-thank-you.html">
+  <div class="thumb"><iframe src="apply-thank-you.html" loading="lazy" tabindex="-1" scrolling="no" title="신청 완료 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-08 · 신청 완료</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
+  <div class="d">접수 완료 안내 + 다음 절차</div>
+  <div class="codes"><b>/apply/thank-you</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">1영업일 내 연락 안내 (FR-LEAD-03)</p></div></div></div>
+
+<div class="lane"><div class="lt">LANE 3 — 멤버 코칭 퍼널 (로그인) <span class="phase curp1" style="font-size:.6rem">● 현행 +P1</span></div><p class="note" style="margin:.1rem 0 .6rem">세션 상태: in-progress → submitted → analyzing → analyzed → finalized</p><div class="flowrow"><div class="fstep"><div class="stepno">STEP 1 · 로그인</div><a class="shot" href="login.html">
+  <div class="thumb"><iframe src="login.html" loading="lazy" tabindex="-1" scrolling="no" title="멤버 로그인 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-09 · 멤버 로그인</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1] 보강</span></div>
+  <div class="d">이메일+비밀번호 멤버 인증 → currentMember</div>
+  <div class="codes"><b>/login</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">Supabase Auth 계정 (FR-AUTH-03)</p></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">STEP 2 · 대시보드</div><a class="shot" href="coaching-dashboard.html">
+  <div class="thumb"><iframe src="coaching-dashboard.html" loading="lazy" tabindex="-1" scrolling="no" title="코칭 대시보드 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-10 · 코칭 대시보드</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
+  <div class="d">4파트 진행률 + 이어쓰기 — 로그인 필요</div>
+  <div class="codes"><b>/coaching</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">4파트 진행률 + 이어쓰기 (FR-COACH-01·03)</p></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">STEP 3 · 42문항 작성</div><a class="shot" href="coaching-questions.html">
+  <div class="thumb"><iframe src="coaching-questions.html" loading="lazy" tabindex="-1" scrolling="no" title="42문항 작성 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-11 · 42문항 작성</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1] 보강</span></div>
+  <div class="d">텍스트+음성 이중 입력, QuestionNav, 실시간 자동 저장</div>
+  <div class="codes"><b>/coaching/questions</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">텍스트 입력(음성 OFF), 자동 저장 (FR-COACH-02·04)</p></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">STEP 4 · 검토·제출</div><a class="shot" href="coaching-review.html">
+  <div class="thumb"><iframe src="coaching-review.html" loading="lazy" tabindex="-1" scrolling="no" title="답변 리뷰·제출 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-12 · 답변 리뷰·제출</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
+  <div class="d">파트별 답변 검토, 미답변 경고, 최종 제출 잠금</div>
+  <div class="codes"><b>/coaching/review</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">미답변 확인 → submitted 잠금 (FR-COACH-05·06)</p></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">STEP 5 · 분석 대기</div><a class="shot" href="coaching-analyzing.html">
+  <div class="thumb"><iframe src="coaching-analyzing.html" loading="lazy" tabindex="-1" scrolling="no" title="AI 분석 진행 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-13 · AI 분석 진행</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
+  <div class="d">submitted→analyzing 상태 연출</div>
+  <div class="codes"><b>/coaching/analyzing</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">코치 검수·확정 대기</p></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">STEP 6 · 리포트 수령</div><a class="shot" href="coaching-report.html">
+  <div class="thumb"><iframe src="coaching-report.html" loading="lazy" tabindex="-1" scrolling="no" title="코칭 리포트 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>C-14 · 코칭 리포트</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1] 보강</span></div>
+  <div class="d">유료 유형 4종 + 원라이너 초안 + 강점/보완 + 다음 단계</div>
+  <div class="codes"><b>/coaching/report</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">finalized 확정본만 노출 (FR-WORK-04)</p></div></div></div>
+
+<div class="lane"><div class="lt">출시 직후 · 로드맵 — 고객 측 <span class="phase p15" style="font-size:.6rem">◇ P1.5 / P2·3</span></div><div class="flowrow"><div class="fstep"><div class="stepno">검수 대기</div><a class="shot" href="report-pending.html">
+  <div class="thumb"><iframe src="report-pending.html" loading="lazy" tabindex="-1" scrolling="no" title="검수 대기 안내 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>R-01 · 검수 대기 안내</span><span class="phase p15" style="font-size:.6rem">◇ Phase 1.5</span></div>
+  <div class="d">코치 확정 전 '검토 중' 대기 — 이메일 알림 연계 [P1.5] (FR-WORK-04 보조)</div>
+  <div class="codes"><b>검수 대기 화면</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">[P1.5] 검토 중 대기 + 이메일 알림</p></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">변화 리포트</div><a class="shot" href="change-report.html">
+  <div class="thumb"><iframe src="change-report.html" loading="lazy" tabindex="-1" scrolling="no" title="변화 리포트 미리보기"></iframe></div>
+  <div class="meta"><div class="t"><span>R-14 · 변화 리포트</span><span class="phase p3" style="font-size:.6rem">◇ Phase 3 로드맵</span></div>
+  <div class="d">기간별 브랜드 변화 추적 — [P3]</div>
+  <div class="codes"><b>재진단 비교</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">[P3] 재진단 비교</p></div></div></div>
+</div>
+</body></html>

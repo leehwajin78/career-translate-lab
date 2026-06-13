@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A-04 알림 시스템 — 한끗프로젝트 프로토타입</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="">
+<div class="proto-bar"><span class="pid">A-04</span><span class="pt">알림 시스템</span><span class="sep">|</span><span class="frwrap"><span class="route">/admin (notifications)</span><span class="fr">FR-NOTIF</span></span><span class="phase cur">● 현행 구현</span><nav><a href="pages.html">전체 화면 목록</a><a href="flow-customer.html">고객 흐름</a><a href="flow-coach.html">운영 흐름</a><a href="index.html">프로토타입 홈</a></nav></div>
+<div class="admin"><aside class="side"><div class="logo">한끗프로젝트<small>ADMIN — career-translate-lab</small></div><div class="grp">운영 콘솔</div><a href="admin.html"><span>관리자 콘솔 2탭</span><span class="tag">P1</span></a><a href="admin-lead-detail.html"><span>리드 상세</span><span class="tag">현행</span></a><a href="workspace.html"><span>코칭 워크스페이스</span><span class="tag">P1</span></a><a href="admin-notifications.html" class="on"><span>알림 시스템</span><span class="tag">현행</span></a><a href="admin-auth.html"><span>어드민 인증 게이트</span><span class="tag">P1</span></a><div class="grp">AI 엔진 (Phase 2)</div><a href="admin-brief.html"><span>마스터 브리프</span><span class="tag">P2</span></a><a href="admin-oneliner.html"><span>원라이너 3종</span><span class="tag">P2</span></a><a href="admin-questions.html"><span>질문 아키텍처</span><span class="tag">P2</span></a><a href="admin-patterns.html"><span>패턴 분류기</span><span class="tag">P2</span></a><a href="admin-mapper.html"><span>브랜딩 매퍼</span><span class="tag">P2</span></a><a href="admin-feedback.html"><span>코칭 피드백</span><span class="tag">P2</span></a><a href="admin-rules.html"><span>리포트 룰</span><span class="tag">P2</span></a><a href="admin-crosscheck.html"><span>교차검증</span><span class="tag">P2</span></a><a href="admin-handoff.html"><span>휴먼 핸드오프</span><span class="tag">P2</span></a><a href="admin-airuns.html"><span>AI 호출 로그</span><span class="tag">P2</span></a><div class="grp">확장 (Phase 3)</div><a href="admin-retainer.html"><span>리테이너 관리</span><span class="tag">P3</span></a><a href="admin-export.html"><span>PPT Export</span><span class="tag">P3</span></a></aside><div class="main"><div style="display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap"><div><h1>알림 시스템</h1><p class="sub">제출 차임벨 + 데스크톱 푸시 + 멀티탭 동기화</p></div><div style="margin-left:auto;display:flex;gap:.5rem"><button class="btn ghost sm">전체 읽음</button><button class="btn bad sm">초기화</button></div></div>
+<div class="kpis">
+  <div class="kpi"><div class="v" style="color:var(--warn)">3</div><div class="k">읽지 않은 알림</div></div>
+  <div class="kpi"><div class="v">Web Audio</div><div class="k">제출 차임벨 재생</div></div>
+  <div class="kpi"><div class="v">Notification API</div><div class="k">데스크톱 푸시</div></div>
+  <div class="kpi"><div class="v">BroadcastChannel</div><div class="k">멀티탭 동기화</div></div>
+</div>
+<div class="panel">
+  <h3>알림 목록</h3>
+  <table class="data">
+    <tr><th></th><th>내용</th><th>시각</th><th></th></tr>
+    <tr><td>🔔</td><td><strong>김명진 님이 42문항 답변을 제출했습니다</strong> — 워크스페이스에서 검토를 시작하세요</td><td class="mono">오늘 14:31</td><td><a class="btn primary sm" href="workspace.html">검토</a></td></tr>
+    <tr><td>📥</td><td><strong>신규 상담 리드</strong> — 이재환 (무료상담, 특강 자료 니즈)</td><td class="mono">오늘 11:02</td><td><a class="btn ghost sm" href="admin-lead-detail.html">보기</a></td></tr>
+    <tr><td>📥</td><td><strong>한끗 빌드 신청 접수</strong> — 정은주</td><td class="mono">어제 17:44</td><td><a class="btn ghost sm" href="admin.html">보기</a></td></tr>
+    <tr style="opacity:.5"><td>✓</td><td>최성호 님 코칭 리포트 확정(finalized) 완료</td><td class="mono">06-08</td><td></td></tr>
+  </table>
+  <p class="note" style="margin-top:.7rem">제출 이벤트 발생 시: ① 차임벨 사운드 재생 → ② 데스크톱 푸시 발송 → ③ 열려 있는 모든 관리자 탭에 동기화</p>
+</div>
+</div></div>
+</body>
+</html>

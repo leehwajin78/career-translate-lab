@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A-05 어드민 인증 게이트 — 한끗프로젝트 프로토타입</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="">
+<div class="proto-bar"><span class="pid">A-05</span><span class="pt">어드민 인증 게이트</span><span class="sep">|</span><span class="frwrap"><span class="route">/admin (auth)</span><span class="fr">FR-AUTH-01·02 · NFR-SEC</span></span><span class="phase p1">◆ Phase 1 구현 대상</span><nav><a href="pages.html">전체 화면 목록</a><a href="flow-customer.html">고객 흐름</a><a href="flow-coach.html">운영 흐름</a><a href="index.html">프로토타입 홈</a></nav></div>
+<div class="admin"><aside class="side"><div class="logo">한끗프로젝트<small>ADMIN — career-translate-lab</small></div><div class="grp">운영 콘솔</div><a href="admin.html"><span>관리자 콘솔 2탭</span><span class="tag">P1</span></a><a href="admin-lead-detail.html"><span>리드 상세</span><span class="tag">현행</span></a><a href="workspace.html"><span>코칭 워크스페이스</span><span class="tag">P1</span></a><a href="admin-notifications.html"><span>알림 시스템</span><span class="tag">현행</span></a><a href="admin-auth.html" class="on"><span>어드민 인증 게이트</span><span class="tag">P1</span></a><div class="grp">AI 엔진 (Phase 2)</div><a href="admin-brief.html"><span>마스터 브리프</span><span class="tag">P2</span></a><a href="admin-oneliner.html"><span>원라이너 3종</span><span class="tag">P2</span></a><a href="admin-questions.html"><span>질문 아키텍처</span><span class="tag">P2</span></a><a href="admin-patterns.html"><span>패턴 분류기</span><span class="tag">P2</span></a><a href="admin-mapper.html"><span>브랜딩 매퍼</span><span class="tag">P2</span></a><a href="admin-feedback.html"><span>코칭 피드백</span><span class="tag">P2</span></a><a href="admin-rules.html"><span>리포트 룰</span><span class="tag">P2</span></a><a href="admin-crosscheck.html"><span>교차검증</span><span class="tag">P2</span></a><a href="admin-handoff.html"><span>휴먼 핸드오프</span><span class="tag">P2</span></a><a href="admin-airuns.html"><span>AI 호출 로그</span><span class="tag">P2</span></a><div class="grp">확장 (Phase 3)</div><a href="admin-retainer.html"><span>리테이너 관리</span><span class="tag">P3</span></a><a href="admin-export.html"><span>PPT Export</span><span class="tag">P3</span></a></aside><div class="main"><div style="display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap"><div><h1>어드민 인증 게이트</h1><p class="sub">Supabase Auth 기반 접근 통제 — FR-AUTH-01·02 / NFR-SEC</p></div></div>
+<div class="panel" style="border-left:4px solid var(--bad)">
+  <h3>현행 위험 (As-Is)</h3>
+  <p style="font-size:.88rem">현재 AdminGate는 children만 반환합니다. <strong>/admin은 URL만 알면 누구나 접근</strong>해 리드 연락처·진단 답변·멤버 계정을 열람할 수 있습니다. 실고객 데이터가 쌓이기 전 반드시 차단해야 합니다.</p>
+  <pre class="mono" style="background:#3A1212;color:#F0C8C8;border-radius:10px;padding:1rem;font-size:.78rem;margin-top:.8rem">const AdminGate = ({ children }) => children;  // 인증 로직 없음</pre>
+</div>
+<div class="panel" style="border-left:4px solid var(--blue)">
+  <h3>◆ [P1] 목표 (To-Be) — Supabase Auth</h3>
+  <p style="font-size:.88rem">로그인 + <code>app_metadata.role='admin'</code> 세션만 어드민 권한을 가집니다. 비로그인·비어드민은 <code>/admin</code>·<code>/coaching/workspace/*</code> 진입이 차단됩니다.</p>
+  <pre class="mono" style="background:#0F1A3A;color:#C8D6F0;border-radius:10px;padding:1rem;font-size:.78rem;margin-top:.8rem">// is_admin(): auth.jwt().app_metadata.role === 'admin'
+if (!session || !isAdmin) return &lt;AdminLogin/&gt;;
+return children;</pre>
+  <div style="max-width:420px;margin:1rem auto 0">
+    <p style="font-size:.84rem;font-weight:600;margin-bottom:.3rem">어드민 이메일</p>
+    <input type="text" value="admin@kkummolda.com" style="width:100%;border:1.5px solid var(--line);border-radius:8px;padding:.55rem .8rem;font:inherit">
+    <p style="font-size:.84rem;font-weight:600;margin:.7rem 0 .3rem">비밀번호</p>
+    <input type="password" placeholder="••••••••" style="width:100%;border:1.5px solid var(--line);border-radius:8px;padding:.55rem .8rem;font:inherit">
+    <button class="btn primary" style="width:100%;margin-top:.9rem">어드민 로그인</button>
+  </div>
+</div>
+<div class="panel">
+  <h3>인수조건 (SRS)</h3>
+  <table class="data">
+    <tr><th>AC</th><th>통과 조건</th></tr>
+    <tr><td>AUTH-02.1</td><td>로그아웃 상태 /admin 진입 시 로그인 폼 표시, 데이터 미렌더</td></tr>
+    <tr><td>AUTH-02.2</td><td>일반 멤버 세션으로 워크스페이스 진입 거부</td></tr>
+    <tr><td>AUTH-05.1</td><td>members 테이블·store에 평문 password 필드 부재</td></tr>
+    <tr><td>SEC-02.1</td><td>service_role 키가 클라이언트 번들에 미포함</td></tr>
+  </table>
+  <p class="note" style="margin-top:.6rem">관련 Task: 작업 명세 T1(RLS·어드민 role) · T3(AdminGate 교체) · T4(멤버 Auth 발급)</p>
+</div>
+</div></div>
+</body>
+</html>

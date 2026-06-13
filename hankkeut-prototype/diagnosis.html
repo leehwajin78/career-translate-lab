@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C-03 무료 7문항 진단 — 한끗프로젝트 프로토타입</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="">
+<div class="proto-bar"><span class="pid">C-03</span><span class="pt">무료 7문항 진단</span><span class="sep">|</span><span class="frwrap"><span class="route">/diagnosis</span><span class="fr">FR-FREE-01·03 · FR-PRIV-01~03</span></span><span class="phase curp1">● 현행 +[P1] 보강</span><nav><a href="pages.html">전체 화면 목록</a><a href="flow-customer.html">고객 흐름</a><a href="flow-coach.html">운영 흐름</a><a href="index.html">프로토타입 홈</a></nav></div>
+
+<div class="cust cust-narrow">
+  <div class="eyebrow">FREE DIAGNOSIS · 무료 자가 진단</div>
+  <h1 style="margin-top:.6rem">경력 가치 무료 진단 — 7문항</h1>
+  <p class="lead">직함을 빼고 나를 설명할 수 있는지, 10분 안에 확인합니다.</p>
+
+  <div class="card" style="padding:1.3rem;margin-top:1.5rem">
+    <div class="eyebrow">STEP 0 — 기본 정보 (완료)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.7rem;margin-top:.8rem">
+      <div><p class="note">이름</p><p style="font-weight:600">김명진</p></div>
+      <div><p class="note">이메일</p><p style="font-weight:600">mj.kim@example.com</p></div>
+      <div><p class="note">경력 연수</p><p style="font-weight:600">28년</p></div>
+    </div>
+    <div class="consent"><input type="checkbox" checked><div><strong>개인정보 수집·이용 동의</strong> <a href="privacy.html" style="color:var(--blue)">[처리방침 보기]</a><br><span class="note">이름·이메일·경력연수·진단 답변을 진단 제공 목적으로 수집합니다. 동의해야 진단을 시작할 수 있습니다. <b>FR-PRIV-01·02</b></span></div></div>
+    <p class="note" style="margin-top:.3rem">✓ 동의 시각이 free_diagnostics.consent_at에 기록됩니다 (FR-PRIV-03)</p>
+  </div>
+
+  <div style="margin:1.6rem 0 1rem">
+    <div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.4rem"><strong>진행률 — 2/7 완료</strong><span class="note">현재 Q3</span></div>
+    <div class="bar"><i style="width:29%"></i></div>
+  </div>
+
+  <div class="card" style="padding:1.1rem 1.3rem;margin-bottom:.7rem;"><div style="display:flex;gap:.6rem;align-items:center"><span class="badge ok">Q1</span><span class="note mono">identity · 정체성</span><span class="badge ok" style="margin-left:auto">작성 완료</span></div><p style="font-weight:600;font-size:.95rem;margin-top:.55rem">직함을 빼고, 당신을 한 문장으로 소개한다면 어떻게 말하시겠습니까?</p></div><div class="card" style="padding:1.1rem 1.3rem;margin-bottom:.7rem;"><div style="display:flex;gap:.6rem;align-items:center"><span class="badge ok">Q2</span><span class="note mono">coreValues · 핵심 가치</span><span class="badge ok" style="margin-left:auto">작성 완료</span></div><p style="font-weight:600;font-size:.95rem;margin-top:.55rem">지금까지의 일에서 가장 자랑스러웠던 순간 3가지는 무엇입니까?</p></div><div class="card" style="padding:1.1rem 1.3rem;margin-bottom:.7rem;border:2px solid var(--blue)"><div style="display:flex;gap:.6rem;align-items:center"><span class="badge blue">Q3</span><span class="note mono">strengths · 강점</span><span class="badge blue" style="margin-left:auto">현재 작성 중</span></div><p style="font-weight:600;font-size:.95rem;margin-top:.55rem">특별히 애쓰지 않아도 자연스럽게 잘 되는 것 3가지는 무엇입니까?</p><textarea placeholder="자유롭게 적어주세요. 문장이 다듬어져 있지 않아도 괜찮습니다." style="width:100%;min-height:110px;border:1.5px solid var(--blue);border-radius:10px;padding:.8rem;font:inherit;font-size:.9rem;margin-top:.7rem"></textarea><div style="display:flex;justify-content:space-between;margin-top:.5rem"><span class="note">텍스트 길이·키워드 기반 로컬 분석(analyzeFree)에 사용됩니다</span><span class="note">0자</span></div></div><div class="card" style="padding:1.1rem 1.3rem;margin-bottom:.7rem;"><div style="display:flex;gap:.6rem;align-items:center"><span class="badge gray">Q4</span><span class="note mono">authority · 권위</span><span class="badge gray" style="margin-left:auto">대기</span></div><p style="font-weight:600;font-size:.95rem;margin-top:.55rem">사람들이 당신에게 조언을 구하러 오는 분야는 무엇입니까?</p></div><div class="card" style="padding:1.1rem 1.3rem;margin-bottom:.7rem;"><div style="display:flex;gap:.6rem;align-items:center"><span class="badge gray">Q5</span><span class="note mono">targetAudience · 타깃</span><span class="badge gray" style="margin-left:auto">대기</span></div><p style="font-weight:600;font-size:.95rem;margin-top:.55rem">어떤 마음 상태에 있는 사람을 돕고 싶으십니까?</p></div><div class="card" style="padding:1.1rem 1.3rem;margin-bottom:.7rem;"><div style="display:flex;gap:.6rem;align-items:center"><span class="badge gray">Q6</span><span class="note mono">differentiation · 차별화</span><span class="badge gray" style="margin-left:auto">대기</span></div><p style="font-weight:600;font-size:.95rem;margin-top:.55rem">같은 분야의 다른 사람들과 비교해, 당신만의 차별점은 무엇입니까?</p></div><div class="card" style="padding:1.1rem 1.3rem;margin-bottom:.7rem;"><div style="display:flex;gap:.6rem;align-items:center"><span class="badge gray">Q7</span><span class="note mono">message · 메시지</span><span class="badge gray" style="margin-left:auto">대기</span></div><p style="font-weight:600;font-size:.95rem;margin-top:.55rem">세상에 꼭 전하고 싶은 핵심 메시지를 한 문장으로 적어주세요.</p></div>
+
+  <div class="card" style="padding:1.2rem 1.3rem;margin-top:1rem;border-left:4px solid var(--gold)">
+    <div style="display:flex;gap:.6rem;align-items:center"><span class="badge gold">보너스 Q8</span><span class="note">체크리스트</span></div>
+    <p style="font-weight:600;font-size:.95rem;margin-top:.55rem">지금 바로 보낼 수 있는 자료를 모두 골라주세요.</p>
+    <div style="margin-top:.5rem"><label style="display:flex;gap:.5rem;align-items:center;font-size:.88rem;padding:.35rem 0"><input type="checkbox" > 원라이너(한 줄 소개)</label><label style="display:flex;gap:.5rem;align-items:center;font-size:.88rem;padding:.35rem 0"><input type="checkbox" > 전문가 프로필 1페이지</label><label style="display:flex;gap:.5rem;align-items:center;font-size:.88rem;padding:.35rem 0"><input type="checkbox" > 대표 강의안</label><label style="display:flex;gap:.5rem;align-items:center;font-size:.88rem;padding:.35rem 0"><input type="checkbox" > B2B 제안서</label><label style="display:flex;gap:.5rem;align-items:center;font-size:.88rem;padding:.35rem 0"><input type="checkbox" > 온라인 소개 페이지</label><label style="display:flex;gap:.5rem;align-items:center;font-size:.88rem;padding:.35rem 0"><input type="checkbox" checked> 아직 없음</label></div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;margin-top:1.4rem">
+    <a class="btn ghost" href="landing.html">← 이전</a>
+    <a class="btn primary" href="analyzing-free.html">다음 문항 →</a>
+  </div>
+  <p class="note" style="margin-top:1rem;text-align:center">답변은 작성 즉시 저장되며, 진단 완료 시 free_diagnostics 테이블에 기록됩니다 (FR-FREE-03)</p>
+</div>
+
+</body>
+</html>

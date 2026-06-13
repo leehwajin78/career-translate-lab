@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A-14 교차 검증 매트릭스 — 한끗프로젝트 프로토타입 (로드맵 보존)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="">
+<div class="proto-bar"><span class="pid">A-14</span><span class="pt">교차 검증 매트릭스</span><span class="sep">|</span><span class="feat">AC-Cross · AC-Neg-6</span><span class="phase p2">◇ Phase 2 로드맵</span><nav><a href="pages.html">전체 화면 목록</a><a href="flow-customer.html">고객 흐름</a><a href="flow-coach.html">운영 흐름</a><a href="index.html">프로토타입 홈</a></nav></div>
+<div class="admin"><aside class="side"><div class="logo">꿈몰다 브랜드 매니지먼트<small>ADMIN CONSOLE · PROTOTYPE</small></div><div class="grp">운영 (MVP-Free P0)</div><a href="admin.html"><span>진단 목록</span><span class="tag">P0</span></a><a href="admin-lead-detail.html"><span>진단 상세·검수</span><span class="tag">P0</span></a><a href="admin.html"><span>리드 DB</span><span class="tag">P0</span></a><a href="admin-airuns.html"><span>AI 호출 로그</span><span class="tag">P1</span></a><div class="grp">AI 코칭 엔진 (V1.5)</div><a href="admin-questions.html"><span>질문 아키텍처 F9</span><span class="tag">V1.5</span></a><a href="admin-patterns.html"><span>패턴 분류기 F10</span><span class="tag">V1.5</span></a><a href="admin-mapper.html"><span>브랜딩 매퍼 F11</span><span class="tag">V1.5</span></a><a href="workspace.html"><span>코치 분석 노트 F15</span><span class="tag">V1.5</span></a><a href="admin-oneliner.html"><span>원라이너 3종</span><span class="tag">V1.5</span></a><a href="admin-brief.html"><span>마스터 브리프 F1</span><span class="tag">V1.5</span></a><a href="admin-feedback.html"><span>코칭 피드백 F12</span><span class="tag">V1.5</span></a><a href="admin-rules.html"><span>리포트 룰 엔진 F13</span><span class="tag">V1.5</span></a><div class="grp">고도화 (V2)</div><a href="admin-crosscheck.html" class="on"><span>교차 검증 매트릭스</span><span class="tag">V2</span></a><a href="admin-handoff.html"><span>휴먼 핸드오프 F14</span><span class="tag">V2</span></a><a href="admin-retainer.html"><span>리테이너 관리 F6</span><span class="tag">V2</span></a><a href="admin-export.html"><span>PPT/PDF Export F8</span><span class="tag">V2</span></a></aside><div class="main"><div style="display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap"><div><h1>교차 검증 매트릭스</h1><p class="sub">단일 답변이 아닌 답변 간 관계에서 패턴을 읽습니다 — §5-5 · 9개 매트릭스 (AC-Cross)</p></div></div>
+<div class="kpis">
+  <div class="kpi"><div class="v">8 / 9</div><div class="k">통과 (게이트: fail 시 검수자 명시 승인 필요)</div></div>
+  <div class="kpi"><div class="v">0.74</div><div class="k">평균 정합성 점수</div></div>
+</div>
+<div class="panel">
+  <table class="data"><tr><th>매트릭스</th><th>검증 내용</th><th>결과</th><th>판정</th></tr><tr><td class="mono">X1 Q1↔Q41</td><td>정체성 변화량 (직함 의존·가치 표현·구체성)</td><td><b>변화 +0.43</b></td><td><span class="badge ok">통과</span></td></tr><tr><td class="mono">X2 Q6×Q20</td><td>가치 일관성 점수 (의사결정 기준 vs 선언 가치)</td><td><b>0.82</b></td><td><span class="badge ok">통과 (≥0.5)</span></td></tr><tr><td class="mono">X3 Q1+Q21+Q41</td><td>3지점 정체성 일관성</td><td><b>0.77</b></td><td><span class="badge ok">통과</span></td></tr><tr><td class="mono">X4 Q32↔Q42</td><td>WHY 일관성 (추상도 차이)</td><td><b>1단계</b></td><td><span class="badge ok">통과 (≤2)</span></td></tr><tr><td class="mono">X5 Q26+Q33</td><td>페르소나 통합 정합</td><td><b>0.88</b></td><td><span class="badge ok">통과</span></td></tr><tr><td class="mono">X6 Q4↔Q12</td><td>전문성-자연 권위 일치도</td><td><b>0.71</b></td><td><span class="badge ok">통과</span></td></tr><tr><td class="mono">X7 Q6↔Q18</td><td>행동-가치 일관성</td><td><b>0.48</b></td><td><span class="badge bad">fail — 심화 탐색 플래그</span></td></tr><tr><td class="mono">X8 Q16↔Q4</td><td>열정-전문성 교집합</td><td><b>있음</b></td><td><span class="badge ok">통과</span></td></tr><tr><td class="mono">X9 Q38↔Q10</td><td>메시지 씨앗 정합</td><td><b>0.80</b></td><td><span class="badge ok">통과</span></td></tr></table>
+  <div class="card" style="padding:.9rem 1.1rem;margin-top:.9rem;background:var(--bad-soft);border-color:#F3CFCB">
+    <p style="font-size:.86rem;color:var(--bad)"><b>X7 fail</b> — Q18 일관성 근거가 Q6 원칙과 어긋납니다. AC-Neg-6에 따라 마스터 브리프 생성은 검수자 명시 승인 후에만 진입합니다.
+    <button class="btn bad sm" style="margin-left:.5rem" onclick="alert('사람 코치 핸드오프 권장 기록')">핸드오프 권장</button>
+    <button class="btn ghost sm" onclick="alert('검수자 명시 승인 — 게이트 해제')">명시 승인 후 진행</button></p>
+  </div>
+</div>
+</div></div>
+</body>
+</html>
