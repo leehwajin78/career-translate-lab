@@ -205,11 +205,11 @@ export default function VoiceRecordMode({
   // ─── 마이크 권한 거부 상태 ───
   if (permissionDenied) {
     return (
-      <div className="rounded-2xl border-2 border-dashed border-red-200 bg-red-50/50 p-6 text-center">
-        <p className="text-base font-bold text-red-600 mb-2">
+      <div className="rounded-2xl border-2 border-dashed border-error-border bg-error-bg p-6 text-center">
+        <p className="text-base font-bold text-destructive mb-2">
           🎤 마이크 사용 권한이 필요합니다
         </p>
-        <p className="text-sm text-red-500/80 leading-relaxed break-keep mb-4">
+        <p className="text-sm text-destructive/80 leading-relaxed break-keep mb-4">
           브라우저 설정에서 이 사이트의 마이크 접근을 허용해 주세요.
           <br />
           허용 후 아래 버튼을 다시 눌러주시면 됩니다.

@@ -14,7 +14,7 @@ export default function Index() {
             <Sparkles size={16} />
             <span>경력 자산화 서비스</span>
           </div>
-          <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[1.15] text-primary fade-in tracking-tight break-keep">
+          <h1 className="font-serif text-fluid-hero leading-[1.15] text-primary fade-in tracking-tight break-keep">
             30년을 일했는데, <br />
             <span className="inline-block">나를 소개하는 <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-primary/80">한 문장</span>이 없습니다.</span>
           </h1>

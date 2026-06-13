@@ -13,7 +13,7 @@ export default function Service() {
             <Sparkles size={16} />
             <span>1:1 맞춤 6주 과정</span>
           </div>
-          <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[1.15] text-primary fade-in tracking-tight break-keep">
+          <h1 className="font-serif text-fluid-hero leading-[1.15] text-primary fade-in tracking-tight break-keep">
             30년 경력을 시장의 <br />
             언어로 번역하는 <br />
             서비스입니다.

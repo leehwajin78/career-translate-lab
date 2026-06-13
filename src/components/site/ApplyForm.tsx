@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { FieldError } from "@/components/ui/error-message";
 import type { ApplyProductKey } from "@/data/content";
 import { APPLY_PRODUCTS } from "@/data/content";
 import { useLeadsStore } from "@/store/leads";
@@ -88,15 +89,13 @@ function Field({ id, label, required, hint, error, children }: FieldProps) {
     <div id={`field-${id}`} className="scroll-mt-24">
       <label htmlFor={id} className="block text-base font-bold text-foreground mb-1">
         {label}
-        {required && <span className="text-red-500 ml-0.5">*</span>}
+        {required && <span className="text-destructive ml-0.5">*</span>}
       </label>
       {hint && (
         <p className="text-sm text-foreground/50 mb-2 leading-relaxed break-keep">{hint}</p>
       )}
       <div className="mt-1.5">{children}</div>
-      {error && (
-        <p className="mt-1.5 text-sm text-red-500 font-medium">{error}</p>
-      )}
+      {error && <FieldError>{error}</FieldError>}
     </div>
   );
 }
@@ -205,7 +204,7 @@ export default function ApplyForm({ productKey }: ApplyFormProps) {
   return (
     <section className="mb-16">
       {/* 폼 제목 */}
-      <h2 className="font-serif text-2xl md:text-3xl font-extrabold text-[#1E2D8C] mb-3">
+      <h2 className="font-serif text-2xl md:text-3xl font-extrabold text-primary mb-3">
         신청 정보를 입력해 주세요
       </h2>
       <p className="text-base text-foreground/60 leading-[1.7] mb-10 break-keep">
@@ -284,7 +283,7 @@ export default function ApplyForm({ productKey }: ApplyFormProps) {
 
           {/* 카카오톡 ID 조건부 노출 */}
           {form.contactMethod === "카카오톡" && (
-            <div className="mt-4 pl-6 border-l-2 border-[#1E2D8C]/20">
+            <div className="mt-4 pl-6 border-l-2 border-primary/20">
               <label htmlFor="kakaoId" className="block text-sm font-medium text-foreground/70 mb-1">
                 카카오톡 ID
               </label>
@@ -295,9 +294,7 @@ export default function ApplyForm({ productKey }: ApplyFormProps) {
                 placeholder="카카오톡 ID를 입력해 주세요"
                 className="h-11 text-base max-w-sm"
               />
-              {errors.kakaoId && (
-                <p className="mt-1.5 text-sm text-red-500 font-medium">{errors.kakaoId}</p>
-              )}
+              {errors.kakaoId && <FieldError>{errors.kakaoId}</FieldError>}
             </div>
           )}
         </Field>
@@ -329,7 +326,7 @@ export default function ApplyForm({ productKey }: ApplyFormProps) {
             rows={6}
             value={form.situation || ""}
             onChange={(e) => update("situation", e.target.value)}
-            placeholder="예: 25년간 IT 업계에서 일했고, 올해 퇴직 예정입니다. 강의 활동을 시작하고 싶은데 어떻게 준비해야 할지 막막합니다."
+            placeholder="예: 25년간 IT 업계에서 일했고, 올해 퇴직 예정입니다. 강의 활동을 시작하고 싶은데 어떻게 준비해야 할지 막말합니다."
             className="text-base leading-[1.7]"
           />
         </Field>
@@ -369,7 +366,7 @@ export default function ApplyForm({ productKey }: ApplyFormProps) {
 
           {/* 사업자 정보 조건부 노출 */}
           {form.needInvoice === "네, 발행이 필요합니다" && (
-            <div className="mt-4 pl-6 border-l-2 border-[#1E2D8C]/20 space-y-3">
+            <div className="mt-4 pl-6 border-l-2 border-primary/20 space-y-3">
               <div>
                 <label htmlFor="bizNumber" className="block text-sm font-medium text-foreground/70 mb-1">
                   사업자번호
@@ -381,9 +378,7 @@ export default function ApplyForm({ productKey }: ApplyFormProps) {
                   placeholder="000-00-00000"
                   className="h-11 text-base max-w-sm"
                 />
-                {errors.bizNumber && (
-                  <p className="mt-1.5 text-sm text-red-500 font-medium">{errors.bizNumber}</p>
-                )}
+                {errors.bizNumber && <FieldError>{errors.bizNumber}</FieldError>}
               </div>
               <div>
                 <label htmlFor="bizName" className="block text-sm font-medium text-foreground/70 mb-1">
@@ -412,14 +407,14 @@ export default function ApplyForm({ productKey }: ApplyFormProps) {
               />
               <span className="text-base text-foreground/80 leading-relaxed font-medium">
                 신청 처리 및 상담 진행을 위해 개인정보 수집·이용에 동의합니다{" "}
-                <span className="text-red-500">(필수)</span>
+                <span className="text-destructive">(필수)</span>
               </span>
             </label>
 
             <button
               type="button"
               onClick={() => setPrivacyOpen(!privacyOpen)}
-              className="mt-2 ml-8 text-sm text-[#1E2D8C]/60 hover:text-[#1E2D8C] underline underline-offset-4 transition-colors"
+              className="mt-2 ml-8 text-sm text-primary/60 hover:text-primary underline underline-offset-4 transition-colors"
             >
               {privacyOpen ? "닫기" : "[자세히]"}
             </button>
@@ -439,9 +434,7 @@ export default function ApplyForm({ productKey }: ApplyFormProps) {
               </div>
             )}
 
-            {errors.agree && (
-              <p className="mt-2 ml-8 text-sm text-red-500 font-medium">{errors.agree}</p>
-            )}
+            {errors.agree && <FieldError className="ml-8">{errors.agree}</FieldError>}
           </div>
         </div>
 
@@ -449,7 +442,7 @@ export default function ApplyForm({ productKey }: ApplyFormProps) {
         <button
           type="submit"
           disabled={submitting}
-          className="w-full md:w-auto md:min-w-[320px] mx-auto block bg-[#1E2D8C] text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-[#1E2D8C]/90 transition-all shadow-lg hover:shadow-xl disabled:opacity-60 disabled:cursor-not-allowed"
+          className="w-full md:w-auto md:min-w-[320px] mx-auto block bg-primary text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {submitting ? "보내는 중..." : "신청서 보내기"}
         </button>

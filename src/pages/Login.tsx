@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Sparkles, ArrowLeft, Lock } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
+import { ErrorBox } from "@/components/ui/error-message";
 
 export default function Login() {
   const [form, setForm] = useState({ userId: "", password: "" });
@@ -73,11 +74,7 @@ export default function Login() {
             />
           </div>
 
-          {error && (
-            <p className="text-xs text-destructive bg-destructive/5 border border-destructive/10 p-3 rounded-xl leading-relaxed break-keep">
-              {error}
-            </p>
-          )}
+          {error && <ErrorBox>{error}</ErrorBox>}
 
           <button
             type="submit"

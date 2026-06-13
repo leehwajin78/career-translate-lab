@@ -1,0 +1,75 @@
+/* ────────────────────────────────────────────────────────────
+   diagnosis.css
+   무료 진단 플로우 전용 애니메이션 & 레이아웃 유틸리티
+   사용: AnalysisLoading.tsx, Report.tsx, DiagnosisForm.tsx
+   ──────────────────────────────────────────────────────────── */
+
+/* ── 펄스 스피너 (분석 로딩) ── */
+.pulse-spinner {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.pulse-spinner .ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid hsl(var(--accent) / 0.3);
+  animation: pulseRing 2s ease-out infinite;
+}
+.pulse-spinner .ring:nth-child(2) { animation-delay: 0.4s; }
+.pulse-spinner .ring:nth-child(3) { animation-delay: 0.8s; }
+.pulse-spinner .core {
+  position: absolute;
+  inset: 20px;
+  border-radius: 50%;
+  background: hsl(var(--accent));
+  animation: pulseCore 2s ease-in-out infinite;
+}
+@keyframes pulseRing {
+  0%   { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+@keyframes pulseCore {
+  0%, 100% { transform: scale(1);    opacity: 0.9; }
+  50%       { transform: scale(1.15); opacity: 1;   }
+}
+
+/* ── 잠금 섹션 블러 (리포트 잠금 콘텐츠) ── */
+.locked-section {
+  position: relative;
+  overflow: hidden;
+}
+.locked-section .locked-content {
+  filter: blur(6px);
+  user-select: none;
+  pointer-events: none;
+}
+.locked-section .locked-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  z-index: 10;
+}
+
+/* ── 진행률 바 애니메이션 ── */
+.progress-animate {
+  animation: progressFill 12s ease-in-out forwards;
+}
+@keyframes progressFill {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+/* ── 순차 텍스트 페이드 ── */
+.text-fade-in {
+  animation: textFadeIn 0.6s ease-out both;
+}
+@keyframes textFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}

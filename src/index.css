@@ -1,3 +1,4 @@
+@import './styles/diagnosis.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -63,6 +64,18 @@
 
     --radius: 0.875rem;
 
+    /* Product confirm card — #F0EFFB 대응 연보라 배경 */
+    --product-confirm: 244 60% 96%;
+    --product-confirm-border: 230 99% 35%; /* primary와 동일 */
+
+    /* 에러·성공·경고 보조 토큰 */
+    --error-bg: 0 60% 97%;
+    --error-border: 0 50% 90%;
+    --success: 142 71% 35%;
+    --success-bg: 142 60% 96%;
+    --warning: 38 92% 50%;
+    --warning-bg: 38 90% 96%;
+
     --shadow-soft: 0 1px 2px hsl(230 40% 20% / 0.05), 0 8px 24px -12px hsl(230 40% 20% / 0.10);
     --shadow-elevated: 0 1px 2px hsl(230 40% 20% / 0.06), 0 24px 48px -24px hsl(230 50% 25% / 0.20);
 
@@ -76,29 +89,7 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
-  .dark {
-    --background: 220 40% 6%;
-    --foreground: 40 33% 97%;
-    --surface: 220 35% 9%;
-    --card: 220 35% 9%;
-    --card-foreground: 40 33% 97%;
-    --popover: 220 35% 9%;
-    --popover-foreground: 40 33% 97%;
-    --primary: 40 33% 97%;
-    --primary-foreground: 220 55% 13%;
-    --secondary: 220 25% 14%;
-    --secondary-foreground: 40 33% 97%;
-    --muted: 220 25% 14%;
-    --muted-foreground: 36 12% 70%;
-    --accent: 36 38% 60%;
-    --accent-foreground: 220 55% 13%;
-    --accent-soft: 36 25% 22%;
-    --destructive: 0 60% 45%;
-    --destructive-foreground: 40 33% 97%;
-    --border: 220 25% 18%;
-    --input: 220 25% 18%;
-    --ring: 36 38% 60%;
-  }
+
 }
 
 @layer base {
@@ -132,75 +123,9 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ── 무료 진단 전용 애니메이션 ── */
-
-  /* 펄스 스피너 */
-  .pulse-spinner {
-    position: relative;
-    width: 80px;
-    height: 80px;
-  }
-  .pulse-spinner .ring {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    border: 3px solid hsl(var(--accent) / 0.3);
-    animation: pulseRing 2s ease-out infinite;
-  }
-  .pulse-spinner .ring:nth-child(2) { animation-delay: 0.4s; }
-  .pulse-spinner .ring:nth-child(3) { animation-delay: 0.8s; }
-  .pulse-spinner .core {
-    position: absolute;
-    inset: 20px;
-    border-radius: 50%;
-    background: hsl(var(--accent));
-    animation: pulseCore 2s ease-in-out infinite;
-  }
-  @keyframes pulseRing {
-    0% { transform: scale(0.8); opacity: 1; }
-    100% { transform: scale(2.2); opacity: 0; }
-  }
-  @keyframes pulseCore {
-    0%, 100% { transform: scale(1); opacity: 0.9; }
-    50% { transform: scale(1.15); opacity: 1; }
-  }
-
-  /* 잠금 섹션 블러 */
-  .locked-section {
-    position: relative;
-    overflow: hidden;
-  }
-  .locked-section .locked-content {
-    filter: blur(6px);
-    user-select: none;
-    pointer-events: none;
-  }
-  .locked-section .locked-overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    z-index: 10;
-  }
-
-  /* 진행률 바 애니메이션 */
-  .progress-animate {
-    animation: progressFill 12s ease-in-out forwards;
-  }
-  @keyframes progressFill {
-    from { width: 0%; }
-    to { width: 100%; }
-  }
-
-  /* 순차 텍스트 페이드 */
-  .text-fade-in {
-    animation: textFadeIn 0.6s ease-out both;
-  }
-  @keyframes textFadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  /* ── Fluid Typography ── */
+  .text-fluid-hero { font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem); }       /* 40px → 72px */
+  .text-fluid-display { font-size: clamp(1.875rem, 3vw + 0.75rem, 3rem); }  /* 30px → 48px */
+  .text-fluid-section { font-size: clamp(1.875rem, 2.5vw + 0.5rem, 2.25rem); } /* 30px → 36px */
 }
+

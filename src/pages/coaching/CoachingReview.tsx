@@ -54,7 +54,7 @@ export default function CoachingReview() {
           >
             <ArrowLeft size={20} />
           </button>
-          <h1 className="font-serif text-2xl md:text-3xl text-[#1E2D8C] font-extrabold">
+          <h1 className="font-serif text-2xl md:text-3xl text-primary font-extrabold">
             📋 응답 요약
           </h1>
         </div>
@@ -63,19 +63,19 @@ export default function CoachingReview() {
         <div className="flex items-center gap-4 text-sm text-foreground/50 mb-8 ml-8">
           <span>
             완료{" "}
-            <span className="font-bold text-[#1E2D8C]">{completedCount}</span>
+            <span className="font-bold text-primary">{completedCount}</span>
             문항
           </span>
           {unansweredCount > 0 && (
             <span>
               미응답{" "}
-              <span className="font-bold text-red-500">{unansweredCount}</span>
+              <span className="font-bold text-destructive">{unansweredCount}</span>
               문항
             </span>
           )}
           <span>
             녹음{" "}
-            <span className="font-bold text-[#C4A265]">
+            <span className="font-bold text-accent">
               {
                 Object.values(session.answers).filter((a) => a.voice).length
               }
@@ -94,7 +94,7 @@ export default function CoachingReview() {
             return (
               <div key={part.key}>
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="text-xs font-bold text-[#C4A265] tracking-wider uppercase">
+                  <span className="text-xs font-bold text-accent tracking-wider uppercase">
                     {part.questionRange}
                   </span>
                   <span className="text-sm font-bold text-foreground/60 break-keep">
@@ -121,7 +121,7 @@ export default function CoachingReview() {
                         <div className="flex items-start justify-between gap-3">
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-bold text-foreground/70 break-keep">
-                              <span className="text-[#1E2D8C] mr-1.5">
+                              <span className="text-primary mr-1.5">
                                 Q{q.id}.
                               </span>
                               {q.question}
@@ -151,7 +151,7 @@ export default function CoachingReview() {
 
                           <button
                             onClick={() => goToQuestion(q.id)}
-                            className="shrink-0 text-xs font-bold text-[#1E2D8C]/60 hover:text-[#1E2D8C] transition-colors px-3 py-2 rounded-lg hover:bg-[#F0EFFB]"
+                            className="shrink-0 text-xs font-bold text-primary/60 hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-product-confirm"
                           >
                             {answered ? "수정" : "작성"}
                           </button>
@@ -166,7 +166,7 @@ export default function CoachingReview() {
         </div>
 
         {/* 제출 영역 */}
-        <div className="mt-12 bg-[#F0EFFB] rounded-2xl p-6 md:p-8 text-center">
+        <div className="mt-12 bg-product-confirm rounded-2xl p-6 md:p-8 text-center">
           {unansweredCount > 0 && (
             <p className="text-sm text-foreground/50 mb-4 break-keep">
               ⚠️ 미응답 문항이 {unansweredCount}개 있습니다. 미응답 상태로도
@@ -176,7 +176,7 @@ export default function CoachingReview() {
 
           <button
             onClick={() => setShowConfirm(true)}
-            className="bg-[#1E2D8C] text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-[#1E2D8C]/90 transition-all shadow-lg hover:shadow-xl"
+            className="bg-primary text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl"
           >
             최종 제출하기
           </button>
@@ -194,7 +194,7 @@ export default function CoachingReview() {
               onClick={() => setShowConfirm(false)}
             />
             <div className="relative bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl">
-              <h3 className="font-serif text-xl text-[#1E2D8C] font-bold mb-3">
+              <h3 className="font-serif text-xl text-primary font-bold mb-3">
                 응답을 제출하시겠습니까?
               </h3>
               <p className="text-base text-foreground/60 leading-relaxed mb-6 break-keep">
@@ -211,7 +211,7 @@ export default function CoachingReview() {
                 </button>
                 <button
                   onClick={handleSubmit}
-                  className="flex-1 py-3.5 rounded-xl bg-[#1E2D8C] text-white font-bold hover:bg-[#1E2D8C]/90 transition-colors shadow-md"
+                  className="flex-1 py-3.5 rounded-xl bg-primary text-white font-bold hover:bg-primary/90 transition-colors shadow-md"
                 >
                   제출하기
                 </button>

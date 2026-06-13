@@ -3,6 +3,7 @@ import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { FormField } from "@/components/ui/form-field";
 import { GoldDivider, NumberedLabel } from "@/components/site/Editorial";
+import { FieldError } from "@/components/ui/error-message";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -270,7 +271,7 @@ export default function Consultation() {
                   (작성하신 내용은 진단 리포트 작성용으로만 활용되며 안전하게 1년 후 파기됩니다.)
                 </span>
               </label>
-              {errors.agree && <p className="mt-2 text-xs text-destructive">{errors.agree}</p>}
+              {errors.agree && <FieldError className="mt-2 ml-7">{errors.agree}</FieldError>}
             </div>
 
             <button
@@ -364,7 +365,7 @@ export default function Consultation() {
                   수집된 정보는 상담 안내 및 진행 목적으로만 사용되며, 상담 완료 1년 후 안전하게 파기됩니다.
                 </span>
               </label>
-              {errors.agree && <p className="mt-2 text-xs text-destructive">{errors.agree}</p>}
+              {errors.agree && <FieldError className="mt-2 ml-7">{errors.agree}</FieldError>}
             </div>
 
             <button
