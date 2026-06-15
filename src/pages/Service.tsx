@@ -569,21 +569,19 @@ export default function Service() {
       </section>
 
       {/* FINAL CTA */}
-      <section className="py-16 md:py-24 bg-primary text-primary-foreground text-center relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/20 to-transparent -z-10" />
-        <div className="container-prose relative z-10">
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl leading-snug mb-6 max-w-3xl mx-auto">
+      <section className="py-12 md:py-16 bg-primary text-primary-foreground text-center">
+        <div className="container-prose">
+          <h2 className="font-serif text-2xl md:text-3xl leading-snug mb-4 max-w-3xl mx-auto">
             내 경력이 어떤 자산이 될 수 있을지,<br />부담 없이 확인해 보세요.
           </h2>
-          <p className="text-lg md:text-xl text-primary-foreground/80 mb-10 max-w-3xl mx-auto leading-relaxed break-keep">
-            지금 결정하지 않으셔도 됩니다.<br />
-            다만 6개월·1년 후 "그때 시작했어야 했는데"가 가장 큰 아쉬움일 것입니다.
+          <p className="text-sm md:text-base text-primary-foreground/80 mb-8 max-w-3xl mx-auto leading-relaxed break-keep">
+            지금 결정하지 않으셔도 됩니다. 다만 6개월·1년 후 "그때 시작했어야 했는데"가 가장 큰 아쉬움일 것입니다.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-5">
-            <Link to="/diagnosis" className="w-full sm:w-auto bg-accent text-white border-2 border-white/90 px-10 py-5 rounded-full font-bold text-lg hover:bg-accent/90 transition-all shadow-lg hover:scale-105">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+            <Link to="/diagnosis" className="w-full sm:w-auto bg-transparent text-white border-2 border-white px-8 py-3.5 rounded-full font-bold text-base hover:bg-white/10 transition-all">
               경력 가치 무료 진단받기
             </Link>
-            <Link to="/consultation" className="w-full sm:w-auto bg-white text-primary px-10 py-5 rounded-full font-bold text-lg hover:bg-white/90 transition-all shadow-lg hover:scale-105">
+            <Link to="/consultation" className="w-full sm:w-auto bg-white text-primary px-8 py-3.5 rounded-full font-bold text-base hover:bg-white/90 transition-all">
               30분 무료 상담 신청하기
             </Link>
           </div>
