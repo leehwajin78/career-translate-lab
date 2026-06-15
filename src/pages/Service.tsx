@@ -445,8 +445,8 @@ export default function Service() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
             {[
-              { step: "STEP 1", name: "한끗 진단", price: "50만원", period: "· 1주", desc: "내 경력의 시장 가치를 진단합니다", highlight: false },
-              { step: "STEP 2", name: "한끗 빌드", price: "350만원", period: "· 6주", desc: "프로필·강의안·제안서를 완성합니다", highlight: true },
+              { step: "STEP 1", name: "한끗 진단", price: "50만원", period: "· 1주", desc: "내 경력의 시장 가치를 진단합니다", highlight: true },
+              { step: "STEP 2", name: "한끗 빌드", price: "350만원", period: "· 6주", desc: "프로필·강의안·제안서를 완성합니다", highlight: false },
               { step: "STEP 3", name: "한끗 론칭", price: "별도 문의", period: "· 3개월", desc: "빌드 + 강의 리허설·제안처 연결까지", highlight: false },
               { step: "후속", name: "한끗 파트너", price: "별도 문의", period: "· 월 단위", desc: "지속 코칭과 새 기회 연결", highlight: false },
             ].map((p) => (
