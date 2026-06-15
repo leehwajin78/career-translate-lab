@@ -205,7 +205,7 @@ const SCREENS: Screen[] = [
   {
     id: 'C-03', name: '무료 진단 폼', route: '/diagnosis',
     proto: 'diagnosis.html', component: 'src/pages/Diagnosis.tsx',
-    phase: 'current-p1', auth: 'Guest', fe: 'partial', be: 'not-started',
+    phase: 'current-p1', auth: 'Guest', fe: 'partial', be: 'partial',
     isMissionCritical: true,
     spec: {
       purpose: '무료 리드 수집 핵심 관문. 이름·이메일·7문항 답변 수집 → leads 테이블 저장.',
@@ -812,6 +812,7 @@ const CHANGES: Change[] = [
   { id: 'CHG-010', date: '2026-06-15', screens: [],        type: 'arch',  description: 'Phase A: SoT 스키마를 src/data/playboard.ts 로 분리. Phase B: Playboard.tsx 3뷰 재구축. Phase C: 07-mission-critical.md 작성. Phase D: CLAUDE.md + AGENTS.md 신설.', source: 'PM 지시' },
   { id: 'CHG-011', date: '2026-06-15', screens: ['C-15'], type: 'add',   description: 'src/pages/Privacy.tsx 생성 + /privacy 라우트 등록. ISSUE-03 해결.', source: '구현' },
   { id: 'CHG-012', date: '2026-06-15', screens: [],       type: 'arch',  description: 'Supabase 인프라 초기화: @supabase/supabase-js 설치, src/integrations/supabase/client.ts 생성, supabase/migrations/ 4개 SQL 파일 작성 (profiles·free_diagnostics·leads·memberships·payments·coaching_sessions·coaching_reports·coaching_answers).', source: '기술 결정' },
+  { id: 'CHG-013', date: '2026-06-15', screens: ['C-03'], type: 'add',   description: 'submit-free-diagnosis Edge Function 작성 (Zod 검증·24h Rate Limit·free_diagnostics·leads insert). Diagnosis.tsx 제출 핸들러에 Edge Function 연동 (10s 타임아웃·429·Toast 처리). ISSUE-02 미해결로 type: pending 반환.', source: '구현' },
 ]
 
 // ============================================================
