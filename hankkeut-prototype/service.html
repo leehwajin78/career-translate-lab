@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>서비스 소개 — 한끗프로젝트</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="proto-bar"><span class="pid">S-01</span><span class="pt">서비스 소개</span><span class="sep">|</span><span class="frwrap"><span class="route">/service</span></span><span class="phase cur">● 현행 구현</span><nav><a href="pages.html">전체 화면 목록</a><a href="flow-customer.html">고객 흐름</a><a href="flow-coach.html">운영 흐름</a><a href="index.html">프로토타입 홈</a></nav></div>
+
+<header style="position:sticky;top:33px;z-index:40;background:#fff;border-bottom:1px solid var(--line);padding:.75rem 1.5rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap">
+  <a href="landing.html" style="font-weight:800;font-size:1.05rem;color:var(--blue);letter-spacing:-.02em">한끗프로젝트</a>
+  <nav style="display:flex;gap:1.5rem;margin-left:auto;font-size:.92rem;font-weight:500">
+    <a href="service.html" style="color:var(--blue);font-weight:800">서비스 소개</a>
+    <a href="landing.html#process" style="color:var(--ink)">진행 과정</a>
+    <a href="landing.html#products" style="color:var(--ink)">상품 안내</a>
+  </nav>
+  <div style="display:flex;gap:.6rem;align-items:center;margin-left:1rem;flex-wrap:wrap">
+    <a class="btn primary sm" href="diagnosis.html">경력 가치 진단</a>
+    <a class="btn ghost sm" href="consultation.html">무료 상담 신청</a>
+    <a href="login.html" style="font-size:.88rem;font-weight:500;color:var(--mut);white-space:nowrap">로그인</a>
+  </div>
+</header>
+
+<!-- S1. Hero — 흰 배경 -->
+<div style="background:#fff">
+  <div class="cust">
+    <div style="text-align:center;padding:5rem 1.5rem 3.5rem">
+      <div class="eyebrow" style="display:inline-block;border:1.5px solid var(--blue);border-radius:9999px;padding:.3rem 1.1rem">1:1 맞춤 6주 과정</div>
+      <h1 style="margin-top:1rem">한끗프로젝트가 뭔가요?</h1>
+      <p class="lead" style="max-width:640px;margin:1rem auto 0">20~30년 경력 전문가의 경험을, 시장이 이해하는 언어로 옮겨<br>강의안·제안서·프로필로 만드는 1:1 맞춤 프로그램입니다.</p>
+      <div style="margin-top:1.6rem;background:var(--blue);border-radius:12px;padding:1.3rem 1.8rem;max-width:660px;margin-left:auto;margin-right:auto;text-align:center">
+        <p style="margin:0;color:#fff;font-size:1rem;font-weight:500;line-height:1.8">경력은 사라지는 것이 아니라, 번역되어야 살아남습니다.<br>30년의 경험은 그 자체로 충분합니다. 다만 시장이 알아보려면,<br>시장의 언어로 옮기는 작업이 필요합니다.</p>
+      </div>
+      <div style="margin-top:1.8rem;display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap">
+        <a class="btn primary lg" href="diagnosis.html">경력 가치 무료 진단받기 →</a>
+        <a class="btn ghost lg" href="consultation.html">30분 무료 상담 신청하기</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S2. 누구를 위한 프로그램인가 — #EEF3FC 배경 -->
+<div style="background:#EEF3FC">
+  <div class="cust" style="padding:4rem 1.5rem">
+    <div style="text-align:center;margin-bottom:1.5rem">
+      <h2 style="margin:0">누구를 위한 프로그램인가요?</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem">
+      <div class="card" style="padding:1.8rem">
+        <h3 style="font-size:1.05rem;font-weight:800;color:var(--blue);margin:0 0 1.1rem">이런 분을 위한 프로그램입니다</h3>
+        <div style="display:flex;flex-direction:column;gap:.85rem">
+          <div style="display:flex;gap:.8rem;align-items:flex-start">
+            <div style="width:24px;height:24px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;margin-top:.1rem">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <p style="margin:0;font-size:1rem;line-height:1.65;color:var(--ink)">20~30년 실무 경력의 전문가·임원·대표·컨설턴트</p>
+          </div>
+          <div style="display:flex;gap:.8rem;align-items:flex-start">
+            <div style="width:24px;height:24px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;margin-top:.1rem">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <p style="margin:0;font-size:1rem;line-height:1.65;color:var(--ink)">강의·자문·컨설팅으로 자기 이름의 활동을 시작하려는 분</p>
+          </div>
+          <div style="display:flex;gap:.8rem;align-items:flex-start">
+            <div style="width:24px;height:24px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;margin-top:.1rem">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <p style="margin:0;font-size:1rem;line-height:1.65;color:var(--ink)">경력은 충분하지만 정리·표현 방법을 모르는 분</p>
+          </div>
+          <div style="display:flex;gap:.8rem;align-items:flex-start">
+            <div style="width:24px;height:24px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;margin-top:.1rem">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <p style="margin:0;font-size:1rem;line-height:1.65;color:var(--ink)">퇴직을 앞두었거나 막 퇴직하신 분</p>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="padding:1.8rem;background:#F8F9FB">
+        <h3 style="font-size:1.05rem;font-weight:800;color:#6B7080;margin:0 0 1.1rem">이런 분께는 맞지 않습니다</h3>
+        <div style="display:flex;flex-direction:column;gap:.85rem">
+          <div style="display:flex;gap:.8rem;align-items:flex-start">
+            <div style="width:24px;height:24px;background:#E5E7EB;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;margin-top:.1rem;font-size:.75rem;font-weight:700;color:#9CA3AF">✕</div>
+            <div>
+              <p style="margin:0;font-size:1rem;line-height:1.5;color:#6B7080;font-weight:600">재취업을 원하시는 경우</p>
+              <p style="margin:.2rem 0 0;font-size:.88rem;color:var(--mut)">재취업 지원 기관이 더 적합합니다.</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:.8rem;align-items:flex-start">
+            <div style="width:24px;height:24px;background:#E5E7EB;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;margin-top:.1rem;font-size:.75rem;font-weight:700;color:#9CA3AF">✕</div>
+            <div>
+              <p style="margin:0;font-size:1rem;line-height:1.5;color:#6B7080;font-weight:600">자서전·회고록을 원하시는 경우</p>
+              <p style="margin:.2rem 0 0;font-size:.88rem;color:var(--mut)">출판 전문 서비스가 더 적합합니다.</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:.8rem;align-items:flex-start">
+            <div style="width:24px;height:24px;background:#E5E7EB;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;margin-top:.1rem;font-size:.75rem;font-weight:700;color:#9CA3AF">✕</div>
+            <div>
+              <p style="margin:0;font-size:1rem;line-height:1.5;color:#6B7080;font-weight:600">경력이 아직 충분하지 않은 경우</p>
+              <p style="margin:.2rem 0 0;font-size:.88rem;color:var(--mut)">번역할 원본이 충분해야 합니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S3. 무엇이 다른가 — 흰 배경 -->
+<div style="background:#fff">
+  <div class="cust" style="padding:5rem 1.5rem">
+    <div style="text-align:center">
+      <h2 style="margin:0">가르치지도, 디자인하지도 않습니다</h2>
+      <p class="note" style="margin-top:.5rem">이미 충분한 경력을 가진 분이 그 경력을 '시장에서 바로 쓰는 자산'으로 만드는 데 집중합니다.</p>
+    </div>
+    <div style="margin-top:1.8rem;overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:.93rem;min-width:520px">
+        <thead>
+          <tr>
+            <td style="padding:.85rem 1rem;width:18%;background:#F8F9FB;border:1px solid #E5E7EB"></td>
+            <th style="padding:.85rem 1rem;background:#F8F9FB;border:1px solid #E5E7EB;text-align:center;font-weight:600;color:var(--ink)">강사 양성 과정</th>
+            <th style="padding:.85rem 1rem;background:#F8F9FB;border:1px solid #E5E7EB;text-align:center;font-weight:600;color:var(--ink)">일반 브랜딩 컨설팅</th>
+            <th style="padding:.85rem 1.2rem;background:var(--blue);border:1px solid var(--blue);text-align:center;font-weight:700;color:#fff">한끗프로젝트</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:.75rem 1rem;background:#F8F9FB;border:1px solid #E5E7EB;font-weight:600;font-size:.85rem;color:var(--mut)">대상</td>
+            <td style="padding:.75rem 1rem;border:1px solid #E5E7EB;text-align:center;color:var(--ink)">강의 경험이 없는 분</td>
+            <td style="padding:.75rem 1rem;border:1px solid #E5E7EB;text-align:center;color:var(--ink)">사업체·창업자</td>
+            <td style="padding:.75rem 1rem;border:1px solid #E5E7EB;text-align:center;font-weight:700;color:var(--blue);background:#F0F3FD">20~30년 경력 전문가</td>
+          </tr>
+          <tr>
+            <td style="padding:.75rem 1rem;background:#F8F9FB;border:1px solid #E5E7EB;font-weight:600;font-size:.85rem;color:var(--mut)">방법</td>
+            <td style="padding:.75rem 1rem;border:1px solid #E5E7EB;text-align:center;color:var(--ink)">표준 커리큘럼 교육</td>
+            <td style="padding:.75rem 1rem;border:1px solid #E5E7EB;text-align:center;color:var(--ink)">시각 디자인 작업</td>
+            <td style="padding:.75rem 1rem;border:1px solid #E5E7EB;text-align:center;font-weight:700;color:var(--blue);background:#F0F3FD">1:1로 함께 자산 설계</td>
+          </tr>
+          <tr>
+            <td style="padding:.75rem 1rem;background:#F8F9FB;border:1px solid #E5E7EB;font-weight:600;font-size:.85rem;color:var(--mut)">결과물</td>
+            <td style="padding:.75rem 1rem;border:1px solid #E5E7EB;text-align:center;color:var(--ink)">수료증</td>
+            <td style="padding:.75rem 1rem;border:1px solid #E5E7EB;text-align:center;color:var(--ink)">로고·웹사이트</td>
+            <td style="padding:.75rem 1rem;border:1px solid #E5E7EB;text-align:center;font-weight:700;color:var(--blue);background:#F0F3FD">프로필·강의안·제안서</td>
+          </tr>
+          <tr>
+            <td style="padding:.75rem 1rem;background:#F8F9FB;border:1px solid #E5E7EB;font-weight:600;font-size:.85rem;color:var(--mut)">활용</td>
+            <td style="padding:.75rem 1rem;border:1px solid #E5E7EB;text-align:center;color:var(--ink)">강사 풀 등록</td>
+            <td style="padding:.75rem 1rem;border:1px solid #E5E7EB;text-align:center;color:var(--ink)">사업체 홍보</td>
+            <td style="padding:.75rem 1rem;border:1px solid #E5E7EB;text-align:center;font-weight:700;color:var(--blue);background:#F0F3FD">시장에서 바로 활용</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:1.4rem;background:var(--blue);border-radius:12px;padding:1.3rem 1.8rem;text-align:center">
+      <p style="margin:0;color:#fff;font-size:1rem;font-weight:500;line-height:1.75">한끗은 가르치지 않습니다. 이미 가진 경력을 콘텐츠로 만들고,<br>시장에서 통하는 강의안과 제안서를 만듭니다.</p>
+    </div>
+  </div>
+</div>
+
+<!-- S4. 어떻게 진행되는가 — #EEF3FC 배경 -->
+<div style="background:#EEF3FC">
+  <div class="cust" style="padding:4rem 1.5rem">
+    <div style="text-align:center">
+      <h2 style="margin:0">골라내고, 옮기고, 자산으로 만듭니다</h2>
+      <p class="note" style="margin-top:.4rem">이화진 대표가 20여 년의 강의·코칭 경험에서 정리한 3단계 원리로 진행됩니다.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.2rem;margin-top:1.5rem">
+      <div class="card" style="padding:1.6rem">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <span style="font-size:2.4rem;font-weight:800;color:#D0D8EF;line-height:1">01</span>
+          <div style="width:42px;height:42px;background:var(--info-soft);border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0123B4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          </div>
+        </div>
+        <strong style="display:block;margin-top:.7rem;color:var(--blue);font-size:1.25rem;font-weight:800">골라내기</strong>
+        <p style="font-size:.88rem;color:var(--blue);margin:.2rem 0 .75rem;font-weight:600">경력에서 시장이 원할 핵심을 골라냅니다</p>
+        <p class="note" style="margin:0;line-height:1.7">수백 가지 경험이 모두 자산은 아닙니다. 본인에게 당연한 것이 시장에서는 귀한 가치일 수 있어, 옆에서 함께 봐주는 사람이 필요합니다.</p>
+      </div>
+      <div class="card" style="padding:1.6rem">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <span style="font-size:2.4rem;font-weight:800;color:#D0D8EF;line-height:1">02</span>
+          <div style="width:42px;height:42px;background:var(--info-soft);border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0123B4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+        </div>
+        <strong style="display:block;margin-top:.7rem;color:var(--blue);font-size:1.25rem;font-weight:800">옮기기</strong>
+        <p style="font-size:.88rem;color:var(--blue);margin:.2rem 0 .75rem;font-weight:600">전문가의 언어를 고객의 언어로</p>
+        <p class="note" style="margin:0;line-height:1.7">'30년 차 임원'이 아니라 '어떤 문제를 어떻게 해결하는 사람'으로. 이 결과가 프로필 한 문장, 강의 제목, 제안서 첫 페이지가 됩니다.</p>
+      </div>
+      <div class="card" style="padding:1.6rem">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <span style="font-size:2.4rem;font-weight:800;color:#D0D8EF;line-height:1">03</span>
+          <div style="width:42px;height:42px;background:var(--info-soft);border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0123B4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+        </div>
+        <strong style="display:block;margin-top:.7rem;color:var(--blue);font-size:1.25rem;font-weight:800">자산 만들기</strong>
+        <p style="font-size:.88rem;color:var(--blue);margin:.2rem 0 .75rem;font-weight:600">한 번 만들면 계속 쓰는 형태로</p>
+        <p class="note" style="margin:0;line-height:1.7">강의안은 고쳐 쓰는 형태로, 제안서는 바꿔 쓰는 틀로, 프로필은 변형 가능한 한 장으로. 매번 처음부터 만들지 않도록 설계합니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S5. 한끗 빌드 6주 — 흰 배경 -->
+<div style="background:#fff">
+  <div class="cust" style="padding:5rem 1.5rem">
+    <div style="text-align:center">
+      <h2 style="margin:0">6주, 주 1회 90분으로 자산을 완성합니다</h2>
+      <p class="note" style="margin-top:.5rem">이화진 대표가 처음부터 끝까지 직접 1:1로 진행합니다. 대면·화상 중 편한 방식을 선택합니다.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1.6rem">
+      <div style="background:var(--blue);border-radius:10px;padding:1rem;text-align:center">
+        <div style="font-size:1.5rem;font-weight:800;color:#fff;line-height:1.1">6주</div>
+        <div style="font-size:.82rem;color:rgba(255,255,255,.7);margin-top:.3rem">전체 기간</div>
+      </div>
+      <div style="background:var(--blue);border-radius:10px;padding:1rem;text-align:center">
+        <div style="font-size:1.5rem;font-weight:800;color:#fff;line-height:1.1">주 1회</div>
+        <div style="font-size:.82rem;color:rgba(255,255,255,.7);margin-top:.3rem">약 90분 만남</div>
+      </div>
+      <div style="background:var(--blue);border-radius:10px;padding:1rem;text-align:center">
+        <div style="font-size:1.5rem;font-weight:800;color:#fff;line-height:1.1">대면·화상</div>
+        <div style="font-size:.82rem;color:rgba(255,255,255,.7);margin-top:.3rem">편한 방식 선택</div>
+      </div>
+      <div style="background:var(--blue);border-radius:10px;padding:1rem;text-align:center">
+        <div style="font-size:1.5rem;font-weight:800;color:#fff;line-height:1.1">1:1</div>
+        <div style="font-size:.82rem;color:rgba(255,255,255,.7);margin-top:.3rem">대표 직접 진행</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.2rem">
+      <div class="card" style="padding:1.3rem">
+        <div class="eyebrow" style="font-size:.78rem">1주</div>
+        <strong style="display:block;margin-top:.4rem;color:var(--blue);font-size:1rem;font-weight:800">경력 듣기</strong>
+        <p class="note" style="margin-top:.4rem;line-height:1.65">30년 경험을 편안한 대화로 펼쳐 봅니다. 준비물 없이 오시면 됩니다.</p>
+      </div>
+      <div class="card" style="padding:1.3rem">
+        <div class="eyebrow" style="font-size:.78rem">2주</div>
+        <strong style="display:block;margin-top:.4rem;color:var(--blue);font-size:1rem;font-weight:800">핵심 골라내기</strong>
+        <p class="note" style="margin-top:.4rem;line-height:1.65">시장에서 가장 가치 있을 핵심을 함께 골라냅니다.</p>
+      </div>
+      <div class="card" style="padding:1.3rem">
+        <div class="eyebrow" style="font-size:.78rem">3주</div>
+        <strong style="display:block;margin-top:.4rem;color:var(--blue);font-size:1rem;font-weight:800">한 문장 만들기</strong>
+        <p class="note" style="margin-top:.4rem;line-height:1.65">당신을 설명하는 한 문장과 강의 제목을 만듭니다.</p>
+      </div>
+      <div class="card" style="padding:1.3rem">
+        <div class="eyebrow" style="font-size:.78rem">4주</div>
+        <strong style="display:block;margin-top:.4rem;color:var(--blue);font-size:1rem;font-weight:800">강의안 설계</strong>
+        <p class="note" style="margin-top:.4rem;line-height:1.65">대표 강의안의 뼈대를 함께 세웁니다.</p>
+      </div>
+      <div class="card" style="padding:1.3rem">
+        <div class="eyebrow" style="font-size:.78rem">5주</div>
+        <strong style="display:block;margin-top:.4rem;color:var(--blue);font-size:1rem;font-weight:800">완성 + 제안서</strong>
+        <p class="note" style="margin-top:.4rem;line-height:1.65">강의안 완성, B2B 제안서 템플릿을 만듭니다.</p>
+      </div>
+      <div class="card" style="padding:1.3rem">
+        <div class="eyebrow" style="font-size:.78rem">6주</div>
+        <strong style="display:block;margin-top:.4rem;color:var(--blue);font-size:1rem;font-weight:800">마무리 + 계획</strong>
+        <p class="note" style="margin-top:.4rem;line-height:1.65">프로필 완성, 채널 전략과 다음 계획을 세웁니다.</p>
+      </div>
+    </div>
+    <div style="margin-top:1.3rem;background:#EEF3FC;border-radius:10px;padding:1rem 1.5rem;text-align:center">
+      <p style="margin:0;font-size:.95rem;color:var(--blue);font-weight:500">매주 가벼운 준비 사항을 안내 — 부담스러운 숙제가 아닌 짧은 메모 수준. 한 주를 놓쳐도 일정은 함께 조율합니다.</p>
+    </div>
+  </div>
+</div>
+
+<!-- S6. 무엇을 준비하나 — #EEF3FC 배경 -->
+<div style="background:#EEF3FC">
+  <div class="cust" style="padding:4rem 1.5rem">
+    <div style="text-align:center">
+      <h2 style="margin:0">준비물은 '기억'과 '시간'뿐입니다</h2>
+      <p class="note" style="margin-top:.4rem">정리된 자료도, PPT 기술도, 거창한 계획도 필요 없습니다. 막연한 상태로 오셔도 됩니다.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;margin-top:1.5rem">
+      <div class="card" style="padding:1.6rem">
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.9rem">
+          <div style="width:36px;height:36px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <strong style="color:var(--blue);font-size:1.05rem;font-weight:800">꼭 필요한 것</strong>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.6rem">
+          <p class="note" style="margin:0;line-height:1.65">지나온 경력에 대한 기억<br><span style="color:var(--mut);font-size:.84rem">(정리된 자료가 아니어도 됩니다.)</span></p>
+          <p class="note" style="margin:0;line-height:1.65">6주간 주 1회, 90분의 시간<br><span style="color:var(--mut);font-size:.84rem">(편한 시간으로 맞춥니다.)</span></p>
+        </div>
+      </div>
+      <div class="card" style="padding:1.6rem">
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.9rem">
+          <div style="width:36px;height:36px;background:var(--info-soft);border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0123B4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          </div>
+          <strong style="color:var(--blue);font-size:1.05rem;font-weight:800">있으면 도움 되는 것</strong>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.6rem">
+          <p class="note" style="margin:0;line-height:1.65">기존 이력서나 경력 기술서 (있으면 참고)</p>
+          <p class="note" style="margin:0;line-height:1.65">예전에 만든 발표·강의 자료 (있으면 활용)</p>
+          <p style="margin:.2rem 0 0;font-size:.84rem;color:var(--mut)">※ 없어도 전혀 문제 없습니다</p>
+        </div>
+      </div>
+      <div class="card" style="padding:1.6rem;background:#F8F9FB">
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.9rem">
+          <div style="width:36px;height:36px;background:#E5E7EB;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;font-size:.85rem;font-weight:700;color:#9CA3AF">✕</div>
+          <strong style="color:#6B7080;font-size:1.05rem;font-weight:800">준비 안 해도 되는 것</strong>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.6rem">
+          <p class="note" style="margin:0;line-height:1.65;color:#9CA3AF">PPT 만드는 기술 — 자료는 함께 만듭니다</p>
+          <p class="note" style="margin:0;line-height:1.65;color:#9CA3AF">컴퓨터 능숙함 — 그 부분이 한끗이 돕는 일</p>
+          <p class="note" style="margin:0;line-height:1.65;color:#9CA3AF">거창한 계획 — 방향은 1주 차에 함께 잡습니다</p>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:1.4rem;background:var(--blue);border-radius:12px;padding:1.3rem 1.8rem;text-align:center">
+      <p style="margin:0;color:#fff;font-size:1rem;font-weight:500;line-height:1.8">"특강 요청이 와도 자료가 없어서 거절했다"는 분들이 많습니다.<br>머릿속엔 다 있는데 꺼낼 도구가 없을 뿐 — 그 도구를 함께 만드는 것이 한끗입니다.</p>
+    </div>
+  </div>
+</div>
+
+<!-- S7. 6주 후 손에 쥐는 6가지 원본 자산 — 흰 배경 -->
+<div style="background:#fff">
+  <div class="cust" style="padding:5rem 1.5rem">
+    <div style="text-align:center">
+      <h2 style="margin:0">직접 고쳐 쓰는 6가지 원본 자산</h2>
+      <p class="note" style="margin-top:.4rem">모두 PPT·워드·PDF 원본으로, 인터넷 폴더로 전달되며 활동에 제한 없이 사용할 수 있습니다.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:1.5rem">
+      <div class="card" style="padding:1.6rem">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.65rem">
+          <strong style="color:var(--blue);font-size:1.1rem;font-weight:800">한 줄 포지셔닝</strong>
+          <span style="font-size:1.4rem;font-weight:800;color:#DDE3F5;line-height:1">01</span>
+        </div>
+        <p class="note" style="margin:0 0 .75rem;line-height:1.65">당신을 한 문장으로 설명하는 핵심 메시지</p>
+        <div style="background:#F0F3FD;border-radius:6px;padding:.45rem .85rem;font-size:.82rem;color:var(--blue);font-weight:600">명함 · 자기소개 · 강의 제목</div>
+      </div>
+      <div class="card" style="padding:1.6rem">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.65rem">
+          <strong style="color:var(--blue);font-size:1.1rem;font-weight:800">전문가 프로필 1p</strong>
+          <span style="font-size:1.4rem;font-weight:800;color:#DDE3F5;line-height:1">02</span>
+        </div>
+        <p class="note" style="margin:0 0 .75rem;line-height:1.65">경력과 전문성을 정리한 A4 한 장</p>
+        <div style="background:#F0F3FD;border-radius:6px;padding:.45rem .85rem;font-size:.82rem;color:var(--blue);font-weight:600">강의 제안 · 자문 소개 · 강사풀</div>
+      </div>
+      <div class="card" style="padding:1.6rem">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.65rem">
+          <strong style="color:var(--blue);font-size:1.1rem;font-weight:800">대표 강의안 (60분)</strong>
+          <span style="font-size:1.4rem;font-weight:800;color:#DDE3F5;line-height:1">03</span>
+        </div>
+        <p class="note" style="margin:0 0 .75rem;line-height:1.65">발표 자료 + 말할 내용 + 진행 노트</p>
+        <div style="background:#F0F3FD;border-radius:6px;padding:.45rem .85rem;font-size:.82rem;color:var(--blue);font-weight:600">첫 강의에서 바로 사용</div>
+      </div>
+      <div class="card" style="padding:1.6rem">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.65rem">
+          <strong style="color:var(--blue);font-size:1.1rem;font-weight:800">B2B 제안서 템플릿</strong>
+          <span style="font-size:1.4rem;font-weight:800;color:#DDE3F5;line-height:1">04</span>
+        </div>
+        <p class="note" style="margin:0 0 .75rem;line-height:1.65">기업·기관에 보낼 수 있는 제안서 틀</p>
+        <div style="background:#F0F3FD;border-radius:6px;padding:.45rem .85rem;font-size:.82rem;color:var(--blue);font-weight:600">자문 · 강의 수주 제안</div>
+      </div>
+      <div class="card" style="padding:1.6rem">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.65rem">
+          <strong style="color:var(--blue);font-size:1.1rem;font-weight:800">채널 전략 가이드</strong>
+          <span style="font-size:1.4rem;font-weight:800;color:#DDE3F5;line-height:1">05</span>
+        </div>
+        <p class="note" style="margin:0 0 .75rem;line-height:1.65">어디서 어떻게 활동을 시작할지 길잡이</p>
+        <div style="background:#F0F3FD;border-radius:6px;padding:.45rem .85rem;font-size:.82rem;color:var(--blue);font-weight:600">블로그 · SNS · 네트워크</div>
+      </div>
+      <div class="card" style="padding:1.6rem">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.65rem">
+          <strong style="color:var(--blue);font-size:1.1rem;font-weight:800">소개 멘트 3종</strong>
+          <span style="font-size:1.4rem;font-weight:800;color:#DDE3F5;line-height:1">06</span>
+        </div>
+        <p class="note" style="margin:0 0 .75rem;line-height:1.65">30·60·90초 자기소개 스크립트</p>
+        <div style="background:#F0F3FD;border-radius:6px;padding:.45rem .85rem;font-size:.82rem;color:var(--blue);font-weight:600">모임 · 강의 후 인사 · 발표</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S8. 누가 함께하는가 — #EEF3FC 배경 -->
+<div style="background:#EEF3FC">
+  <div class="cust" style="padding:4rem 1.5rem">
+    <div style="text-align:center;margin-bottom:1.6rem">
+      <h2 style="margin:0">강사 · 리더 · 멘토 · 저자, 네 시선이 함께 작동합니다</h2>
+      <p class="note" style="margin-top:.4rem">모든 과정을 꿈몰다 이화진 대표가 직접 1:1로 진행합니다. 여러 강사가 돌아가며 맡지 않습니다.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;align-items:stretch">
+      <div style="background:var(--blue);border-radius:12px;padding:2rem 1.8rem;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div style="font-size:2.5rem;color:rgba(255,255,255,.3);line-height:1;margin-bottom:.7rem">"</div>
+          <p style="font-size:1.1rem;font-weight:500;color:#fff;line-height:1.75;margin:0">당신이 당신다운 꿈을 찾을 때까지,<br>당신 꿈의 서포터가 되겠습니다.</p>
+        </div>
+        <div style="margin-top:2rem;border-top:1px solid rgba(255,255,255,.2);padding-top:.9rem">
+          <div style="font-weight:800;color:#fff;font-size:1rem">이화진</div>
+          <div style="font-size:.85rem;color:rgba(255,255,255,.6);margin-top:.2rem">꿈몰다 대표</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.9rem">
+        <div class="card" style="padding:1.2rem 1.3rem">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="font-size:.88rem;font-weight:700;color:var(--ink)">강사</div>
+            <div style="font-size:1.55rem;font-weight:800;color:var(--blue);line-height:1">23년</div>
+          </div>
+          <div style="font-size:.82rem;color:var(--mut);margin-top:.65rem;padding-top:.65rem;border-top:1px solid var(--line);line-height:1.6">2003년부터<br>프레젠테이션 강의</div>
+        </div>
+        <div class="card" style="padding:1.2rem 1.3rem">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="font-size:.88rem;font-weight:700;color:var(--ink)">리더</div>
+            <div style="font-size:1.55rem;font-weight:800;color:var(--blue);line-height:1">17년</div>
+          </div>
+          <div style="font-size:.82rem;color:var(--mut);margin-top:.65rem;padding-top:.65rem;border-top:1px solid var(--line);line-height:1.6">2009년부터<br>꿈몰다 브랜드 운영</div>
+        </div>
+        <div class="card" style="padding:1.2rem 1.3rem">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="font-size:.88rem;font-weight:700;color:var(--ink)">멘토</div>
+            <div style="font-size:1.55rem;font-weight:800;color:var(--blue);line-height:1">17년</div>
+          </div>
+          <div style="font-size:.82rem;color:var(--mut);margin-top:.65rem;padding-top:.65rem;border-top:1px solid var(--line);line-height:1.6">2009년부터<br>진로, 취·창업 코칭</div>
+        </div>
+        <div class="card" style="padding:1.2rem 1.3rem">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="font-size:.88rem;font-weight:700;color:var(--ink)">저자</div>
+            <div style="font-size:1.55rem;font-weight:800;color:var(--blue);line-height:1">17년</div>
+          </div>
+          <div style="font-size:.82rem;color:var(--mut);margin-top:.65rem;padding-top:.65rem;border-top:1px solid var(--line);line-height:1.6">2009년부터<br>오피스 분야 책 집필</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S9. 단계별 4가지 상품 — 로열블루 배경 -->
+<div style="background:var(--blue)">
+  <div class="cust" style="padding:4rem 1.5rem">
+    <div style="text-align:center">
+      <h2 style="margin:0;color:#fff">한 번에 큰 결정을 요구하지 않습니다</h2>
+      <p style="margin-top:.5rem;color:rgba(255,255,255,.7);font-size:.92rem">진단부터 시작하면 방향이 분명해집니다. 필요한 만큼 단계별로 진행할 수 있습니다.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1rem;margin-top:1.6rem">
+      <div style="background:rgba(255,255,255,.12);border-radius:12px;padding:1.4rem;border:1px solid rgba(255,255,255,.2)">
+        <div style="font-size:.75rem;font-weight:800;letter-spacing:.1em;color:rgba(255,255,255,.55);margin-bottom:.5rem">STEP 1</div>
+        <strong style="display:block;color:#fff;font-size:1.15rem;font-weight:800">한끗 진단</strong>
+        <div style="font-size:1.1rem;font-weight:800;color:#fff;margin:.4rem 0 .2rem">50만원 <span style="font-size:.85rem;font-weight:400;color:rgba(255,255,255,.6)">· 1주</span></div>
+        <p style="margin:0;font-size:.88rem;color:rgba(255,255,255,.7);line-height:1.6">내 경력의 시장 가치를 진단합니다</p>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:1.4rem;position:relative">
+        <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#fff;border:2px solid var(--blue);border-radius:9999px;padding:.15rem .7rem;font-size:.75rem;font-weight:800;color:var(--blue);white-space:nowrap">핵심</div>
+        <div style="font-size:.75rem;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:.5rem">STEP 2</div>
+        <strong style="display:block;color:var(--blue);font-size:1.15rem;font-weight:800">한끗 빌드</strong>
+        <div style="font-size:1.1rem;font-weight:800;color:var(--blue);margin:.4rem 0 .2rem">350만원 <span style="font-size:.85rem;font-weight:400;color:var(--mut)">· 6주</span></div>
+        <p style="margin:0;font-size:.88rem;color:var(--ink);line-height:1.6">프로필·강의안·제안서를 완성합니다</p>
+      </div>
+      <div style="background:rgba(255,255,255,.12);border-radius:12px;padding:1.4rem;border:1px solid rgba(255,255,255,.2)">
+        <div style="font-size:.75rem;font-weight:800;letter-spacing:.1em;color:rgba(255,255,255,.55);margin-bottom:.5rem">STEP 3</div>
+        <strong style="display:block;color:#fff;font-size:1.15rem;font-weight:800">한끗 론칭</strong>
+        <div style="font-size:1.1rem;font-weight:800;color:#fff;margin:.4rem 0 .2rem">별도 문의 <span style="font-size:.85rem;font-weight:400;color:rgba(255,255,255,.6)">· 3개월</span></div>
+        <p style="margin:0;font-size:.88rem;color:rgba(255,255,255,.7);line-height:1.6">빌드 + 강의 리허설·제안처 연결까지</p>
+      </div>
+      <div style="background:rgba(255,255,255,.12);border-radius:12px;padding:1.4rem;border:1px solid rgba(255,255,255,.2)">
+        <div style="font-size:.75rem;font-weight:800;letter-spacing:.1em;color:rgba(255,255,255,.55);margin-bottom:.5rem">후속</div>
+        <strong style="display:block;color:#fff;font-size:1.15rem;font-weight:800">한끗 파트너</strong>
+        <div style="font-size:1.1rem;font-weight:800;color:#fff;margin:.4rem 0 .2rem">별도 문의 <span style="font-size:.85rem;font-weight:400;color:rgba(255,255,255,.6)">· 월 단위</span></div>
+        <p style="margin:0;font-size:.88rem;color:rgba(255,255,255,.7);line-height:1.6">지속 코칭과 새 기회 연결</p>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:.85rem;color:rgba(255,255,255,.5);margin-top:1rem">한끗 파트너는 동시 진행 5~8명으로 정원 제한 — 한 분 한 분을 깊이 동행하기 위함이며, 정원이 차면 대기 후 합류합니다.</p>
+    <div style="margin-top:1.4rem;display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap">
+      <a class="btn sm" href="https://drive.google.com/file/d/1871MRxG1L2_ft-xe_z5vCmpFdQm24sv1/view?usp=drive_link" target="_blank" rel="noopener" style="background:#fff;color:var(--blue);border-color:#fff;font-weight:700;padding:.6rem 1.4rem">프로그램 상세 안내서 다운로드</a>
+      <a class="btn ghost sm" href="apply.html" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.4);padding:.6rem 1.4rem">상품 안내 자세히 보기</a>
+    </div>
+  </div>
+</div>
+
+<!-- S10. 시작하기 + FAQ + 최종 CTA — 흰 배경 -->
+<div style="background:#fff">
+  <div class="cust" style="padding:5rem 1.5rem">
+    <div style="text-align:center">
+      <h2 style="margin:0">가장 가벼운 무료 진단부터 시작하세요</h2>
+      <p class="note" style="margin-top:.4rem">처음부터 큰 결정을 하실 필요 없습니다. 세 가지 시작 방법은 자연스럽게 이어집니다.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.2rem;margin-top:1.5rem">
+      <div class="card" style="padding:1.5rem">
+        <div style="width:40px;height:40px;background:var(--info-soft);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:.9rem">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0123B4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <strong style="display:block;color:var(--blue);font-size:1.05rem;font-weight:800">무료 진단</strong>
+        <div style="margin:.35rem 0 .5rem;font-size:.88rem;font-weight:700;color:var(--blue)">무료 <span style="font-weight:400;color:var(--mut)">· 5~10분</span></div>
+        <p class="note" style="margin:0 0 1rem;line-height:1.65">결과지로 먼저 확인해보고 싶은 분</p>
+        <a class="btn primary sm" href="diagnosis.html" style="display:block;text-align:center">무료 진단 시작하기</a>
+      </div>
+      <div class="card" style="padding:1.5rem">
+        <div style="width:40px;height:40px;background:var(--info-soft);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:.9rem">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0123B4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <strong style="display:block;color:var(--blue);font-size:1.05rem;font-weight:800">무료 상담</strong>
+        <div style="margin:.35rem 0 .5rem;font-size:.88rem;font-weight:700;color:var(--blue)">무료 <span style="font-weight:400;color:var(--mut)">· 30분</span></div>
+        <p class="note" style="margin:0 0 1rem;line-height:1.65">직접 이야기하며 방향을 잡고 싶은 분</p>
+        <a class="btn ghost sm" href="consultation.html" style="display:block;text-align:center">무료 상담 신청하기</a>
+      </div>
+      <div class="card" style="padding:1.5rem;background:var(--blue);border-color:var(--blue)">
+        <div style="width:40px;height:40px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:.9rem">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <strong style="display:block;color:#fff;font-size:1.05rem;font-weight:800">한끗 진단</strong>
+        <div style="margin:.35rem 0 .5rem;font-size:.88rem;font-weight:700;color:#fff">50만원 <span style="font-weight:400;color:rgba(255,255,255,.65)">· 1주</span></div>
+        <p style="margin:0 0 1rem;font-size:.88rem;color:rgba(255,255,255,.8);line-height:1.65">진지하게 시작할 준비가 된 분</p>
+        <a class="btn sm" href="apply.html#diagnosis" style="display:block;text-align:center;background:#fff;color:var(--blue);border-color:#fff;font-weight:700">한끗 진단 신청하기</a>
+      </div>
+    </div>
+    <div style="margin-top:1.3rem;background:#EEF3FC;border-radius:10px;padding:.9rem 1.4rem;display:flex;align-items:center;justify-content:center;gap:.6rem;flex-wrap:wrap">
+      <span style="font-size:.85rem;font-weight:600;color:var(--blue)">무료 진단</span>
+      <span style="color:#C0C8E0;font-size:.9rem">→</span>
+      <span style="font-size:.82rem;color:var(--mut)">(결과지 함께 보기)</span>
+      <span style="color:#C0C8E0;font-size:.9rem">→</span>
+      <span style="font-size:.85rem;font-weight:600;color:var(--blue)">무료 상담</span>
+      <span style="color:#C0C8E0;font-size:.9rem">→</span>
+      <span style="font-size:.82rem;color:var(--mut)">(유료 진단 시작)</span>
+      <span style="color:#C0C8E0;font-size:.9rem">→</span>
+      <span style="font-size:.85rem;font-weight:600;color:var(--blue)">한끗 진단</span>
+      <span style="color:#C0C8E0;font-size:.9rem">→</span>
+      <span style="font-size:.85rem;font-weight:600;color:var(--blue)">한끗 빌드</span>
+    </div>
+
+    <!-- FAQ -->
+    <div style="margin-top:4rem;text-align:center">
+      <h2 style="margin:0">시작 전, 가장 많이 묻는 것들</h2>
+      <p class="note" style="margin-top:.4rem">일정·진행 방식·결과 보장까지, 솔직하게 답해 드립니다.</p>
+    </div>
+    <div style="max-width:680px;margin:1.5rem auto 0">
+      <details class="faq-item"><summary>컴퓨터를 잘 못 다뤄도 되나요?</summary><p>괜찮습니다. 자료는 함께 만들고, 바로 그 부분이 한끗이 돕는 일입니다.</p></details>
+      <details class="faq-item"><summary>뭘 하고 싶은지 명확하지 않아도 되나요?</summary><p>오히려 그런 분들을 위한 프로그램입니다. 1주 차에 방향부터 잡습니다.</p></details>
+      <details class="faq-item"><summary>매주 시간을 얼마나 내야 하나요?</summary><p>주 1회 약 90분. 평일 야간·주말도 조율 가능합니다.</p></details>
+      <details class="faq-item"><summary>대면인가요, 화상인가요?</summary><p>편하신 방식을 선택하시면 됩니다. 화상이 익숙지 않아도 어려움 없이 도와드립니다.</p></details>
+      <details class="faq-item"><summary>퇴직 전인데 받을 수 있나요?</summary><p>가능합니다. 퇴직 6개월~1년 전 시작이 가장 좋습니다.</p></details>
+      <details class="faq-item"><summary>중간에 일정을 못 맞추면 어떻게 되나요?</summary><p>괜찮습니다. 1:1이라 일정은 유연하게 조율합니다.</p></details>
+      <details class="faq-item"><summary>만든 자료는 어디에 쓸 수 있나요?</summary><p>강의·자문·컨설팅·강사풀 등록·출간 제안·SNS 등 다양하게 활용하실 수 있습니다.</p></details>
+      <details class="faq-item"><summary>결과가 보장되나요?</summary><p>자료는 6주 안에 반드시 완성됩니다. 시장 반응은 경력·실행에 따라 다릅니다.</p></details>
+    </div>
+  </div>
+</div>
+
+<!-- 최종 CTA — 로열블루 배경 -->
+<div style="background:var(--blue)">
+  <div class="cust" style="padding:4rem 1.5rem;text-align:center">
+    <h2 style="margin:0;color:#fff">내 경력이 어떤 자산이 될 수 있을지,<br>부담 없이 확인해 보세요.</h2>
+    <p style="margin-top:.6rem;color:rgba(255,255,255,.7);font-size:.92rem">지금 결정하지 않으셔도 됩니다. 다만 6개월·1년 후 "그때 시작했어야 했는데"가 가장 큰 아쉬움일 것입니다.</p>
+    <div style="margin-top:1.5rem;display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap">
+      <a class="btn primary lg" href="diagnosis.html" style="background:#fff;color:var(--blue)">경력 가치 무료 진단받기</a>
+      <a class="btn ghost lg" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.4)" href="consultation.html">30분 무료 상담 신청하기</a>
+    </div>
+  </div>
+</div>
+
+<!-- 푸터 -->
+<div style="background:#fff;border-top:1px solid var(--line)">
+  <div class="cust" style="padding:3rem 1.5rem;display:flex;gap:2rem;justify-content:space-between;align-items:flex-start;flex-wrap:wrap">
+    <div style="font-size:.9rem;line-height:2.1">
+      <p style="font-weight:800;font-size:1.05rem;color:var(--blue);margin-bottom:.4rem">꿈몰다 | 한끗프로젝트</p>
+      <p style="color:var(--blue)">전화. 070-4090-2161</p>
+      <p style="color:var(--blue)">메일. kkummolda@kkummolda.com</p>
+      <p style="color:var(--blue)">주소. 화성시 동탄대로 683 SH스퀘어2, 312호</p>
+      <p style="color:var(--blue)">사업자등록번호. 133-13-04664</p>
+      <p style="color:var(--blue)">통신판매업 신고번호. 제 2022-수원영통-0965호</p>
+      <p style="color:#6B7080;font-size:.8rem;margin-top:.4rem">Copyright © 2021 kkummolda All rights reserved</p>
+    </div>
+    <div style="text-align:right">
+      <p style="font-size:.72rem;font-weight:800;letter-spacing:.12em;color:var(--blue);text-transform:uppercase">CUSTOMER SERVICE</p>
+      <a href="tel:07040902161" style="display:block;font-size:2rem;font-weight:800;color:var(--blue);letter-spacing:-.02em;text-decoration:none;margin-top:.15rem">070-4090-2161</a>
+      <p style="font-size:.85rem;color:#404660;margin-top:.25rem">주중 10:00~18:00 (점심시간 12:00~13:00)</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
