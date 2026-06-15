@@ -16,7 +16,7 @@ export default function Index() {
           <div className="inline-block border border-primary rounded-full px-4 py-1.5 text-xs font-bold text-primary mb-4">
             경력 자산화 서비스
           </div>
-          <h1 className="font-serif text-fluid-hero leading-[1.2] text-foreground tracking-tight break-keep">
+          <h1 className="font-serif text-fluid-hero leading-[1.2] text-primary tracking-tight break-keep">
             30년을 일했는데,<br />나를 소개하는 한 문장이 없습니다.
           </h1>
           <p className="mt-5 max-w-xl mx-auto text-base md:text-lg text-foreground/75 leading-relaxed break-keep">
@@ -54,7 +54,7 @@ export default function Index() {
       {/* ① 가치 제안 — 연한 회색 배경 */}
       <div className="bg-[#FAFBFD]">
         <div className="container-prose py-16 text-center">
-          <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight break-keep">경력은 충분합니다. 부족한 건 번역입니다.</h2>
+          <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight break-keep text-primary">경력은 충분합니다. 부족한 건 번역입니다.</h2>
           <p className={`mt-2 ${note}`}>노하우는 머릿속에 있고, 시장은 문서를 요구합니다.</p>
           <div className="mt-6 grid grid-cols-[1fr_auto_1fr] gap-4 md:gap-6 items-center max-w-3xl mx-auto">
             <div className="bg-white border-2 border-primary rounded-xl p-5 md:p-6 text-left">
@@ -87,7 +87,7 @@ export default function Index() {
         <div className="container-prose py-16">
           <div className="text-center">
             <div className={eyebrow}>#1 — 시간 대비 성과</div>
-            <h2 className="text-2xl md:text-3xl font-extrabold mt-2 tracking-tight break-keep">혼자 하면 6개월, 한끗과 함께하면 6주</h2>
+            <h2 className="text-2xl md:text-3xl font-extrabold mt-2 tracking-tight break-keep text-primary">혼자 하면 6개월, 한끗과 함께하면 6주</h2>
             <p className={`mt-1 ${note}`}>막막한 자료 정리부터 강의안, 제안서까지 빠르게 완성합니다.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
@@ -114,7 +114,7 @@ export default function Index() {
       <div className="bg-white">
         <div className="container-prose py-20">
           <div className="text-center">
-            <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight break-keep">
+            <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight break-keep text-primary">
               경험만 말씀하세요.<br />문서와 구조는 한끗이 완성합니다.
             </h2>
             <p className={`mt-2 ${note}`}>경험과 노하우를 듣고, 시장에서 통하는 자료로 정리해드립니다.</p>
@@ -177,7 +177,7 @@ export default function Index() {
             <div className={`${eyebrow} inline-flex items-center gap-2`}>
               #2 <span className="inline-block w-8 h-px bg-primary align-middle" /> 진행 과정
             </div>
-            <h2 className="text-2xl md:text-3xl font-extrabold mt-2 tracking-tight break-keep">진단부터 론칭까지 단계별로 진행합니다.</h2>
+            <h2 className="text-2xl md:text-3xl font-extrabold mt-2 tracking-tight break-keep text-primary">진단부터 론칭까지 단계별로 진행합니다.</h2>
             <p className={`mt-2 ${note} leading-loose`}>
               처음부터 큰 결정을 내릴 필요 없습니다.<br />
               진단으로 방향을 확인하고,<br />
@@ -208,7 +208,7 @@ export default function Index() {
             <div className={`${eyebrow} inline-flex items-center gap-2`}>
               #3 <span className="inline-block w-8 h-px bg-primary align-middle" /> 완성되는 결과물
             </div>
-            <h2 className="text-2xl md:text-3xl font-extrabold mt-2 tracking-tight break-keep">6주 후, 손에 쥐는 자산입니다.</h2>
+            <h2 className="text-2xl md:text-3xl font-extrabold mt-2 tracking-tight break-keep text-primary">6주 후, 손에 쥐는 자산입니다.</h2>
             <p className={`mt-1 ${note}`}>한끗 빌드 종료 시 완성되는 핵심 산출물입니다.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
@@ -236,7 +236,7 @@ export default function Index() {
             <div className={`${eyebrow} inline-flex items-center gap-2`}>
               #4 <span className="inline-block w-8 h-px bg-primary align-middle" /> 단계별 상품
             </div>
-            <h2 className="text-2xl md:text-3xl font-extrabold mt-2 tracking-tight break-keep">단계별로 시작하세요.</h2>
+            <h2 className="text-2xl md:text-3xl font-extrabold mt-2 tracking-tight break-keep text-primary">단계별로 시작하세요.</h2>
             <p className={`mt-1 ${note}`}>진단부터 시작해, 필요한 만큼만 진행하시면 됩니다.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
@@ -269,7 +269,7 @@ export default function Index() {
       <div className="bg-white">
         <div className="container-prose py-20">
           <div className="text-center">
-            <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">자주 묻는 질문</h2>
+            <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-primary">자주 묻는 질문</h2>
           </div>
           <div className="max-w-2xl mx-auto mt-6 space-y-2">
             {[
