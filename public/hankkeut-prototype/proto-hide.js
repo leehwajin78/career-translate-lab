@@ -1,7 +1,6 @@
 (function(){
   if(location.hostname==='localhost'||location.hostname==='127.0.0.1') return;
-  var bar=document.querySelector('.proto-bar');
-  if(bar) bar.remove();
-  var header=document.querySelector('header');
-  if(header && header.style.top==='33px') header.style.top='0';
+  var s=document.createElement('style');
+  s.textContent='.proto-bar{display:none!important}header{top:0!important}';
+  document.head.appendChild(s);
 })();
