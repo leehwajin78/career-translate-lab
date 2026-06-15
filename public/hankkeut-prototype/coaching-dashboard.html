@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C-10 코칭 대시보드 — 한끗프로젝트 프로토타입</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="">
+<div class="proto-bar"><span class="pid">C-10</span><span class="pt">코칭 대시보드</span><span class="sep">|</span><span class="frwrap"><span class="route">/coaching</span><span class="fr">FR-COACH-01</span></span><span class="phase cur">● 현행 구현</span><nav><a href="pages.html">전체 화면 목록</a><a href="flow-customer.html">고객 흐름</a><a href="flow-coach.html">운영 흐름</a><a href="index.html">프로토타입 홈</a></nav></div>
+
+<div class="cust">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem">
+    <div><div class="eyebrow">COACHING · 김명진 님</div>
+      <h1 style="margin-top:.5rem">42문항 경험 인터뷰</h1>
+      <p class="lead">작성하신 답변은 자동 저장됩니다. 첫 코호트는 텍스트로 작성합니다.</p></div>
+    <div class="card" style="padding:1rem 1.4rem;text-align:center;flex:none">
+      <div style="font-size:1.7rem;font-weight:800">17<span class="note" style="font-weight:500">/42</span></div>
+      <div class="note">전체 진행률 40%</div>
+      <div class="bar" style="width:130px;margin-top:.4rem"><i style="width:40%"></i></div>
+    </div>
+  </div>
+  <div style="margin-top:1.6rem"><div class="card" style="padding:1.2rem 1.4rem;margin-bottom:.8rem"><div style="display:flex;gap:.6rem;align-items:center;flex-wrap:wrap"><span class="badge blue">PART 1</span><strong style="font-size:.95rem">나는 어떤 삶을 살아왔는가</strong><span class="note mono">Q01–Q10</span><span class="badge ok" style="margin-left:auto">완료 10/10</span></div><p class="note" style="margin-top:.4rem">과거 경험에서 브랜드 원재료 발굴</p><div class="bar" style="margin-top:.6rem"><i style="width:100%"></i></div></div><div class="card" style="padding:1.2rem 1.4rem;margin-bottom:.8rem"><div style="display:flex;gap:.6rem;align-items:center;flex-wrap:wrap"><span class="badge blue">PART 2</span><strong style="font-size:.95rem">나는 지금 무엇을 가지고 있는가</strong><span class="note mono">Q11–Q22</span><span class="badge blue" style="margin-left:auto">진행 중 7/12</span></div><p class="note" style="margin-top:.4rem">현재 보유 자산·강점·가치관 확인</p><div class="bar" style="margin-top:.6rem"><i style="width:58%"></i></div></div><div class="card" style="padding:1.2rem 1.4rem;margin-bottom:.8rem"><div style="display:flex;gap:.6rem;align-items:center;flex-wrap:wrap"><span class="badge blue">PART 3</span><strong style="font-size:.95rem">나는 무엇을 원하는가</strong><span class="note mono">Q23–Q32</span><span class="badge gray" style="margin-left:auto">대기 0/10</span></div><p class="note" style="margin-top:.4rem">미래 비전·타깃·기여 방식 설계</p><div class="bar" style="margin-top:.6rem"><i style="width:0%"></i></div></div><div class="card" style="padding:1.2rem 1.4rem;margin-bottom:.8rem"><div style="display:flex;gap:.6rem;align-items:center;flex-wrap:wrap"><span class="badge blue">PART 4</span><strong style="font-size:.95rem">나는 세상에 어떻게 말할 것인가</strong><span class="note mono">Q33–Q42</span><span class="badge gray" style="margin-left:auto">대기 0/10</span></div><p class="note" style="margin-top:.4rem">브랜드 언어·원라이너·채널 전략 구체화</p><div class="bar" style="margin-top:.6rem"><i style="width:0%"></i></div></div></div>
+  <div style="display:flex;gap:.7rem;margin-top:1.2rem;flex-wrap:wrap">
+    <a class="btn primary lg" href="coaching-questions.html">이어서 작성하기 (Q18부터) →</a>
+    <a class="btn ghost lg" href="coaching-review.html">지금까지 답변 검토</a>
+  </div>
+  <p class="note" style="margin-top:1rem">세션 상태: <span class="badge blue">in-progress</span> → submitted → analyzing → analyzed → finalized · coaching_sessions 영속, 교차 기기 이어쓰기 (FR-COACH-03)</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C-06 무료 상담 신청 — 한끗프로젝트 프로토타입</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="">
+<div class="proto-bar"><span class="pid">C-06</span><span class="pt">무료 상담 신청</span><span class="sep">|</span><span class="frwrap"><span class="route">/consultation</span><span class="fr">FR-LEAD-01 · FR-PRIV</span></span><span class="phase curp1">● 현행 +[P1] 보강</span><nav><a href="pages.html">전체 화면 목록</a><a href="flow-customer.html">고객 흐름</a><a href="flow-coach.html">운영 흐름</a><a href="index.html">프로토타입 홈</a></nav></div>
+
+<div class="cust cust-narrow">
+  <div class="eyebrow">FREE CONSULTATION</div>
+  <h1 style="margin-top:.6rem">30분 무료 상담 신청</h1>
+  <p class="lead">현재 상황을 알려주시면, 가장 효율적인 다음 단계를 함께 정리해 드립니다.</p>
+  <div class="card" style="padding:1.6rem;margin-top:1.4rem">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 1rem">
+      <div style="margin-bottom:.9rem"><p style="font-size:.84rem;font-weight:500;margin-bottom:.3rem">이름</p><input type="text" placeholder="홍길동" value="김명진" style="width:100%;border:1.5px solid var(--line);border-radius:10px;padding:.65rem .85rem;font:inherit;font-size:.9rem"></div><div style="margin-bottom:.9rem"><p style="font-size:.84rem;font-weight:500;margin-bottom:.3rem">전화번호</p><input type="text" placeholder="010-0000-0000" value="" style="width:100%;border:1.5px solid var(--line);border-radius:10px;padding:.65rem .85rem;font:inherit;font-size:.9rem"></div>
+    </div>
+    <div style="margin-bottom:.9rem"><p style="font-size:.84rem;font-weight:500;margin-bottom:.3rem">이메일</p><input type="text" placeholder="name@example.com" value="mj.kim@example.com" style="width:100%;border:1.5px solid var(--line);border-radius:10px;padding:.65rem .85rem;font:inherit;font-size:.9rem"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 1rem">
+      <div style="margin-bottom:.9rem"><p style="font-size:.84rem;font-weight:500;margin-bottom:.3rem">전문 분야</p><input type="text" placeholder="예: 전략기획, 반도체 공정, HR" value="전략기획" style="width:100%;border:1.5px solid var(--line);border-radius:10px;padding:.65rem .85rem;font:inherit;font-size:.9rem"></div><div style="margin-bottom:.9rem"><p style="font-size:.84rem;font-weight:500;margin-bottom:.3rem">상세 경력</p><input type="text" placeholder="예: 대기업 전략기획 28년" value="" style="width:100%;border:1.5px solid var(--line);border-radius:10px;padding:.65rem .85rem;font:inherit;font-size:.9rem"></div>
+    </div>
+    <p style="font-size:.84rem;font-weight:500;margin-bottom:.3rem">현재 가장 어려운 점</p>
+    <textarea placeholder="예: 특강 요청이 와도 보낼 자료가 없습니다" style="width:100%;min-height:80px;border:1.5px solid var(--line);border-radius:10px;padding:.7rem .85rem;font:inherit;font-size:.9rem;margin-bottom:1rem"></textarea>
+    <p style="font-size:.84rem;font-weight:600;margin-bottom:.45rem">관심 목적 (복수 선택)</p>
+    <div style="display:flex;gap:.45rem;flex-wrap:wrap;margin-bottom:1rem"><label style="display:inline-flex;gap:.4rem;align-items:center;font-size:.85rem;border:1.5px solid var(--blue);border-radius:99px;padding:.35rem .9rem;cursor:pointer;background:var(--info-soft);color:var(--blue);font-weight:600"><input type="checkbox" style="display:none" checked>강의</label><label style="display:inline-flex;gap:.4rem;align-items:center;font-size:.85rem;border:1.5px solid var(--blue);border-radius:99px;padding:.35rem .9rem;cursor:pointer;background:var(--info-soft);color:var(--blue);font-weight:600"><input type="checkbox" style="display:none" checked>자문</label><label style="display:inline-flex;gap:.4rem;align-items:center;font-size:.85rem;border:1.5px solid var(--line);border-radius:99px;padding:.35rem .9rem;cursor:pointer;"><input type="checkbox" style="display:none" >컨설팅</label><label style="display:inline-flex;gap:.4rem;align-items:center;font-size:.85rem;border:1.5px solid var(--line);border-radius:99px;padding:.35rem .9rem;cursor:pointer;"><input type="checkbox" style="display:none" >코칭</label><label style="display:inline-flex;gap:.4rem;align-items:center;font-size:.85rem;border:1.5px solid var(--line);border-radius:99px;padding:.35rem .9rem;cursor:pointer;"><input type="checkbox" style="display:none" >콘텐츠</label><label style="display:inline-flex;gap:.4rem;align-items:center;font-size:.85rem;border:1.5px solid var(--line);border-radius:99px;padding:.35rem .9rem;cursor:pointer;"><input type="checkbox" style="display:none" >출판</label><label style="display:inline-flex;gap:.4rem;align-items:center;font-size:.85rem;border:1.5px solid var(--line);border-radius:99px;padding:.35rem .9rem;cursor:pointer;"><input type="checkbox" style="display:none" >창업</label><label style="display:inline-flex;gap:.4rem;align-items:center;font-size:.85rem;border:1.5px solid var(--line);border-radius:99px;padding:.35rem .9rem;cursor:pointer;"><input type="checkbox" style="display:none" >기타</label></div>
+    <p style="font-size:.84rem;font-weight:600;margin-bottom:.45rem">원하는 결과물 (복수 선택)</p>
+    <div style="display:flex;gap:.45rem;flex-wrap:wrap;margin-bottom:1rem"><label style="display:inline-flex;gap:.4rem;align-items:center;font-size:.85rem;border:1.5px solid var(--line);border-radius:99px;padding:.35rem .9rem;cursor:pointer;"><input type="checkbox" style="display:none" >브랜드 프로필</label><label style="display:inline-flex;gap:.4rem;align-items:center;font-size:.85rem;border:1.5px solid var(--line);border-radius:99px;padding:.35rem .9rem;cursor:pointer;"><input type="checkbox" style="display:none" >강의안</label><label style="display:inline-flex;gap:.4rem;align-items:center;font-size:.85rem;border:1.5px solid var(--blue);border-radius:99px;padding:.35rem .9rem;cursor:pointer;background:var(--info-soft);color:var(--blue);font-weight:600"><input type="checkbox" style="display:none" checked>B2B 제안서</label><label style="display:inline-flex;gap:.4rem;align-items:center;font-size:.85rem;border:1.5px solid var(--line);border-radius:99px;padding:.35rem .9rem;cursor:pointer;"><input type="checkbox" style="display:none" >SNS/채널 전략</label><label style="display:inline-flex;gap:.4rem;align-items:center;font-size:.85rem;border:1.5px solid var(--line);border-radius:99px;padding:.35rem .9rem;cursor:pointer;"><input type="checkbox" style="display:none" >전체 패키지</label></div>
+    <p style="font-size:.84rem;font-weight:600;margin-bottom:.45rem">상담 방식</p>
+    <div style="display:flex;gap:.45rem;flex-wrap:wrap;margin-bottom:1.3rem"><label style="display:inline-flex;gap:.4rem;align-items:center;font-size:.85rem;border:1.5px solid var(--line);border-radius:99px;padding:.35rem .9rem;cursor:pointer;"><input type="checkbox" style="display:none" >전화</label><label style="display:inline-flex;gap:.4rem;align-items:center;font-size:.85rem;border:1.5px solid var(--blue);border-radius:99px;padding:.35rem .9rem;cursor:pointer;background:var(--info-soft);color:var(--blue);font-weight:600"><input type="checkbox" style="display:none" checked>Zoom</label><label style="display:inline-flex;gap:.4rem;align-items:center;font-size:.85rem;border:1.5px solid var(--line);border-radius:99px;padding:.35rem .9rem;cursor:pointer;"><input type="checkbox" style="display:none" >대면</label></div>
+    <div class="consent"><input type="checkbox" checked><div><strong>개인정보 수집·이용 동의</strong> <a href="privacy.html" style="color:var(--blue)">[처리방침]</a> — 미동의 시 제출이 차단됩니다 (FR-PRIV-02)</div></div>
+    <a class="btn primary lg" href="apply-thank-you.html" style="width:100%;text-align:center">상담 신청하기</a>
+    <p class="note" style="margin-top:.8rem;text-align:center">제출 시 leads 테이블에 저장(익명 insert 허용·조회는 어드민만, FR-LEAD-04)되며 동의 시각이 기록됩니다</p>
+  </div>
+</div>
+
+</body>
+</html>

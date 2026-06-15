@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A-13 리포트 룰 엔진 (F13) — 한끗프로젝트 프로토타입 (로드맵 보존)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="">
+<div class="proto-bar"><span class="pid">A-13</span><span class="pt">리포트 룰 엔진 (F13)</span><span class="sep">|</span><span class="feat">F13</span><span class="phase p2">◇ Phase 2 로드맵</span><nav><a href="pages.html">전체 화면 목록</a><a href="flow-customer.html">고객 흐름</a><a href="flow-coach.html">운영 흐름</a><a href="index.html">프로토타입 홈</a></nav></div>
+<div class="admin"><aside class="side"><div class="logo">꿈몰다 브랜드 매니지먼트<small>ADMIN CONSOLE · PROTOTYPE</small></div><div class="grp">운영 (MVP-Free P0)</div><a href="admin.html"><span>진단 목록</span><span class="tag">P0</span></a><a href="admin-lead-detail.html"><span>진단 상세·검수</span><span class="tag">P0</span></a><a href="admin.html"><span>리드 DB</span><span class="tag">P0</span></a><a href="admin-airuns.html"><span>AI 호출 로그</span><span class="tag">P1</span></a><div class="grp">AI 코칭 엔진 (V1.5)</div><a href="admin-questions.html"><span>질문 아키텍처 F9</span><span class="tag">V1.5</span></a><a href="admin-patterns.html"><span>패턴 분류기 F10</span><span class="tag">V1.5</span></a><a href="admin-mapper.html"><span>브랜딩 매퍼 F11</span><span class="tag">V1.5</span></a><a href="workspace.html"><span>코치 분석 노트 F15</span><span class="tag">V1.5</span></a><a href="admin-oneliner.html"><span>원라이너 3종</span><span class="tag">V1.5</span></a><a href="admin-brief.html"><span>마스터 브리프 F1</span><span class="tag">V1.5</span></a><a href="admin-feedback.html"><span>코칭 피드백 F12</span><span class="tag">V1.5</span></a><a href="admin-rules.html" class="on"><span>리포트 룰 엔진 F13</span><span class="tag">V1.5</span></a><div class="grp">고도화 (V2)</div><a href="admin-crosscheck.html"><span>교차 검증 매트릭스</span><span class="tag">V2</span></a><a href="admin-handoff.html"><span>휴먼 핸드오프 F14</span><span class="tag">V2</span></a><a href="admin-retainer.html"><span>리테이너 관리 F6</span><span class="tag">V2</span></a><a href="admin-export.html"><span>PPT/PDF Export F8</span><span class="tag">V2</span></a></aside><div class="main"><div style="display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap"><div><h1>리포트 생성 룰 엔진 — F13</h1><p class="sub">누적 답변 → 진단 리포트·브랜드 프로필·마스터 브리프 규칙 기반 구조화 (일관성 ≥95%)</p></div></div>
+<div class="panel"><h3>생성 규칙 정의</h3>
+<table class="data">
+  <tr><th>규칙</th><th>조건 (IF)</th><th>출력 (THEN)</th><th>상태</th></tr>
+  <tr><td class="mono">R-SUF-01</td><td>응답 < 20문항</td><td>브리프 생성 차단 + 경고 (AC-Suf-1)</td><td><span class="badge ok">활성</span></td></tr>
+  <tr><td class="mono">R-SEC-08</td><td>8요소 매핑 완료</td><td>섹션별 1건 이상 생성 (AC-Out-1)</td><td><span class="badge ok">활성</span></td></tr>
+  <tr><td class="mono">R-TONE-01</td><td>모든 해석 문장</td><td>“~일 수 있습니다” 가설 표현 강제 (R7)</td><td><span class="badge ok">활성</span></td></tr>
+  <tr><td class="mono">R-SRC-01</td><td>주요 항목 생성 시</td><td>sourceQuestionCodes 필수 (REQ-021)</td><td><span class="badge ok">활성</span></td></tr>
+  <tr><td class="mono">R-HALL-01</td><td>Zod 스키마 검증 실패</td><td>draft 보류 + 검수자 알림 (AC-Neg-2)</td><td><span class="badge ok">활성</span></td></tr>
+  <tr><td class="mono">R-MISS-05</td><td>OUTPUT 변수 누락 ≥5개</td><td>생성 보류 + 추가 답변 목록 (AC-Neg-7)</td><td><span class="badge ok">활성</span></td></tr>
+</table></div>
+<div class="kpis">
+  <div class="kpi"><div class="v">96.4%</div><div class="k">산출물 구조 일관성 (목표 ≥95%)</div></div>
+  <div class="kpi"><div class="v">100%</div><div class="k">스키마 일치율 (AC-Logic-1)</div></div>
+  <div class="kpi"><div class="v">3.1%</div><div class="k">환각률 (목표 <5%)</div></div>
+</div>
+</div></div>
+</body>
+</html>

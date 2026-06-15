@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A-01 관리자 콘솔 — 한끗프로젝트 프로토타입</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="">
+<div class="proto-bar"><span class="pid">A-01</span><span class="pt">관리자 콘솔</span><span class="sep">|</span><span class="frwrap"><span class="route">/admin</span><span class="fr">FR-ADMIN-01·03 · FR-AUTH-04</span></span><span class="phase curp1">● 현행 +[P1] 보강</span><nav><a href="pages.html">전체 화면 목록</a><a href="flow-customer.html">고객 흐름</a><a href="flow-coach.html">운영 흐름</a><a href="index.html">프로토타입 홈</a></nav></div>
+<div class="admin"><aside class="side"><div class="logo">한끗프로젝트<small>ADMIN — career-translate-lab</small></div><div class="grp">운영 콘솔</div><a href="admin.html" class="on"><span>관리자 콘솔 2탭</span><span class="tag">P1</span></a><a href="admin-lead-detail.html"><span>리드 상세</span><span class="tag">현행</span></a><a href="workspace.html"><span>코칭 워크스페이스</span><span class="tag">P1</span></a><a href="admin-notifications.html"><span>알림 시스템</span><span class="tag">현행</span></a><a href="admin-auth.html"><span>어드민 인증 게이트</span><span class="tag">P1</span></a><div class="grp">AI 엔진 (Phase 2)</div><a href="admin-brief.html"><span>마스터 브리프</span><span class="tag">P2</span></a><a href="admin-oneliner.html"><span>원라이너 3종</span><span class="tag">P2</span></a><a href="admin-questions.html"><span>질문 아키텍처</span><span class="tag">P2</span></a><a href="admin-patterns.html"><span>패턴 분류기</span><span class="tag">P2</span></a><a href="admin-mapper.html"><span>브랜딩 매퍼</span><span class="tag">P2</span></a><a href="admin-feedback.html"><span>코칭 피드백</span><span class="tag">P2</span></a><a href="admin-rules.html"><span>리포트 룰</span><span class="tag">P2</span></a><a href="admin-crosscheck.html"><span>교차검증</span><span class="tag">P2</span></a><a href="admin-handoff.html"><span>휴먼 핸드오프</span><span class="tag">P2</span></a><a href="admin-airuns.html"><span>AI 호출 로그</span><span class="tag">P2</span></a><div class="grp">확장 (Phase 3)</div><a href="admin-retainer.html"><span>리테이너 관리</span><span class="tag">P3</span></a><a href="admin-export.html"><span>PPT Export</span><span class="tag">P3</span></a></aside><div class="main"><div style="display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap"><div><h1>관리자 콘솔</h1><p class="sub">리드 CRM과 코칭 회원 관리를 한 화면에서 — /admin</p></div><div style="margin-left:auto;display:flex;gap:.5rem"><a class="btn ghost sm" href="admin-notifications.html">🔔 알림 3</a></div></div>
+<div class="kpis">
+  <div class="kpi"><div class="v">12</div><div class="k">이번 달 신규 리드</div></div>
+  <div class="kpi"><div class="v" style="color:var(--warn)">2</div><div class="k">상담 대기</div></div>
+  <div class="kpi"><div class="v">3</div><div class="k">코칭 진행 멤버</div></div>
+  <div class="kpi"><div class="v" style="color:var(--ok)">1</div><div class="k">제출 완료 (검토 필요)</div></div>
+</div>
+<div class="tabbar">
+  <button class="tab on" onclick="tab(0)">① 상담 리드 관리</button>
+  <button class="tab" onclick="tab(1)">② 코칭 회원 관리 (계정 발급)</button>
+</div>
+
+<div class="tabpane" id="t0">
+  <div class="toolbar">
+    <span class="badge blue">전체 12</span><span class="badge gray">무료상담 5</span><span class="badge gold">한끗 진단 3</span><span class="badge gold">빌드 2</span><span class="badge gold">론칭 1</span><span class="badge gold">파트너 1</span>
+    <span class="note" style="margin-left:auto">상태: 대기중 → 상담중 → 완료 → 보류 · 메모 인라인 자동 저장</span>
+  </div>
+  <table class="data card">
+    <tr><th>이름</th><th>유입 상품</th><th>상태</th><th>진단 점수·유형</th><th>운영 메모</th><th>접수일</th><th></th></tr>
+    <tr>
+  <td><strong>김명진</strong><br><span class="note mono">mj.kim@example.com</span></td>
+  <td><span class="badge gold">한끗 빌드</span></td>
+  <td><span class="badge blue">상담중</span></td>
+  <td class="mono">60 · 준비형</td>
+  <td><input type="text" value="6/15 Zoom 2차 예정" style="width:100%;border:1px solid var(--line);border-radius:7px;padding:.3rem .5rem;font:inherit;font-size:.78rem"></td>
+  <td>06-09</td>
+  <td><a class="btn ghost sm" href="admin-lead-detail.html">상세</a></td></tr><tr>
+  <td><strong>이재환</strong><br><span class="note mono">jh.lee@example.com</span></td>
+  <td><span class="badge blue">무료상담</span></td>
+  <td><span class="badge warn">대기중</span></td>
+  <td class="mono">47 · 탐색형</td>
+  <td><input type="text" value="특강 자료 니즈" style="width:100%;border:1px solid var(--line);border-radius:7px;padding:.3rem .5rem;font:inherit;font-size:.78rem"></td>
+  <td>06-11</td>
+  <td><a class="btn ghost sm" href="admin-lead-detail.html">상세</a></td></tr><tr>
+  <td><strong>정은주</strong><br><span class="note mono">ej.jung@example.com</span></td>
+  <td><span class="badge gold">한끗 진단</span></td>
+  <td><span class="badge ok">완료</span></td>
+  <td class="mono">71 · 실행형</td>
+  <td><input type="text" value="진단→빌드 업셀 검토" style="width:100%;border:1px solid var(--line);border-radius:7px;padding:.3rem .5rem;font:inherit;font-size:.78rem"></td>
+  <td>06-02</td>
+  <td><a class="btn ghost sm" href="admin-lead-detail.html">상세</a></td></tr><tr>
+  <td><strong>박도윤</strong><br><span class="note mono">dy.park@example.com</span></td>
+  <td><span class="badge blue">무료상담</span></td>
+  <td><span class="badge gray">보류</span></td>
+  <td class="mono">—</td>
+  <td><input type="text" value="9월 퇴직 후 재연락 요청" style="width:100%;border:1px solid var(--line);border-radius:7px;padding:.3rem .5rem;font:inherit;font-size:.78rem"></td>
+  <td>05-28</td>
+  <td><a class="btn ghost sm" href="admin-lead-detail.html">상세</a></td></tr>
+  </table>
+</div>
+
+<div class="tabpane" id="t1" style="display:none">
+  <div class="panel">
+    <h3>계정 즉시 발급</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.6rem">
+      <input placeholder="이름" style="border:1.5px solid var(--line);border-radius:8px;padding:.5rem .7rem;font:inherit;font-size:.84rem">
+      <input placeholder="이메일 ID" style="border:1.5px solid var(--line);border-radius:8px;padding:.5rem .7rem;font:inherit;font-size:.84rem">
+      <input placeholder="비밀번호" style="border:1.5px solid var(--line);border-radius:8px;padding:.5rem .7rem;font:inherit;font-size:.84rem">
+      <select style="border:1.5px solid var(--line);border-radius:8px;padding:.5rem .7rem;font:inherit;font-size:.84rem"><option>한끗 진단</option><option>한끗 빌드</option><option>한끗 론칭</option><option>한끗 파트너</option></select>
+      <button class="btn primary sm">발급</button>
+    </div>
+    <p class="note" style="margin-top:.6rem">발급은 Edge Function create-member가 Supabase Auth 사용자 생성 + members insert를 수행합니다 (FR-AUTH-04). 비밀번호 평문 저장 없음 (FR-AUTH-05). 발급 즉시 카카오톡/SMS 안내문 원클릭 복사</p>
+  </div>
+  <table class="data card">
+    <tr><th>멤버</th><th>패키지</th><th>42문항 진행률</th><th>세션 상태</th><th>작업</th></tr>
+    <tr>
+  <td><strong>김명진</strong><br><span class="note mono">mj.kim@example.com</span></td>
+  <td><span class="badge gold">빌드</span></td>
+  <td><div style="display:flex;align-items:center;gap:.5rem"><div class="bar" style="width:90px"><i style="width:100%"></i></div><span class="note">100%</span></div></td>
+  <td><span class="badge warn">submitted</span></td>
+  <td style="display:flex;gap:.35rem;flex-wrap:wrap"><a class="btn ghost sm" href="workspace.html">워크스페이스</a><button class="btn ghost sm">안내문 복사</button><button class="btn bad sm">삭제</button></td></tr><tr>
+  <td><strong>정은주</strong><br><span class="note mono">ej.jung@example.com</span></td>
+  <td><span class="badge gold">진단</span></td>
+  <td><div style="display:flex;align-items:center;gap:.5rem"><div class="bar" style="width:90px"><i style="width:40%"></i></div><span class="note">40%</span></div></td>
+  <td><span class="badge blue">in-progress</span></td>
+  <td style="display:flex;gap:.35rem;flex-wrap:wrap"><a class="btn ghost sm" href="workspace.html">워크스페이스</a><button class="btn ghost sm">안내문 복사</button><button class="btn bad sm">삭제</button></td></tr><tr>
+  <td><strong>최성호</strong><br><span class="note mono">sh.choi@example.com</span></td>
+  <td><span class="badge gold">론칭</span></td>
+  <td><div style="display:flex;align-items:center;gap:.5rem"><div class="bar" style="width:90px"><i style="width:100%"></i></div><span class="note">100%</span></div></td>
+  <td><span class="badge ok">finalized</span></td>
+  <td style="display:flex;gap:.35rem;flex-wrap:wrap"><a class="btn ghost sm" href="workspace.html">워크스페이스</a><button class="btn ghost sm">안내문 복사</button><button class="btn bad sm">삭제</button></td></tr>
+  </table>
+</div>
+<script>function tab(i){document.getElementById('t0').style.display=i==0?'':'none';document.getElementById('t1').style.display=i==1?'':'none';document.querySelectorAll('.tabbar .tab').forEach((e,j)=>e.classList.toggle('on',j==i));}</script>
+</div></div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A-05 AI 호출 로그 — 한끗프로젝트 프로토타입 (로드맵 보존)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="">
+<div class="proto-bar"><span class="pid">A-05</span><span class="pt">AI 호출 로그</span><span class="sep">|</span><span class="feat">S12</span><span class="phase p2">◇ Phase 2 로드맵</span><nav><a href="pages.html">전체 화면 목록</a><a href="flow-customer.html">고객 흐름</a><a href="flow-coach.html">운영 흐름</a><a href="index.html">프로토타입 홈</a></nav></div>
+<div class="admin"><aside class="side"><div class="logo">꿈몰다 브랜드 매니지먼트<small>ADMIN CONSOLE · PROTOTYPE</small></div><div class="grp">운영 (MVP-Free P0)</div><a href="admin.html"><span>진단 목록</span><span class="tag">P0</span></a><a href="admin-lead-detail.html"><span>진단 상세·검수</span><span class="tag">P0</span></a><a href="admin.html"><span>리드 DB</span><span class="tag">P0</span></a><a href="admin-airuns.html" class="on"><span>AI 호출 로그</span><span class="tag">P1</span></a><div class="grp">AI 코칭 엔진 (V1.5)</div><a href="admin-questions.html"><span>질문 아키텍처 F9</span><span class="tag">V1.5</span></a><a href="admin-patterns.html"><span>패턴 분류기 F10</span><span class="tag">V1.5</span></a><a href="admin-mapper.html"><span>브랜딩 매퍼 F11</span><span class="tag">V1.5</span></a><a href="workspace.html"><span>코치 분석 노트 F15</span><span class="tag">V1.5</span></a><a href="admin-oneliner.html"><span>원라이너 3종</span><span class="tag">V1.5</span></a><a href="admin-brief.html"><span>마스터 브리프 F1</span><span class="tag">V1.5</span></a><a href="admin-feedback.html"><span>코칭 피드백 F12</span><span class="tag">V1.5</span></a><a href="admin-rules.html"><span>리포트 룰 엔진 F13</span><span class="tag">V1.5</span></a><div class="grp">고도화 (V2)</div><a href="admin-crosscheck.html"><span>교차 검증 매트릭스</span><span class="tag">V2</span></a><a href="admin-handoff.html"><span>휴먼 핸드오프 F14</span><span class="tag">V2</span></a><a href="admin-retainer.html"><span>리테이너 관리 F6</span><span class="tag">V2</span></a><a href="admin-export.html"><span>PPT/PDF Export F8</span><span class="tag">V2</span></a></aside><div class="main"><div style="display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap"><div><h1>AI 호출 로그</h1><p class="sub">AiRun — 호출 성공/실패, 생성 시간, 오류 메시지 추적 (S12 · P1)</p></div></div>
+<div class="kpis">
+  <div class="kpi"><div class="v">41</div><div class="k">이번 달 호출</div></div>
+  <div class="kpi"><div class="v" style="color:var(--ok)">92.7%</div><div class="k">성공률</div></div>
+  <div class="kpi"><div class="v">38.4초</div><div class="k">평균 생성 시간 (목표 ≤60초)</div></div>
+  <div class="kpi"><div class="v">1.07회</div><div class="k">진단당 호출 (한도 2회)</div></div>
+</div>
+<table class="data card">
+  <tr><th>시각</th><th>taskType</th><th>provider</th><th>상태</th><th>소요</th><th>오류</th></tr>
+  <tr><td class="mono">06-10 14:23:01</td><td>generateReport</td><td>gemini</td><td><span class="badge ok">completed</span></td><td>36.2s</td><td>—</td></tr>
+  <tr><td class="mono">06-10 09:52:12</td><td>generateReport</td><td>gemini</td><td><span class="badge ok">completed</span></td><td>41.8s</td><td>—</td></tr>
+  <tr><td class="mono">06-09 11:41:30</td><td>generateReport</td><td>gemini</td><td><span class="badge bad">failed</span></td><td>60.0s</td><td class="mono">429 RESOURCE_EXHAUSTED (free tier)</td></tr>
+  <tr><td class="mono">06-09 11:40:02</td><td>generateReport</td><td>gemini</td><td><span class="badge bad">failed</span></td><td>—</td><td class="mono">Zod parse error → draft 미저장</td></tr>
+  <tr><td class="mono">06-08 16:18:44</td><td>regenerateReport</td><td>gemini</td><td><span class="badge ok">completed</span></td><td>33.1s</td><td>—</td></tr>
+</table>
+<p class="note" style="margin-top:.8rem">실패 시에도 Answer 데이터는 보존됩니다 (REQ-FREE-FUNC-022). Zod 검증 실패 시 리포트는 draft 미만 상태로 차단 — 환각 차단 게이트.</p>
+</div></div>
+</body>
+</html>

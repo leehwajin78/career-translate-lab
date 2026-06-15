@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A-03 코칭 워크스페이스 — 한끗프로젝트 프로토타입</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="">
+<div class="proto-bar"><span class="pid">A-03</span><span class="pt">코칭 워크스페이스</span><span class="sep">|</span><span class="frwrap"><span class="route">/coaching/workspace/:memberId</span><span class="fr">FR-WORK-01~03</span></span><span class="phase curp1">● 현행 +[P1] 보강</span><nav><a href="pages.html">전체 화면 목록</a><a href="flow-customer.html">고객 흐름</a><a href="flow-coach.html">운영 흐름</a><a href="index.html">프로토타입 홈</a></nav></div>
+<div class="admin"><aside class="side"><div class="logo">한끗프로젝트<small>ADMIN — career-translate-lab</small></div><div class="grp">운영 콘솔</div><a href="admin.html"><span>관리자 콘솔 2탭</span><span class="tag">P1</span></a><a href="admin-lead-detail.html"><span>리드 상세</span><span class="tag">현행</span></a><a href="workspace.html" class="on"><span>코칭 워크스페이스</span><span class="tag">P1</span></a><a href="admin-notifications.html"><span>알림 시스템</span><span class="tag">현행</span></a><a href="admin-auth.html"><span>어드민 인증 게이트</span><span class="tag">P1</span></a><div class="grp">AI 엔진 (Phase 2)</div><a href="admin-brief.html"><span>마스터 브리프</span><span class="tag">P2</span></a><a href="admin-oneliner.html"><span>원라이너 3종</span><span class="tag">P2</span></a><a href="admin-questions.html"><span>질문 아키텍처</span><span class="tag">P2</span></a><a href="admin-patterns.html"><span>패턴 분류기</span><span class="tag">P2</span></a><a href="admin-mapper.html"><span>브랜딩 매퍼</span><span class="tag">P2</span></a><a href="admin-feedback.html"><span>코칭 피드백</span><span class="tag">P2</span></a><a href="admin-rules.html"><span>리포트 룰</span><span class="tag">P2</span></a><a href="admin-crosscheck.html"><span>교차검증</span><span class="tag">P2</span></a><a href="admin-handoff.html"><span>휴먼 핸드오프</span><span class="tag">P2</span></a><a href="admin-airuns.html"><span>AI 호출 로그</span><span class="tag">P2</span></a><div class="grp">확장 (Phase 3)</div><a href="admin-retainer.html"><span>리테이너 관리</span><span class="tag">P3</span></a><a href="admin-export.html"><span>PPT Export</span><span class="tag">P3</span></a></aside><div class="main"><div style="display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap"><div><h1>코칭 워크스페이스 — 김명진 (빌드)</h1><p class="sub">42문항 심층 검토 + 코치 메모 + AI 초안 + 최종 프로필 확정 — /coaching/workspace/:memberId</p></div><div style="margin-left:auto;display:flex;gap:.5rem"><span class="badge warn">submitted</span><button class="btn primary sm">최종 확정 (finalized)</button></div></div>
+<div class="split">
+  <div>
+    <div class="panel">
+      <h3>답변 검토 — PART 2 · Q18</h3>
+      <p style="font-weight:600;font-size:.88rem">가르쳐줄 수 있을 만큼 깊이 아는 주제 3가지는?</p>
+      <p style="font-size:.85rem;margin-top:.4rem;background:#F7F8FC;border-radius:8px;padding:.7rem">첫째, 신사업 타당성 검토 프레임입니다. 28년간 12건의 신규 사업 검토를 직접 이끌면서 만든 7단계 체크 구조가 있습니다. 둘째…</p>
+      <div class="audio" style="margin-top:.6rem;max-width:360px"><div class="play">▶</div><div class="track"><i></i></div><span>음성 02:14 · audio/webm</span></div>
+      <p style="font-size:.8rem;font-weight:500;margin-top:.9rem">코치 메모 (문항별)</p>
+      <textarea style="width:100%;min-height:60px;border:1.5px solid var(--line);border-radius:8px;padding:.6rem;font:inherit;font-size:.82rem;margin-top:.3rem">"7단계 체크 구조" — 시그니처 프레임 후보. 강의안 목차의 뼈대로 쓸 것.</textarea>
+      <div style="display:flex;justify-content:space-between;margin-top:.6rem"><a class="btn ghost sm" href="#">← Q17</a><span class="note">18 / 42</span><a class="btn ghost sm" href="#">Q19 →</a></div>
+    </div>
+    <div class="panel">
+      <h3>파트별 검토 현황</h3>
+      <table class="data">
+        <tr><th>파트</th><th>답변</th><th>코치 메모</th></tr>
+        <tr><td>PART 1 — 살아온 삶</td><td><span class="badge ok">10/10</span></td><td class="mono">7건</td></tr>
+        <tr><td>PART 2 — 보유 자산</td><td><span class="badge ok">12/12</span></td><td class="mono">5건</td></tr>
+        <tr><td>PART 3 — 원하는 것</td><td><span class="badge ok">10/10</span></td><td class="mono">2건</td></tr>
+        <tr><td>PART 4 — 말하는 법</td><td><span class="badge ok">10/10</span></td><td class="mono">3건</td></tr>
+      </table>
+    </div>
+  </div>
+  <div>
+    <div class="panel" style="border-left:4px solid var(--blue)">
+      <h3>AI 분석 초안 (AIDraft)</h3>
+      <p class="note">coachingAI.ts 로컬 분석 — Phase 2에서 Claude/Gemini API로 대체</p>
+      <table class="data" style="margin-top:.6rem">
+        <tr><th>유형</th><td><span class="badge blue">경험 나열형</span></td></tr>
+        <tr><th>원라이너 초안</th><td style="font-size:.82rem">"나는 신사업의 갈림길에 선 중견기업 경영진이 투자 판단을 6주 안에 내리도록, 28년의 검토 프레임으로 돕는 사람이다."</td></tr>
+        <tr><th>강점 신호</th><td style="font-size:.82rem">정량 실적 12건 · 위기 의사결정 사례 · 주제 분리 명확</td></tr>
+        <tr><th>보완 지점</th><td style="font-size:.82rem">타깃 광범위 · 회사 주어 서술 · Q40 공백</td></tr>
+      </table>
+      <button class="btn ghost sm" style="margin-top:.7rem">초안 다시 생성</button>
+    </div>
+    <div class="panel" style="border-left:4px solid var(--gold)">
+      <h3>최종 코칭 프로필 (FinalProfile)</h3>
+      <p class="note">코치가 finalized로 확정한 내용만 고객 리포트에 노출됩니다 — RLS·my_finalized_report 뷰로 강제 (FR-WORK-03·04)</p>
+      <textarea style="width:100%;min-height:110px;border:1.5px solid var(--line);border-radius:8px;padding:.6rem;font:inherit;font-size:.82rem;margin-top:.6rem">[원라이너 확정] 나는 신사업의 갈림길에 선 중견기업 경영진이 6주 안에 투자 판단을 내리도록 돕는, 12건의 검토를 책임져 본 사람이다.
+
+[다음 단계] 빌드 2주차: 프로필 1페이지 → 4주차: 강의안 초안</textarea>
+      <div style="display:flex;gap:.5rem;margin-top:.7rem"><button class="btn primary sm">저장</button><button class="btn gold sm">확정·고객 공개 (finalized)</button></div>
+    </div>
+  </div>
+</div>
+</div></div>
+</body>
+</html>
