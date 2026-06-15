@@ -56,7 +56,7 @@ export default function Index() {
         <div className="container-prose py-16 text-center">
           <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight break-keep text-primary">경력은 충분합니다. 부족한 건 번역입니다.</h2>
           <p className={`mt-2 ${note}`}>노하우는 머릿속에 있고, 시장은 문서를 요구합니다.</p>
-          <div className="mt-6 grid grid-cols-[1fr_auto_1fr] gap-4 md:gap-6 items-center max-w-3xl mx-auto">
+          <div className="mt-6 grid grid-cols-[1fr_auto_1fr] gap-4 md:gap-6 items-center">
             <div className="bg-white border-2 border-primary rounded-xl p-5 md:p-6 text-left">
               <div className="font-extrabold text-primary text-base md:text-lg mb-3">당신의 30년 경력</div>
               <ul className="space-y-1.5 text-primary text-sm font-medium">
