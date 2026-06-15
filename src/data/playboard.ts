@@ -811,6 +811,7 @@ const CHANGES: Change[] = [
   { id: 'CHG-009', date: '2026-06-15', screens: [],        type: 'add',   description: '/playboard 라우트 신설 + src/pages/Playboard.tsx 구현 상황판 페이지 생성', source: 'PM 지시' },
   { id: 'CHG-010', date: '2026-06-15', screens: [],        type: 'arch',  description: 'Phase A: SoT 스키마를 src/data/playboard.ts 로 분리. Phase B: Playboard.tsx 3뷰 재구축. Phase C: 07-mission-critical.md 작성. Phase D: CLAUDE.md + AGENTS.md 신설.', source: 'PM 지시' },
   { id: 'CHG-011', date: '2026-06-15', screens: ['C-15'], type: 'add',   description: 'src/pages/Privacy.tsx 생성 + /privacy 라우트 등록. ISSUE-03 해결.', source: '구현' },
+  { id: 'CHG-012', date: '2026-06-15', screens: [],       type: 'arch',  description: 'Supabase 인프라 초기화: @supabase/supabase-js 설치, src/integrations/supabase/client.ts 생성, supabase/migrations/ 4개 SQL 파일 작성 (profiles·free_diagnostics·leads·memberships·payments·coaching_sessions·coaching_reports·coaching_answers).', source: '기술 결정' },
 ]
 
 // ============================================================
