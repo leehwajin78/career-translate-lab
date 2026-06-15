@@ -17,6 +17,7 @@ import Consultation from './pages/Consultation'
 import Login from './pages/Login'
 import NotFound from './pages/NotFound'
 import Playboard from './pages/Playboard'
+import Privacy from './pages/Privacy'
 
 // 지연 로드 (로그인 후 접근 페이지 — 초기 번들 제외)
 const Admin            = lazy(() => import('./pages/Admin'))
@@ -74,6 +75,7 @@ const App = () => (
                 <Route path="/consultation" element={<Consultation />} />
                 <Route path="/login"       element={<Login />} />
                 <Route path="/playboard"   element={<Playboard />} />
+                <Route path="/privacy"     element={<Privacy />} />
 
                 {/* Apply 플로우 — Guest (결제 전) */}
                 <Route path="/apply/diagnosis"  element={<ApplyDiagnosis />} />

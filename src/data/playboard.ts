@@ -541,9 +541,9 @@ const SCREENS: Screen[] = [
 
   // ── C-15 개인정보 처리방침 ────────────────────────────────
   {
-    id: 'C-15', name: '개인정보 처리방침', route: null,
-    proto: 'privacy.html', component: '❌ src/pages/Privacy.tsx 미생성',
-    phase: 'p1', auth: 'Guest', fe: 'not-started', be: 'not-started',
+    id: 'C-15', name: '개인정보 처리방침', route: '/privacy',
+    proto: 'privacy.html', component: 'src/pages/Privacy.tsx',
+    phase: 'p1', auth: 'Guest', fe: 'partial', be: 'not-started',
     isMissionCritical: false,
     spec: { purpose: '개인정보처리방침 전문. 동의 링크 착지점.', stores: [], apis: [], dataContract: { in: {}, out: {} } },
     frs: [
@@ -553,7 +553,7 @@ const SCREENS: Screen[] = [
     nfrs: [], edges: [],
     acceptanceCriteria: ['Privacy.tsx 생성', '/privacy 라우트 등록', 'C-03·C-06 링크 연결'],
     coverage: COV_STATIC,
-    openIssues: ['ISSUE-03'],
+    openIssues: [],
   },
 
   // ── A-01 관리자 콘솔 ───────────────────────────────────────
@@ -747,11 +747,12 @@ const ISSUES: Issue[] = [
   },
   {
     id: 'ISSUE-03', screens: ['C-15'],
-    type: 'impl', priority: 'high', status: 'open',
+    type: 'impl', priority: 'high', status: 'resolved',
     title: '/privacy 라우트 미등록',
     body: 'src/pages/Privacy.tsx 미생성, App.tsx에 /privacy 라우트 없음. C-03·C-06 동의 링크 착지점 없음. 즉시 해결 가능 (prototype 파일 있음).',
     blockedBy: [],
     blocks: [],
+    resolvedBy: 'CHG-011',
   },
   {
     id: 'ISSUE-04', screens: ['C-11'],
@@ -809,6 +810,7 @@ const CHANGES: Change[] = [
   { id: 'CHG-008', date: '2026-06-15', screens: [],        type: 'add',   description: 'PLAYBOARD 작성 — 모든 요구사항의 단일 SoT 지정', source: 'PM 지시' },
   { id: 'CHG-009', date: '2026-06-15', screens: [],        type: 'add',   description: '/playboard 라우트 신설 + src/pages/Playboard.tsx 구현 상황판 페이지 생성', source: 'PM 지시' },
   { id: 'CHG-010', date: '2026-06-15', screens: [],        type: 'arch',  description: 'Phase A: SoT 스키마를 src/data/playboard.ts 로 분리. Phase B: Playboard.tsx 3뷰 재구축. Phase C: 07-mission-critical.md 작성. Phase D: CLAUDE.md + AGENTS.md 신설.', source: 'PM 지시' },
+  { id: 'CHG-011', date: '2026-06-15', screens: ['C-15'], type: 'add',   description: 'src/pages/Privacy.tsx 생성 + /privacy 라우트 등록. ISSUE-03 해결.', source: '구현' },
 ]
 
 // ============================================================
