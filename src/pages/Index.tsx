@@ -57,9 +57,9 @@ export default function Index() {
           <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight break-keep text-primary">경력은 충분합니다. 부족한 건 번역입니다.</h2>
           <p className={`mt-2 ${note}`}>노하우는 머릿속에 있고, 시장은 문서를 요구합니다.</p>
           <div className="mt-6 grid grid-cols-[1fr_auto_1fr] gap-4 md:gap-6 items-center">
-            <div className="bg-white border-2 border-primary rounded-xl p-5 md:p-6 text-left">
-              <div className="font-extrabold text-primary text-base md:text-lg mb-3">당신의 30년 경력</div>
-              <ul className="space-y-1.5 text-primary text-sm font-medium">
+            <div className="bg-white border-2 border-primary rounded-xl p-4 text-left">
+              <div className="font-extrabold text-primary text-base mb-2">당신의 30년 경력</div>
+              <ul className="space-y-1 text-primary text-sm font-medium">
                 <li>· 분야별 전문성</li>
                 <li>· 현장에서 쌓은 노하우</li>
                 <li>· 실패와 성공의 흔적</li>
@@ -67,12 +67,12 @@ export default function Index() {
             </div>
             <div className="flex flex-col items-center gap-2">
               <span className="text-xl text-primary">→</span>
-              <div className="bg-primary text-white font-extrabold text-xs md:text-sm px-4 py-2 rounded-full whitespace-nowrap">한끗프로젝트</div>
+              <div className="bg-primary text-white font-extrabold text-sm px-8 py-2.5 rounded-full whitespace-nowrap">한끗프로젝트</div>
               <span className="text-xl text-primary">→</span>
             </div>
-            <div className="bg-primary rounded-xl p-5 md:p-6 text-left">
-              <div className="font-extrabold text-white text-base md:text-lg mb-3">시장이 선택하는 자산</div>
-              <ul className="space-y-1.5 text-white/85 text-sm font-medium">
+            <div className="bg-primary rounded-xl p-4 text-left">
+              <div className="font-extrabold text-white text-base mb-2">시장이 선택하는 자산</div>
+              <ul className="space-y-1 text-white/85 text-sm font-medium">
                 <li>· 전문가 강의안</li>
                 <li>· 대표 경력서</li>
                 <li>· B2B 제안서</li>
