@@ -1,50 +1,361 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>C-03 무료 7문항 진단 — 한끗프로젝트 프로토타입</title>
+<title>경력 가치 무료 진단 — 한끗프로젝트</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="style.css">
-<script src="proto-hide.js"></script></head>
-<body class="">
-<div class="proto-bar"><span class="pid">C-03</span><span class="pt">무료 7문항 진단</span><span class="sep">|</span><span class="frwrap"><span class="route">/diagnosis</span><span class="fr">FR-FREE-01·03 · FR-PRIV-01~03</span></span><span class="phase curp1">● 현행 +[P1] 보강</span><nav><a href="pages.html">전체 화면 목록</a><a href="flow-customer.html">고객 흐름</a><a href="flow-coach.html">운영 흐름</a><a href="index.html">프로토타입 홈</a></nav></div>
+<script src="proto-hide.js"></script>
+<style>
+  .diag-wrap { max-width: 640px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+  .diag-step { display: none; }
+  .diag-step.active { display: block; }
+  .step-label { font-size: .78rem; font-weight: 800; letter-spacing: .12em; color: var(--blue); text-transform: uppercase; margin-bottom: .5rem; }
+  .step-q { font-size: 1.25rem; font-weight: 800; color: var(--ink); line-height: 1.55; margin: 0 0 .5rem; }
+  .step-hint { font-size: .93rem; color: var(--mut); line-height: 1.7; margin: 0 0 1.2rem; }
+  .diag-textarea { width: 100%; min-height: 130px; border: 1.5px solid var(--line); border-radius: 12px; padding: 1rem 1.1rem; font: inherit; font-size: 1rem; line-height: 1.7; resize: vertical; box-sizing: border-box; transition: border-color .15s; }
+  .diag-textarea:focus { outline: none; border-color: var(--blue); }
+  .diag-input { width: 100%; border: 1.5px solid var(--line); border-radius: 12px; padding: .85rem 1.1rem; font: inherit; font-size: 1rem; box-sizing: border-box; transition: border-color .15s; }
+  .diag-input:focus { outline: none; border-color: var(--blue); }
+  .char-count { font-size: .8rem; color: var(--mut); text-align: right; margin-top: .35rem; }
+  .prog-bar-wrap { margin-bottom: 2rem; }
+  .prog-label { display: flex; justify-content: space-between; font-size: .82rem; margin-bottom: .4rem; }
+  .prog-track { background: #E8ECFB; border-radius: 9999px; height: 6px; }
+  .prog-fill { background: var(--blue); border-radius: 9999px; height: 6px; transition: width .3s ease; }
+  .nav-btns { display: flex; justify-content: space-between; margin-top: 1.6rem; gap: .7rem; }
+  .nav-btns .btn { min-width: 100px; text-align: center; }
+  .consent-box { background: #F8F9FB; border-radius: 10px; padding: 1rem 1.2rem; margin-top: 1rem; font-size: .88rem; line-height: 1.7; }
+  .consent-box label { display: flex; gap: .7rem; align-items: flex-start; cursor: pointer; }
+  .consent-box input[type=checkbox] { margin-top: .25rem; flex: none; width: 16px; height: 16px; accent-color: var(--blue); }
+  .check-list label { display: flex; gap: .75rem; align-items: center; padding: .65rem 0; font-size: 1rem; cursor: pointer; border-bottom: 1px solid var(--line); }
+  .check-list label:last-child { border-bottom: none; }
+  .check-list input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--blue); flex: none; }
+  .done-icon { width: 64px; height: 64px; background: var(--blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; }
+  .err-msg { font-size: .85rem; color: #E03838; margin-top: .4rem; display: none; }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+  .info-field label { display: block; font-size: .82rem; font-weight: 700; color: var(--mut); margin-bottom: .3rem; }
+  .year-select { width: 100%; border: 1.5px solid var(--line); border-radius: 12px; padding: .85rem 1.1rem; font: inherit; font-size: 1rem; box-sizing: border-box; appearance: none; background: #fff; }
+  .year-select:focus { outline: none; border-color: var(--blue); }
+</style>
+</head>
+<body>
+<div class="proto-bar"><span class="pid">C-03</span><span class="pt">경력 가치 무료 진단</span><span class="sep">|</span><span class="frwrap"><span class="route">/diagnosis</span></span><span class="phase curp1">● 현행 구현</span><nav><a href="pages.html">전체 화면 목록</a><a href="flow-customer.html">고객 흐름</a><a href="flow-coach.html">운영 흐름</a><a href="index.html">프로토타입 홈</a></nav></div>
 
-<div class="cust cust-narrow">
-  <div class="eyebrow">FREE DIAGNOSIS · 무료 자가 진단</div>
-  <h1 style="margin-top:.6rem">경력 가치 무료 진단 — 7문항</h1>
-  <p class="lead">직함을 빼고 나를 설명할 수 있는지, 10분 안에 확인합니다.</p>
+<header style="position:sticky;top:33px;z-index:40;background:#fff;border-bottom:1px solid var(--line);padding:.75rem 1.5rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap">
+  <a href="landing.html" style="font-weight:800;font-size:1.05rem;color:var(--blue);letter-spacing:-.02em">한끗프로젝트</a>
+  <nav style="display:flex;gap:1.5rem;margin-left:auto;font-size:.92rem;font-weight:500">
+    <a href="service.html" style="color:#000">서비스 소개</a>
+    <a href="landing.html#process" style="color:#000">진행 과정</a>
+    <a href="landing.html#products" style="color:#000">상품 안내</a>
+  </nav>
+  <div style="display:flex;gap:.6rem;align-items:center;margin-left:1rem">
+    <a class="btn primary sm" href="diagnosis.html">경력 가치 진단</a>
+    <a class="btn ghost sm" href="consultation.html">무료 상담 신청</a>
+    <a href="login.html" style="font-size:.88rem;font-weight:500;color:var(--mut);white-space:nowrap">로그인</a>
+  </div>
+</header>
 
-  <div class="card" style="padding:1.3rem;margin-top:1.5rem">
-    <div class="eyebrow">STEP 0 — 기본 정보 (완료)</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.7rem;margin-top:.8rem">
-      <div><p class="note">이름</p><p style="font-weight:500">김명진</p></div>
-      <div><p class="note">이메일</p><p style="font-weight:500">mj.kim@example.com</p></div>
-      <div><p class="note">경력 연수</p><p style="font-weight:500">28년</p></div>
+<div class="diag-wrap">
+
+  <!-- 진행률 바 -->
+  <div class="prog-bar-wrap">
+    <div class="prog-label">
+      <span id="prog-text" style="font-weight:700;color:var(--ink)">경력 가치 무료 진단</span>
+      <span id="prog-num" class="note">0 / 8 완료</span>
     </div>
-    <div class="consent"><input type="checkbox" checked><div><strong>개인정보 수집·이용 동의</strong> <a href="privacy.html" style="color:var(--blue)">[처리방침 보기]</a><br><span class="note">이름·이메일·경력연수·진단 답변을 진단 제공 목적으로 수집합니다. 동의해야 진단을 시작할 수 있습니다. <b>FR-PRIV-01·02</b></span></div></div>
-    <p class="note" style="margin-top:.3rem">✓ 동의 시각이 free_diagnostics.consent_at에 기록됩니다 (FR-PRIV-03)</p>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
   </div>
 
-  <div style="margin:1.6rem 0 1rem">
-    <div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.4rem"><strong>진행률 — 2/7 완료</strong><span class="note">현재 Q3</span></div>
-    <div class="bar"><i style="width:29%"></i></div>
+  <!-- STEP 0: 기본 정보 -->
+  <div class="diag-step active" id="step-0">
+    <div class="step-label">시작하기</div>
+    <h2 class="step-q">직함을 빼고 나를 설명할 수 있는지,<br>10분 안에 확인합니다.</h2>
+    <p class="step-hint">7가지 질문에 솔직하게 답하면, 현재 경력 자산의 강점과 보완점을 알 수 있습니다. 완성된 문장이 아니어도 괜찮습니다.</p>
+    <div class="info-grid" style="margin-top:1.2rem">
+      <div class="info-field" style="grid-column:1/-1">
+        <label for="f-name">이름</label>
+        <input class="diag-input" id="f-name" type="text" placeholder="홍길동">
+      </div>
+      <div class="info-field" style="grid-column:1/-1">
+        <label for="f-email">이메일 <span style="color:var(--mut);font-weight:400">(진단 결과를 받을 주소)</span></label>
+        <input class="diag-input" id="f-email" type="email" placeholder="example@email.com">
+      </div>
+      <div class="info-field" style="grid-column:1/-1">
+        <label for="f-years">경력 연수</label>
+        <select class="year-select" id="f-years">
+          <option value="">선택해 주세요</option>
+          <option value="10년 미만">10년 미만</option>
+          <option value="10~15년">10~15년</option>
+          <option value="15~20년">15~20년</option>
+          <option value="20~25년">20~25년</option>
+          <option value="25~30년">25~30년</option>
+          <option value="30년 이상">30년 이상</option>
+        </select>
+      </div>
+    </div>
+    <div class="consent-box">
+      <label>
+        <input type="checkbox" id="f-consent">
+        <span><strong>개인정보 수집·이용에 동의합니다.</strong><br>이름·이메일·경력연수·진단 답변을 진단 제공 목적으로만 수집합니다. 동의해야 진단을 시작할 수 있습니다. <a href="privacy.html" style="color:var(--blue)">개인정보처리방침 보기</a></span>
+      </label>
+    </div>
+    <p class="err-msg" id="err-0">이름, 이메일, 경력 연수를 입력하고 개인정보 수집에 동의해 주세요.</p>
+    <div class="nav-btns">
+      <a class="btn ghost" href="landing.html">← 돌아가기</a>
+      <button class="btn primary" onclick="goNext(0)">진단 시작하기 →</button>
+    </div>
   </div>
 
-  <div class="card" style="padding:1.1rem 1.3rem;margin-bottom:.7rem;"><div style="display:flex;gap:.6rem;align-items:center"><span class="badge ok">Q1</span><span class="note mono">identity · 정체성</span><span class="badge ok" style="margin-left:auto">작성 완료</span></div><p style="font-weight:600;font-size:.95rem;margin-top:.55rem">직함을 빼고, 당신을 한 문장으로 소개한다면 어떻게 말하시겠습니까?</p></div><div class="card" style="padding:1.1rem 1.3rem;margin-bottom:.7rem;"><div style="display:flex;gap:.6rem;align-items:center"><span class="badge ok">Q2</span><span class="note mono">coreValues · 핵심 가치</span><span class="badge ok" style="margin-left:auto">작성 완료</span></div><p style="font-weight:600;font-size:.95rem;margin-top:.55rem">지금까지의 일에서 가장 자랑스러웠던 순간 3가지는 무엇입니까?</p></div><div class="card" style="padding:1.1rem 1.3rem;margin-bottom:.7rem;border:2px solid var(--blue)"><div style="display:flex;gap:.6rem;align-items:center"><span class="badge blue">Q3</span><span class="note mono">strengths · 강점</span><span class="badge blue" style="margin-left:auto">현재 작성 중</span></div><p style="font-weight:600;font-size:.95rem;margin-top:.55rem">특별히 애쓰지 않아도 자연스럽게 잘 되는 것 3가지는 무엇입니까?</p><textarea placeholder="자유롭게 적어주세요. 문장이 다듬어져 있지 않아도 괜찮습니다." style="width:100%;min-height:110px;border:1.5px solid var(--blue);border-radius:10px;padding:.8rem;font:inherit;font-size:.9rem;margin-top:.7rem"></textarea><div style="display:flex;justify-content:space-between;margin-top:.5rem"><span class="note">텍스트 길이·키워드 기반 로컬 분석(analyzeFree)에 사용됩니다</span><span class="note">0자</span></div></div><div class="card" style="padding:1.1rem 1.3rem;margin-bottom:.7rem;"><div style="display:flex;gap:.6rem;align-items:center"><span class="badge gray">Q4</span><span class="note mono">authority · 권위</span><span class="badge gray" style="margin-left:auto">대기</span></div><p style="font-weight:600;font-size:.95rem;margin-top:.55rem">사람들이 당신에게 조언을 구하러 오는 분야는 무엇입니까?</p></div><div class="card" style="padding:1.1rem 1.3rem;margin-bottom:.7rem;"><div style="display:flex;gap:.6rem;align-items:center"><span class="badge gray">Q5</span><span class="note mono">targetAudience · 타깃</span><span class="badge gray" style="margin-left:auto">대기</span></div><p style="font-weight:600;font-size:.95rem;margin-top:.55rem">어떤 마음 상태에 있는 사람을 돕고 싶으십니까?</p></div><div class="card" style="padding:1.1rem 1.3rem;margin-bottom:.7rem;"><div style="display:flex;gap:.6rem;align-items:center"><span class="badge gray">Q6</span><span class="note mono">differentiation · 차별화</span><span class="badge gray" style="margin-left:auto">대기</span></div><p style="font-weight:600;font-size:.95rem;margin-top:.55rem">같은 분야의 다른 사람들과 비교해, 당신만의 차별점은 무엇입니까?</p></div><div class="card" style="padding:1.1rem 1.3rem;margin-bottom:.7rem;"><div style="display:flex;gap:.6rem;align-items:center"><span class="badge gray">Q7</span><span class="note mono">message · 메시지</span><span class="badge gray" style="margin-left:auto">대기</span></div><p style="font-weight:600;font-size:.95rem;margin-top:.55rem">세상에 꼭 전하고 싶은 핵심 메시지를 한 문장으로 적어주세요.</p></div>
-
-  <div class="card" style="padding:1.2rem 1.3rem;margin-top:1rem;border-left:4px solid var(--gold)">
-    <div style="display:flex;gap:.6rem;align-items:center"><span class="badge gold">보너스 Q8</span><span class="note">체크리스트</span></div>
-    <p style="font-weight:600;font-size:.95rem;margin-top:.55rem">지금 바로 보낼 수 있는 자료를 모두 골라주세요.</p>
-    <div style="margin-top:.5rem"><label style="display:flex;gap:.5rem;align-items:center;font-size:.88rem;padding:.35rem 0"><input type="checkbox" > 원라이너(한 줄 소개)</label><label style="display:flex;gap:.5rem;align-items:center;font-size:.88rem;padding:.35rem 0"><input type="checkbox" > 전문가 프로필 1페이지</label><label style="display:flex;gap:.5rem;align-items:center;font-size:.88rem;padding:.35rem 0"><input type="checkbox" > 대표 강의안</label><label style="display:flex;gap:.5rem;align-items:center;font-size:.88rem;padding:.35rem 0"><input type="checkbox" > B2B 제안서</label><label style="display:flex;gap:.5rem;align-items:center;font-size:.88rem;padding:.35rem 0"><input type="checkbox" > 온라인 소개 페이지</label><label style="display:flex;gap:.5rem;align-items:center;font-size:.88rem;padding:.35rem 0"><input type="checkbox" checked> 아직 없음</label></div>
+  <!-- STEP 1: Q1 정체성 -->
+  <div class="diag-step" id="step-1">
+    <div class="step-label">Q1 · 정체성</div>
+    <p class="step-q">직함을 빼고, 당신을 한 문장으로 소개한다면 어떻게 말하시겠습니까?</p>
+    <p class="step-hint">"저는 ~분들이 ~할 수 있도록 돕는 사람입니다" 형식도 좋고, 자연스럽게 떠오르는 문장도 괜찮습니다.</p>
+    <textarea class="diag-textarea" id="a-1" placeholder="예) 30년간 제조업 현장에서 쌓은 경험으로, 중소기업이 품질 문제를 스스로 해결할 수 있도록 돕는 사람입니다." oninput="updateChar('a-1','cc-1')"></textarea>
+    <div class="char-count" id="cc-1">0자</div>
+    <p class="err-msg" id="err-1">한 문장이라도 적어주세요.</p>
+    <div class="nav-btns">
+      <button class="btn ghost" onclick="goPrev(1)">← 이전</button>
+      <button class="btn primary" onclick="goNext(1)">다음 →</button>
+    </div>
   </div>
 
-  <div style="display:flex;justify-content:space-between;margin-top:1.4rem">
-    <a class="btn ghost" href="landing.html">← 이전</a>
-    <a class="btn primary" href="analyzing-free.html">다음 문항 →</a>
+  <!-- STEP 2: Q2 핵심 가치 -->
+  <div class="diag-step" id="step-2">
+    <div class="step-label">Q2 · 핵심 가치</div>
+    <p class="step-q">지금까지의 일에서 가장 자랑스러웠던 순간 3가지는 무엇입니까?</p>
+    <p class="step-hint">결과가 크지 않아도 됩니다. 내가 뿌듯했던 순간, 주변에서 칭찬받았던 순간, 혼자서 해냈다고 느꼈던 때를 떠올려 보세요.</p>
+    <textarea class="diag-textarea" id="a-2" placeholder="1. &#10;2. &#10;3. " style="min-height:160px" oninput="updateChar('a-2','cc-2')"></textarea>
+    <div class="char-count" id="cc-2">0자</div>
+    <p class="err-msg" id="err-2">한 가지라도 적어주세요.</p>
+    <div class="nav-btns">
+      <button class="btn ghost" onclick="goPrev(2)">← 이전</button>
+      <button class="btn primary" onclick="goNext(2)">다음 →</button>
+    </div>
   </div>
-  <p class="note" style="margin-top:1rem;text-align:center">답변은 작성 즉시 저장되며, 진단 완료 시 free_diagnostics 테이블에 기록됩니다 (FR-FREE-03)</p>
+
+  <!-- STEP 3: Q3 강점 -->
+  <div class="diag-step" id="step-3">
+    <div class="step-label">Q3 · 강점</div>
+    <p class="step-q">특별히 애쓰지 않아도 자연스럽게 잘 되는 것 3가지는 무엇입니까?</p>
+    <p class="step-hint">다른 사람들은 어려워하는데 나는 별것 아닌 것처럼 하는 일, 오래 해도 지치지 않는 일을 생각해 보세요.</p>
+    <textarea class="diag-textarea" id="a-3" placeholder="1. &#10;2. &#10;3. " style="min-height:160px" oninput="updateChar('a-3','cc-3')"></textarea>
+    <div class="char-count" id="cc-3">0자</div>
+    <p class="err-msg" id="err-3">한 가지라도 적어주세요.</p>
+    <div class="nav-btns">
+      <button class="btn ghost" onclick="goPrev(3)">← 이전</button>
+      <button class="btn primary" onclick="goNext(3)">다음 →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: Q4 권위 -->
+  <div class="diag-step" id="step-4">
+    <div class="step-label">Q4 · 권위</div>
+    <p class="step-q">사람들이 당신에게 조언을 구하러 오는 분야는 무엇입니까?</p>
+    <p class="step-hint">직장 동료, 후배, 지인, 가족 등 누구든 좋습니다. "이 사람한테 물어보면 된다"고 떠올리는 그 분야입니다.</p>
+    <textarea class="diag-textarea" id="a-4" placeholder="예) 협상, 팀 갈등 해결, 원가 계산, 수출 절차, 인사 평가 등" oninput="updateChar('a-4','cc-4')"></textarea>
+    <div class="char-count" id="cc-4">0자</div>
+    <p class="err-msg" id="err-4">내용을 입력해 주세요.</p>
+    <div class="nav-btns">
+      <button class="btn ghost" onclick="goPrev(4)">← 이전</button>
+      <button class="btn primary" onclick="goNext(4)">다음 →</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: Q5 타깃 -->
+  <div class="diag-step" id="step-5">
+    <div class="step-label">Q5 · 타깃</div>
+    <p class="step-q">어떤 마음 상태에 있는 사람을 돕고 싶으십니까?</p>
+    <p class="step-hint">나이, 직업보다는 '어떤 상황에 놓인 사람'으로 떠올려 보세요. 막막한 사람, 도전하려는 사람, 실패 후 다시 일어서려는 사람 등.</p>
+    <textarea class="diag-textarea" id="a-5" placeholder="예) 퇴직 후 다음 커리어가 막막한 50대 전문가, 창업 초기라 방향을 못 잡고 있는 중소기업 대표 등" oninput="updateChar('a-5','cc-5')"></textarea>
+    <div class="char-count" id="cc-5">0자</div>
+    <p class="err-msg" id="err-5">내용을 입력해 주세요.</p>
+    <div class="nav-btns">
+      <button class="btn ghost" onclick="goPrev(5)">← 이전</button>
+      <button class="btn primary" onclick="goNext(5)">다음 →</button>
+    </div>
+  </div>
+
+  <!-- STEP 6: Q6 차별화 -->
+  <div class="diag-step" id="step-6">
+    <div class="step-label">Q6 · 차별화</div>
+    <p class="step-q">같은 분야의 다른 사람들과 비교해, 당신만의 차별점은 무엇입니까?</p>
+    <p class="step-hint">더 많은 경험, 더 특이한 경로, 두 분야를 모두 아는 것, 현장 감각 등 무엇이든 괜찮습니다.</p>
+    <textarea class="diag-textarea" id="a-6" placeholder="예) 이론과 현장을 모두 경험한 유일한 사람, 대기업과 중소기업 양쪽을 다 해봤음 등" oninput="updateChar('a-6','cc-6')"></textarea>
+    <div class="char-count" id="cc-6">0자</div>
+    <p class="err-msg" id="err-6">내용을 입력해 주세요.</p>
+    <div class="nav-btns">
+      <button class="btn ghost" onclick="goPrev(6)">← 이전</button>
+      <button class="btn primary" onclick="goNext(6)">다음 →</button>
+    </div>
+  </div>
+
+  <!-- STEP 7: Q7 메시지 -->
+  <div class="diag-step" id="step-7">
+    <div class="step-label">Q7 · 핵심 메시지</div>
+    <p class="step-q">세상에 꼭 전하고 싶은 핵심 메시지를 한 문장으로 적어주세요.</p>
+    <p class="step-hint">다듬어진 문장이 아니어도 됩니다. 지금 마음에서 나오는 한 마디를 그대로 적어주세요.</p>
+    <textarea class="diag-textarea" id="a-7" placeholder="예) 경험은 누구나 쌓지만, 그것을 자산으로 만드는 사람은 드뭅니다." oninput="updateChar('a-7','cc-7')"></textarea>
+    <div class="char-count" id="cc-7">0자</div>
+    <p class="err-msg" id="err-7">한 문장이라도 적어주세요.</p>
+    <div class="nav-btns">
+      <button class="btn ghost" onclick="goPrev(7)">← 이전</button>
+      <button class="btn primary" onclick="goNext(7)">다음 →</button>
+    </div>
+  </div>
+
+  <!-- STEP 8: 보너스 체크리스트 -->
+  <div class="diag-step" id="step-8">
+    <div class="step-label" style="color:#B08030">보너스 Q8 · 현재 보유 자료</div>
+    <p class="step-q">지금 바로 보낼 수 있는 자료를 모두 골라주세요.</p>
+    <p class="step-hint">없어도 전혀 괜찮습니다. 솔직하게 체크해 주시면 더 정확한 진단 결과를 드릴 수 있습니다.</p>
+    <div class="check-list" style="margin-top:1rem">
+      <label><input type="checkbox" id="ck-1" value="원라이너"> 원라이너 (한 줄 소개문)</label>
+      <label><input type="checkbox" id="ck-2" value="전문가 프로필"> 전문가 프로필 1페이지</label>
+      <label><input type="checkbox" id="ck-3" value="대표 강의안"> 대표 강의안</label>
+      <label><input type="checkbox" id="ck-4" value="B2B 제안서"> B2B 제안서</label>
+      <label><input type="checkbox" id="ck-5" value="온라인 소개 페이지"> 온라인 소개 페이지 (블로그·SNS 포함)</label>
+      <label><input type="checkbox" id="ck-none" value="없음" onchange="toggleNone(this)"> 아직 아무것도 없음</label>
+    </div>
+    <p class="err-msg" id="err-8" style="display:none"></p>
+    <div class="nav-btns">
+      <button class="btn ghost" onclick="goPrev(8)">← 이전</button>
+      <button class="btn primary" onclick="submitDiagnosis()">진단 완료 →</button>
+    </div>
+  </div>
+
+  <!-- STEP 9: 완료 -->
+  <div class="diag-step" id="step-9">
+    <div style="text-align:center;padding:2rem 0">
+      <div class="done-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2 style="margin:0;color:var(--blue)">진단 완료!</h2>
+      <p class="lead" style="margin-top:.5rem" id="done-name">수고하셨습니다.</p>
+      <p class="note" style="margin-top:.3rem" id="done-email"></p>
+      <div style="background:#EEF3FC;border-radius:12px;padding:1.4rem 1.6rem;margin-top:1.5rem;text-align:left">
+        <p style="font-weight:800;color:var(--blue);margin:0 0 .5rem">지금까지 작성하신 내용을 바탕으로 분석을 시작합니다.</p>
+        <p class="note" style="margin:0;line-height:1.8">입력하신 이메일로 진단 결과를 보내드립니다.<br>분석에는 보통 1~2 영업일이 소요됩니다.</p>
+      </div>
+      <div style="margin-top:1.8rem;display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap">
+        <a class="btn primary lg" href="report-free.html">진단 결과 미리 보기</a>
+        <a class="btn ghost lg" href="consultation.html">무료 상담 신청하기</a>
+      </div>
+      <p class="note" style="margin-top:1.2rem">결과 확인 후 맞지 않는다고 느끼시면 언제든 다시 시작하실 수 있습니다.</p>
+    </div>
+  </div>
+
 </div>
+
+<script>
+var TOTAL = 8;
+var answers = JSON.parse(localStorage.getItem('diag_answers') || '{}');
+
+function save() { localStorage.setItem('diag_answers', JSON.stringify(answers)); }
+
+function restore() {
+  var fields = ['name','email','years'];
+  fields.forEach(function(k){ if(answers[k]) document.getElementById('f-'+k) && (document.getElementById('f-'+k).value = answers[k]); });
+  if(answers.consent) document.getElementById('f-consent').checked = true;
+  for(var i=1;i<=7;i++){
+    if(answers['q'+i]){ var el=document.getElementById('a-'+i); if(el){ el.value=answers['q'+i]; updateChar('a-'+i,'cc-'+i); } }
+  }
+  if(answers.checks){
+    answers.checks.forEach(function(v){
+      document.querySelectorAll('.check-list input').forEach(function(cb){ if(cb.value===v) cb.checked=true; });
+    });
+  }
+}
+
+function updateChar(tid, cid) {
+  var el = document.getElementById(tid);
+  var cc = document.getElementById(cid);
+  if(el && cc) cc.textContent = el.value.length + '자';
+}
+
+function setProgress(step) {
+  var pct = Math.round((step / TOTAL) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-num').textContent = step + ' / ' + TOTAL + ' 완료';
+  if(step === 0) document.getElementById('prog-text').textContent = '경력 가치 무료 진단';
+  else if(step <= 7) document.getElementById('prog-text').textContent = 'Q' + step + ' / 7 진행 중';
+  else if(step === 8) document.getElementById('prog-text').textContent = '마지막 질문';
+  else document.getElementById('prog-text').textContent = '진단 완료';
+}
+
+function showStep(n) {
+  document.querySelectorAll('.diag-step').forEach(function(el){ el.classList.remove('active'); });
+  document.getElementById('step-'+n).classList.add('active');
+  setProgress(Math.max(0, n-1));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function goNext(cur) {
+  // 유효성 검사
+  if(cur === 0) {
+    var name = document.getElementById('f-name').value.trim();
+    var email = document.getElementById('f-email').value.trim();
+    var years = document.getElementById('f-years').value;
+    var consent = document.getElementById('f-consent').checked;
+    if(!name || !email || !years || !consent) {
+      document.getElementById('err-0').style.display = 'block';
+      return;
+    }
+    document.getElementById('err-0').style.display = 'none';
+    answers.name = name; answers.email = email; answers.years = years; answers.consent = true;
+    save();
+  } else if(cur >= 1 && cur <= 7) {
+    var val = document.getElementById('a-'+cur).value.trim();
+    if(val.length < 5) {
+      document.getElementById('err-'+cur).style.display = 'block';
+      return;
+    }
+    document.getElementById('err-'+cur).style.display = 'none';
+    answers['q'+cur] = val;
+    save();
+  }
+  showStep(cur + 1);
+}
+
+function goPrev(cur) {
+  if(cur >= 1 && cur <= 7) { var val = document.getElementById('a-'+cur); if(val) { answers['q'+cur] = val.value.trim(); save(); } }
+  showStep(cur - 1);
+}
+
+function toggleNone(cb) {
+  if(cb.checked) {
+    document.querySelectorAll('.check-list input:not(#ck-none)').forEach(function(el){ el.checked = false; });
+  }
+}
+
+document.querySelectorAll('.check-list input:not(#ck-none)').forEach(function(cb){
+  cb.addEventListener('change', function(){ if(this.checked) document.getElementById('ck-none').checked = false; });
+});
+
+function submitDiagnosis() {
+  var checked = [];
+  document.querySelectorAll('.check-list input:checked').forEach(function(cb){ checked.push(cb.value); });
+  if(checked.length === 0) checked = ['없음'];
+  answers.checks = checked;
+  answers.completedAt = new Date().toISOString();
+  save();
+
+  var nameEl = document.getElementById('done-name');
+  var emailEl = document.getElementById('done-email');
+  if(answers.name) nameEl.textContent = answers.name + '님, 수고하셨습니다!';
+  if(answers.email) emailEl.textContent = '결과를 ' + answers.email + ' 로 보내드립니다.';
+
+  setProgress(8);
+  document.getElementById('prog-fill').style.width = '100%';
+  document.getElementById('prog-num').textContent = '완료';
+  document.getElementById('prog-text').textContent = '진단 완료';
+  showStep(9);
+}
+
+// 초기화
+restore();
+</script>
 
 </body>
 </html>
