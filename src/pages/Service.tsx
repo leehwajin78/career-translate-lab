@@ -7,27 +7,27 @@ export default function Service() {
   return (
     <>
       {/* SECTION 1: HERO */}
-      <section className="relative overflow-hidden">
-        <div className="container-prose relative z-10 pt-20 md:pt-32 pb-24 md:pb-40">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-bold mb-8 border border-accent/20 shadow-sm">
+      <section className="bg-white">
+        <div className="container-prose pt-20 md:pt-28 pb-16 md:pb-24 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-bold mb-6 border border-accent/20">
             <Sparkles size={16} />
             <span>1:1 맞춤 6주 과정</span>
           </div>
-          <h1 className="font-serif text-fluid-hero leading-[1.15] text-primary fade-in tracking-tight break-keep">
+          <h1 className="font-serif text-fluid-hero leading-[1.15] text-primary tracking-tight break-keep">
             한끗프로젝트가 뭔가요?
           </h1>
-          <p className="mt-8 max-w-3xl text-lg md:text-xl text-foreground/80 leading-relaxed font-medium break-keep">
+          <p className="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-foreground/80 leading-relaxed font-medium break-keep">
             20~30년 경력 전문가의 경험을, 시장이 이해하는 언어로 옮겨<br />
             강의안·제안서·프로필로 만드는 1:1 맞춤 프로그램입니다.
           </p>
-          <div className="mt-8 bg-primary text-white p-6 rounded-2xl max-w-2xl">
+          <div className="mt-8 bg-primary text-white p-6 rounded-2xl max-w-2xl mx-auto text-center">
             <p className="text-base md:text-lg font-medium leading-relaxed">
               경력은 사라지는 것이 아니라, 번역되어야 살아남습니다.<br />
               30년의 경험은 그 자체로 충분합니다. 다만 시장이 알아보려면,<br />
               시장의 언어로 옮기는 작업이 필요합니다.
             </p>
           </div>
-          <div className="mt-10 flex flex-col sm:flex-row gap-4 flex-wrap">
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center flex-wrap">
             <CTAButton to="/diagnosis" variant="primary" className="w-full sm:w-auto justify-center">경력 가치 무료 진단받기 →</CTAButton>
             <CTAButton to="/consultation" variant="ghost" className="w-full sm:w-auto justify-center">30분 무료 상담 신청하기</CTAButton>
             <a
@@ -41,8 +41,6 @@ export default function Service() {
             </a>
           </div>
         </div>
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1/2 h-[80vh] bg-gradient-to-bl from-accent/20 to-transparent blur-3xl -z-10 rounded-full" />
-        <div className="absolute -left-20 bottom-0 w-96 h-96 bg-primary/5 blur-3xl -z-10 rounded-full" />
       </section>
 
       {/* SECTION 2: 누구를 위한 프로그램인가 */}
