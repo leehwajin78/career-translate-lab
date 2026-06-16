@@ -364,11 +364,11 @@ export default function Service() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {[
-              { n: "01", title: "한 줄 포지셔닝", desc: "당신을 한 문장으로 설명하는 핵심 메시지", tag: "명함 · 자기소개 · 강의 제목" },
+              { n: "01", title: "한 줄 포지셔닝", desc: "나를 한 문장으로 설명하는 핵심 메시지", tag: "명함 · 자기소개 · 강의 제목" },
               { n: "02", title: "전문가 프로필 1페이지", desc: "경력과 전문성을 정리한 A4 한 장", tag: "강의 제안 · 자문 소개 · 강사풀" },
               { n: "03", title: "대표 강의안 (60분)", desc: "발표 자료 + 말할 내용 + 진행 노트", tag: "첫 강의에서 바로 사용" },
               { n: "04", title: "B2B 제안서 템플릿", desc: "기업·기관에 보낼 수 있는 제안서 틀", tag: "자문 · 강의 수주 제안" },
-              { n: "05", title: "채널 전략 가이드", desc: "어디서 어떻게 활동을 시작할지 길잡이", tag: "블로그 · SNS · 네트워크" },
+              { n: "05", title: "채널 전략 가이드", desc: "활동 채널 선택과 시작을 위한 길잡이", tag: "블로그 · SNS · 네트워크" },
               { n: "06", title: "소개 멘트 3종", desc: "30·60·90초 자기소개 스크립트", tag: "모임 · 강의 후 인사 · 발표" },
             ].map((d) => (
               <div key={d.n} className="bg-background border border-border p-6 md:p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
