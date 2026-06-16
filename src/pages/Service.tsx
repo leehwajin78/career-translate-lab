@@ -511,7 +511,7 @@ export default function Service() {
               <h3 className="font-extrabold text-accent text-lg mb-1">무료 상담</h3>
               <p className="text-sm font-bold text-accent mb-3">무료 <span className="font-normal text-muted-foreground">· 30분</span></p>
               <p className="text-foreground/70 text-sm leading-relaxed mb-6 flex-grow">직접 이야기하며 방향을 잡고 싶은 분</p>
-              <Link to="/consultation" className="w-full py-3 rounded-xl font-bold border border-border text-primary text-center text-sm hover:border-primary transition-colors">무료 상담 신청하기</Link>
+              <Link to="/consultation" className="w-full py-3 rounded-xl font-bold bg-primary text-white text-center text-sm hover:bg-primary/90 transition-colors">무료 상담 신청하기</Link>
             </div>
             <div className="bg-primary text-white p-8 rounded-2xl shadow-xl flex flex-col">
               <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center mb-6">
