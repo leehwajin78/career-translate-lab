@@ -475,9 +475,6 @@ export default function Service() {
               <Download size={14} />
               프로그램 상세 안내서 다운로드
             </a>
-            <Link to="/apply" className="inline-flex items-center gap-2 bg-transparent text-white border border-white/40 px-6 py-3 rounded-full font-bold text-sm hover:bg-white/10 transition-all">
-              상품 안내 자세히 보기
-            </Link>
           </div>
         </div>
       </section>
