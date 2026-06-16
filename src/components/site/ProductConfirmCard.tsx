@@ -57,15 +57,6 @@ export default function ProductConfirmCard({ productKey }: ProductConfirmCardPro
         </div>
       </div>
 
-      {/* 다른 상품 선택 링크 */}
-      <p className="mt-4 text-center">
-        <Link
-          to="/#packages"
-          className="text-sm text-primary/60 hover:text-primary underline underline-offset-4 transition-colors"
-        >
-          다른 상품을 선택하시려면 여기를 누르세요
-        </Link>
-      </p>
     </div>
   );
 }

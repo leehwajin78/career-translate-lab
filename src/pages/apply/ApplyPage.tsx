@@ -15,7 +15,7 @@ export default function ApplyPage({ productKey }: ApplyPageProps) {
         {/* 상단 네비 링크 */}
         <div className="flex justify-end mb-8">
           <Link
-            to="/#packages"
+            to="/#products"
             className="text-sm text-[#1E2D8C]/60 hover:text-[#1E2D8C] transition-colors underline underline-offset-4 font-medium"
           >
             ← 단계별 상품 다시 보기
