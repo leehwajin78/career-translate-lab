@@ -194,33 +194,41 @@ export default function Service() {
             </p>
           </div>
 
-          <div className="space-y-6 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-5 max-w-4xl mx-auto">
             {[
               {
                 n: "01", title: "골라내기",
-                sub: "경력에서 시장이 원할 핵심을 골라냅니다.",
+                sub: "경력에서 시장이 원할 핵심을 골라냅니다",
                 desc: "수백 가지 경험이 모두 자산은 아닙니다. 본인에게 당연한 것이 시장에서는 귀한 가치일 수 있어, 옆에서 함께 봐주는 사람이 필요합니다.",
+                icon: (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+                ),
               },
               {
                 n: "02", title: "옮기기",
-                sub: "전문가의 언어를 고객의 언어로.",
+                sub: "전문가의 언어를 고객의 언어로",
                 desc: "'30년 차 임원'이 아니라 '어떤 문제를 어떻게 해결하는 사람'으로. 이 결과가 프로필 한 문장, 강의 제목, 제안서 첫 페이지가 됩니다.",
+                icon: (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                ),
               },
               {
                 n: "03", title: "자산 만들기",
-                sub: "한 번 만들면 계속 쓰는 형태로.",
+                sub: "한 번 만들면 계속 쓰는 형태로",
                 desc: "강의안은 고쳐 쓰는 형태로, 제안서는 바꿔 쓰는 틀로, 프로필은 변형 가능한 한 장으로. 매번 처음부터 만들지 않도록 설계합니다.",
+                icon: (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                ),
               },
             ].map((s) => (
-              <div key={s.n} className="bg-card border border-border rounded-3xl p-8 md:p-10 shadow-sm hover:shadow-md transition-shadow">
-                <div className="grid md:grid-cols-[100px_1fr] gap-6 items-start">
-                  <span className="font-serif text-6xl md:text-7xl text-accent/30 font-bold leading-none">{s.n}</span>
-                  <div>
-                    <h3 className="font-serif text-3xl md:text-4xl font-extrabold text-primary mb-2">{s.title}</h3>
-                    <p className="text-accent font-extrabold text-lg md:text-xl mb-4 leading-normal">{s.sub}</p>
-                    <p className="text-base md:text-lg text-foreground/90 font-medium leading-relaxed break-keep">{s.desc}</p>
-                  </div>
+              <div key={s.n} className="bg-card border border-border rounded-3xl p-7 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                <div className="flex items-start justify-between mb-5">
+                  <span className="font-serif text-5xl text-accent/25 font-bold leading-none">{s.n}</span>
+                  <span className="text-accent/40 mt-1">{s.icon}</span>
                 </div>
+                <h3 className="font-serif text-2xl font-extrabold text-primary mb-2">{s.title}</h3>
+                <p className="text-accent font-extrabold text-sm mb-3 leading-snug break-keep">{s.sub}</p>
+                <p className="text-sm text-foreground/80 font-medium leading-relaxed break-keep flex-1">{s.desc}</p>
               </div>
             ))}
           </div>

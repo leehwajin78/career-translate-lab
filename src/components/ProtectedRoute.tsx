@@ -24,7 +24,7 @@ export function ProtectedRoute({ role, children }: ProtectedRouteProps) {
 
   const userRole = (currentMember as { role?: RequiredRole }).role ?? 'member'
   if (ROLE_LEVEL[userRole] < ROLE_LEVEL[role]) {
-    return <Navigate to="/unauthorized" replace />
+    return <Navigate to="/login" replace />
   }
 
   return <>{children}</>

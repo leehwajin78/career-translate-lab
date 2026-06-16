@@ -8,6 +8,7 @@ export interface Member {
   name: string;
   email: string;
   password: string;
+  role?: "member" | "admin";
   productKey: string; // "diagnosis" | "build" etc
   createdAt: string;
 }
@@ -41,10 +42,20 @@ export const useAuthStore = create<AuthState>()(
       currentMember: null,
       members: [
         {
+          id: "admin-id",
+          name: "이화진",
+          email: "admin@kkummolda.com",
+          password: "hankkeut2026",
+          role: "admin",
+          productKey: "admin",
+          createdAt: new Date().toISOString(),
+        },
+        {
           id: "test-member-id",
           name: "테스터",
           email: "test@example.com",
           password: "password123",
+          role: "member",
           productKey: "diagnosis",
           createdAt: new Date().toISOString(),
         }

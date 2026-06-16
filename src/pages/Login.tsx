@@ -18,7 +18,7 @@ export default function Login() {
     }
     const member = login(form.userId.trim(), form.password.trim());
     if (member) {
-      navigate("/coaching");
+      navigate((member as { role?: string }).role === "admin" ? "/admin" : "/coaching");
     } else {
       setError("발급된 회원 정보가 아니거나, 비밀번호가 올바르지 않습니다. 관리자에게 문의해 주세요.");
     }
