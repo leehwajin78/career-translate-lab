@@ -556,8 +556,9 @@ export default function Service() {
               { q: "결과가 보장되나요?", a: "자료는 6주 안에 반드시 완성됩니다. 시장 반응은 경력·실행에 따라 다릅니다." },
             ].map((item, idx) => (
               <details key={idx} className="border border-border rounded-xl overflow-hidden">
-                <summary className="p-5 cursor-pointer font-bold text-primary text-base hover:bg-secondary/40 transition-colors">
+                <summary className="p-5 cursor-pointer font-bold text-primary text-base hover:bg-secondary/40 transition-colors list-none flex justify-between items-center [&::-webkit-details-marker]:hidden">
                   {item.q}
+                  <span className="text-primary font-bold text-lg ml-4 shrink-0">+</span>
                 </summary>
                 <div className="px-5 pb-5 text-foreground/80 leading-relaxed text-sm border-t border-border pt-4">
                   {item.a}
