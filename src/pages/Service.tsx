@@ -102,7 +102,7 @@ export default function Service() {
             <h2 className="font-serif text-3xl md:text-4xl text-primary leading-snug mt-4 mb-6">
               가르치지도, 디자인하지도 않습니다.
             </h2>
-            <p className="text-foreground/70 text-lg max-w-2xl mx-auto">
+            <p className="text-foreground/70 text-lg max-w-4xl mx-auto">
               이미 충분한 경력을 가진 분이 그 경력을 '시장에서 바로 쓰는 자산'으로 만드는 데 집중합니다.
             </p>
           </div>
@@ -189,7 +189,7 @@ export default function Service() {
             <h2 className="font-serif text-3xl md:text-4xl text-primary leading-snug mt-4 mb-6">
               골라내고, 옮기고, 자산으로 만듭니다.
             </h2>
-            <p className="text-foreground/70 text-lg max-w-2xl mx-auto">
+            <p className="text-foreground/70 text-lg max-w-4xl mx-auto">
               이화진 대표가 20여 년의 강의·코칭 경험에서 정리한 3단계 원리로 진행됩니다.
             </p>
           </div>
@@ -235,7 +235,7 @@ export default function Service() {
             <h2 className="font-serif text-3xl md:text-4xl text-primary leading-snug mt-4 mb-4">
               6주, 주 1회 90분으로 자산을 완성합니다.
             </h2>
-            <p className="text-foreground/70 text-lg max-w-2xl mx-auto">
+            <p className="text-foreground/70 text-lg max-w-4xl mx-auto">
               이화진 대표가 처음부터 끝까지 직접 1:1로 진행합니다. 대면·화상 중 편한 방식을 선택합니다.
             </p>
           </div>
@@ -286,7 +286,7 @@ export default function Service() {
             <h2 className="font-serif text-3xl md:text-4xl text-primary leading-snug mb-4">
               준비물은 '기억'과 '시간'뿐입니다.
             </h2>
-            <p className="text-foreground/70 text-lg max-w-2xl mx-auto">
+            <p className="text-foreground/70 text-lg max-w-4xl mx-auto">
               정리된 자료도, PPT 기술도, 거창한 계획도 필요 없습니다. 막연한 상태로 오셔도 됩니다.
             </p>
           </div>
@@ -357,7 +357,7 @@ export default function Service() {
             <h2 className="font-serif text-3xl md:text-4xl text-primary leading-snug mt-4 mb-6">
               직접 고쳐 쓰는 6가지 원본 자산.
             </h2>
-            <p className="text-foreground/70 text-lg max-w-2xl mx-auto">
+            <p className="text-foreground/70 text-lg max-w-4xl mx-auto">
               모두 PPT·워드·PDF 원본으로, 인터넷 폴더로 전달되며 활동에 제한 없이 사용할 수 있습니다.
             </p>
           </div>
@@ -392,7 +392,7 @@ export default function Service() {
             <h2 className="font-serif text-3xl md:text-4xl text-primary leading-snug mt-4 mb-4">
               강사 · 리더 · 멘토 · 저자,<br />네 시선이 함께 작동합니다.
             </h2>
-            <p className="text-foreground/70 text-lg max-w-2xl mx-auto">
+            <p className="text-foreground/70 text-lg max-w-4xl mx-auto">
               모든 과정을 꿈몰다 이화진 대표가 직접 1:1로 진행합니다. 여러 강사가 돌아가며 맡지 않습니다.
             </p>
           </div>
@@ -489,7 +489,7 @@ export default function Service() {
             <h2 className="font-serif text-3xl md:text-4xl text-primary leading-snug mb-4">
               가장 가벼운 무료 진단부터 시작하세요.
             </h2>
-            <p className="text-foreground/70 text-lg max-w-2xl mx-auto">
+            <p className="text-foreground/70 text-lg max-w-4xl mx-auto">
               처음부터 큰 결정을 하실 필요 없습니다. 세 가지 시작 방법은 자연스럽게 이어집니다.
             </p>
           </div>
