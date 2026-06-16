@@ -19,8 +19,24 @@ import NotFound from './pages/NotFound'
 import Playboard from './pages/Playboard'
 import Privacy from './pages/Privacy'
 
-// 지연 로드 (로그인 후 접근 페이지 — 초기 번들 제외)
-const Admin            = lazy(() => import('./pages/Admin'))
+// 지연 로드 (Admin 포털 — 초기 번들 제외)
+const AdminLayout       = lazy(() => import('./pages/admin/AdminLayout'))
+const AdminDashboard    = lazy(() => import('./pages/admin/AdminDashboard'))
+const AdminLeadDetail   = lazy(() => import('./pages/admin/AdminLeadDetail'))
+const AdminNotifications = lazy(() => import('./pages/admin/AdminNotifications'))
+const AdminAuth         = lazy(() => import('./pages/admin/AdminAuth'))
+const AdminAiruns       = lazy(() => import('./pages/admin/AdminAiruns'))
+const AdminBrief        = lazy(() => import('./pages/admin/AdminBrief'))
+const AdminOneliner     = lazy(() => import('./pages/admin/AdminOneliner'))
+const AdminQuestions    = lazy(() => import('./pages/admin/AdminQuestions'))
+const AdminPatterns     = lazy(() => import('./pages/admin/AdminPatterns'))
+const AdminMapper       = lazy(() => import('./pages/admin/AdminMapper'))
+const AdminFeedback     = lazy(() => import('./pages/admin/AdminFeedback'))
+const AdminRules        = lazy(() => import('./pages/admin/AdminRules'))
+const AdminCrosscheck   = lazy(() => import('./pages/admin/AdminCrosscheck'))
+const AdminHandoff      = lazy(() => import('./pages/admin/AdminHandoff'))
+const AdminRetainer     = lazy(() => import('./pages/admin/AdminRetainer'))
+const AdminExport       = lazy(() => import('./pages/admin/AdminExport'))
 const ApplyDiagnosis   = lazy(() => import('./pages/apply/ApplyDiagnosis'))
 const ApplyBuild       = lazy(() => import('./pages/apply/ApplyBuild'))
 const ApplyLaunch      = lazy(() => import('./pages/apply/ApplyLaunch'))
@@ -109,13 +125,28 @@ const App = () => (
                   <ProtectedRoute role="admin"><CoachingWorkspace /></ProtectedRoute>
                 } />
 
-                {/* Admin 포털 — Admin 전용 */}
-                <Route path="/admin" element={
-                  <ProtectedRoute role="admin"><Admin /></ProtectedRoute>
-                } />
-                <Route path="/admin/*" element={
-                  <ProtectedRoute role="admin"><Admin /></ProtectedRoute>
-                } />
+              </Route>
+
+              {/* Admin 포털 — 사이트 Layout 밖 (AdminLayout 자체 사이드바) */}
+              <Route path="/admin" element={
+                <ProtectedRoute role="admin"><AdminLayout /></ProtectedRoute>
+              }>
+                <Route index element={<AdminDashboard />} />
+                <Route path="lead/:id" element={<AdminLeadDetail />} />
+                <Route path="notifications" element={<AdminNotifications />} />
+                <Route path="auth" element={<AdminAuth />} />
+                <Route path="airuns" element={<AdminAiruns />} />
+                <Route path="brief" element={<AdminBrief />} />
+                <Route path="oneliner" element={<AdminOneliner />} />
+                <Route path="questions" element={<AdminQuestions />} />
+                <Route path="patterns" element={<AdminPatterns />} />
+                <Route path="mapper" element={<AdminMapper />} />
+                <Route path="feedback" element={<AdminFeedback />} />
+                <Route path="rules" element={<AdminRules />} />
+                <Route path="crosscheck" element={<AdminCrosscheck />} />
+                <Route path="handoff" element={<AdminHandoff />} />
+                <Route path="retainer" element={<AdminRetainer />} />
+                <Route path="export" element={<AdminExport />} />
               </Route>
 
               <Route path="*" element={<NotFound />} />
