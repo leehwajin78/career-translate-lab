@@ -364,7 +364,7 @@ export default function Service() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {[
-              { n: "01", title: "한 줄 포지셔닝", desc: "나를 한 문장으로 설명하는 핵심 메시지", tag: "명함 · 자기소개 · 강의 제목" },
+              { n: "01", title: "한 줄 포지셔닝", desc: "나를 한 문장으로 설명하는 메시지", tag: "명함 · 자기소개 · 강의 제목" },
               { n: "02", title: "전문가 프로필 1페이지", desc: "경력과 전문성을 정리한 A4 한 장", tag: "강의 제안 · 자문 소개 · 강사풀" },
               { n: "03", title: "대표 강의안 (60분)", desc: "발표 자료 + 말할 내용 + 진행 노트", tag: "첫 강의에서 바로 사용" },
               { n: "04", title: "B2B 제안서 템플릿", desc: "기업·기관에 보낼 수 있는 제안서 틀", tag: "자문 · 강의 수주 제안" },
