@@ -107,69 +107,32 @@ export default function Service() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            <div className="bg-background border border-border p-6 md:p-8 rounded-2xl shadow-sm flex flex-col">
-              <h3 className="text-2xl font-extrabold text-foreground mb-6 tracking-tight break-keep">강사 양성 과정</h3>
-              <hr className="border-border mb-6" />
-              <div className="space-y-4 text-base flex-grow">
+          <div className="max-w-5xl mx-auto overflow-x-auto">
+            <table className="w-full border-collapse text-sm md:text-base">
+              <thead>
+                <tr>
+                  <th className="border border-border bg-secondary/30 px-5 py-4 text-left font-medium text-foreground/50 w-24"></th>
+                  <th className="border border-border bg-secondary/30 px-5 py-4 text-center font-extrabold text-foreground">강사 양성 과정</th>
+                  <th className="border border-border bg-secondary/30 px-5 py-4 text-center font-extrabold text-foreground">일반 브랜딩 컨설팅</th>
+                  <th className="border border-primary bg-primary px-5 py-4 text-center font-extrabold text-white rounded-t-lg">한끗프로젝트</th>
+                </tr>
+              </thead>
+              <tbody>
                 {[
-                  { l: "대상", v: "강의 경험이 없는 분" },
-                  { l: "방법", v: "표준 커리큘럼 교육" },
-                  { l: "결과물", v: "수료증" },
-                  { l: "활용", v: "강사 풀 등록" },
+                  { l: "대상", a: "강의 경험이 없는 분", b: "사업체·창업자", c: "20~30년 경력 전문가" },
+                  { l: "방법", a: "표준 커리큘럼 교육", b: "시각 디자인 작업", c: "1:1로 함께 자산 설계" },
+                  { l: "결과물", a: "수료증", b: "로고·웹사이트", c: "프로필·강의안·제안서" },
+                  { l: "활용", a: "강사 풀 등록", b: "사업체 홍보", c: "시장에서 바로 활용" },
                 ].map((r) => (
-                  <div key={r.l} className="grid grid-cols-[60px_1fr] gap-2 items-start">
-                    <span className="font-bold text-foreground shrink-0">{r.l}</span>
-                    <span className="text-foreground/80 leading-relaxed">{r.v}</span>
-                  </div>
+                  <tr key={r.l}>
+                    <td className="border border-border px-5 py-4 font-bold text-foreground">{r.l}</td>
+                    <td className="border border-border px-5 py-4 text-center text-foreground/70">{r.a}</td>
+                    <td className="border border-border px-5 py-4 text-center text-foreground/70">{r.b}</td>
+                    <td className="border border-primary/30 bg-primary/5 px-5 py-4 text-center font-bold text-primary">{r.c}</td>
+                  </tr>
                 ))}
-              </div>
-              <div className="mt-8 pt-5 border-t border-border">
-                <p className="text-base text-accent font-bold">"한끗은 강의를 가르치지 않습니다."</p>
-              </div>
-            </div>
-
-            <div className="bg-background border border-border p-6 md:p-8 rounded-2xl shadow-sm flex flex-col">
-              <h3 className="text-2xl font-extrabold text-foreground mb-6 tracking-tight break-keep">일반 브랜딩 컨설팅</h3>
-              <hr className="border-border mb-6" />
-              <div className="space-y-4 text-base flex-grow">
-                {[
-                  { l: "대상", v: "사업체·창업자" },
-                  { l: "방법", v: "시각 디자인 작업" },
-                  { l: "결과물", v: "로고·웹사이트" },
-                  { l: "활용", v: "사업체 홍보" },
-                ].map((r) => (
-                  <div key={r.l} className="grid grid-cols-[60px_1fr] gap-2 items-start">
-                    <span className="font-bold text-foreground shrink-0">{r.l}</span>
-                    <span className="text-foreground/80 leading-relaxed">{r.v}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-8 pt-5 border-t border-border">
-                <p className="text-base text-accent font-bold">"한끗은 디자인이 아닙니다."</p>
-              </div>
-            </div>
-
-            <div className="bg-primary text-white p-6 md:p-8 rounded-2xl shadow-xl flex flex-col">
-              <h3 className="text-2xl font-extrabold text-white mb-6 tracking-tight break-keep">한끗프로젝트</h3>
-              <hr className="border-white/20 mb-6" />
-              <div className="space-y-4 text-base flex-grow">
-                {[
-                  { l: "대상", v: "20~30년 경력 전문가" },
-                  { l: "방법", v: "1:1로 함께 자산 설계" },
-                  { l: "결과물", v: "프로필·강의안·제안서" },
-                  { l: "활용", v: "시장에서 바로 활용" },
-                ].map((r) => (
-                  <div key={r.l} className="grid grid-cols-[60px_1fr] gap-2 items-start">
-                    <span className="font-bold text-white shrink-0">{r.l}</span>
-                    <span className="text-white/90 leading-relaxed">{r.v}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-8 pt-5 border-t border-white/20">
-                <p className="text-base text-white/90 font-bold">"한끗은 경력을 시장 언어로 번역합니다."</p>
-              </div>
-            </div>
+              </tbody>
+            </table>
           </div>
 
           <div className="mt-8 bg-primary text-white p-6 rounded-2xl max-w-5xl mx-auto text-center">
