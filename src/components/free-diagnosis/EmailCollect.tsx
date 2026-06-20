@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useFreeDiagnosticStore } from "@/store/freeDiagnosticStore";
 import { CAREER_YEAR_OPTIONS } from "@/data/content";
 import { Input } from "@/components/ui/input";
@@ -125,8 +126,9 @@ export default function EmailCollect({ onNext }: Props) {
               className="mt-1 h-4 w-4 rounded border-border text-accent focus:ring-accent"
             />
             <span className="text-xs text-muted-foreground leading-relaxed">
-              개인정보 수집·이용에 동의합니다. 수집된 정보는 진단 결과 발송 및 서비스 안내 목적으로만
-              사용됩니다.
+              <Link to="/terms" target="_blank" className="underline hover:text-primary">이용약관</Link> 및{" "}
+              <Link to="/privacy" target="_blank" className="underline hover:text-primary">개인정보 처리방침</Link>에
+              동의합니다. 수집된 정보는 진단 결과 발송 및 서비스 안내 목적으로만 사용됩니다.
             </span>
           </label>
           {errors.agreed && <p className="mt-1 text-xs text-destructive">{errors.agreed}</p>}
