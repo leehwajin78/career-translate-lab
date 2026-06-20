@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { safeStorage } from "@/lib/safeStorage";
 import { TOTAL_QUESTIONS } from "@/data/coachingQuestions";
 
 /* ─── 42문항 코칭 응답 스토어 ─── */
@@ -333,6 +334,6 @@ export const useCoachingStore = create<CoachingState>()(
         return Math.round((count / TOTAL_QUESTIONS) * 100);
       },
     }),
-    { name: "kkummolda-coaching" },
+    { name: "kkummolda-coaching", storage: safeStorage },
   ),
 );

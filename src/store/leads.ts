@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { safeStorage } from "@/lib/safeStorage";
 import { DiagnosisType, PackageKey } from "@/data/content";
 import { notifyLead } from "@/lib/notifyLead";
 
@@ -81,6 +82,6 @@ export const useLeadsStore = create<LeadsState>()(
       updateMemo: (id, memo) =>
         set((s) => ({ leads: s.leads.map((l) => (l.id === id ? { ...l, memo } : l)) })),
     }),
-    { name: "kkummolda-leads" }
+    { name: "kkummolda-leads", storage: safeStorage }
   )
 );

@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { safeStorage } from "@/lib/safeStorage";
 import { analyzeFree, FreeDiagnosticResult } from "@/lib/freeDiagnostic";
 
 export type FreeDiagnosticStep = "email" | "form" | "loading" | "report" | "complete";
@@ -60,6 +61,6 @@ export const useFreeDiagnosticStore = create<FreeDiagnosticState>()(
           result: null,
         }),
     }),
-    { name: "kkummolda-free-diagnostic" }
+    { name: "kkummolda-free-diagnostic", storage: safeStorage }
   )
 );

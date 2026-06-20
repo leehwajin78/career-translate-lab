@@ -1,5 +1,7 @@
+'use client';
+
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -106,7 +108,8 @@ interface ApplyFormProps {
 
 
 export default function ApplyForm({ productKey }: ApplyFormProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
+  const navigate = (p: string) => router.push(p);
   const product = APPLY_PRODUCTS[productKey];
 
   const [form, setForm] = useState<FormData>({ ...INITIAL });

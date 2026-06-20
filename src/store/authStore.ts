@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { safeStorage } from "@/lib/safeStorage";
 
 /* ─── 간이 인증 스토어 (로컬 프로토타입) ─── */
 
@@ -109,6 +110,6 @@ export const useAuthStore = create<AuthState>()(
           };
         }),
     }),
-    { name: "kkummolda-auth" },
+    { name: "kkummolda-auth", storage: safeStorage },
   ),
 );
