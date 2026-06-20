@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { Check } from "lucide-react";
 import { APPLY_PRODUCTS, type ApplyProductKey } from "@/data/content";
 

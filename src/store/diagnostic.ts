@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { safeStorage } from "@/lib/safeStorage";
 import { analyze, ContactInfo, DiagnosticAnswers, DiagnosticResult } from "@/lib/diagnostic";
 
 interface DiagnosticState {
@@ -27,6 +28,6 @@ export const useDiagnosticStore = create<DiagnosticState>()(
       },
       reset: () => set({ answers: {}, contact: null, result: null }),
     }),
-    { name: "kkummolda-diagnostic" }
+    { name: "kkummolda-diagnostic", storage: safeStorage }
   )
 );

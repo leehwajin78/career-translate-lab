@@ -1,5 +1,7 @@
+'use client';
+
 import { useFreeDiagnosticStore } from "@/store/freeDiagnosticStore";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Lock, AlertTriangle, Star, Users, Target, Lightbulb, Award, Check, Minus } from "lucide-react";
 
 interface Props {
@@ -239,13 +241,13 @@ export default function Report({ onSendEmail }: Props) {
               <p className="font-bold text-primary text-sm mb-3">1:1 무료 해석 상담 또는 정식 진단에서 해제됩니다</p>
               <div className="flex flex-wrap gap-2 justify-center">
                 <Link
-                  to="/consultation?type=free"
+                  href="/consultation?type=free"
                   className="bg-accent text-white px-5 py-2.5 rounded-full text-xs font-bold hover:bg-accent/90 transition-colors shadow-sm"
                 >
                   30분 무료 해석 상담 신청
                 </Link>
                 <Link
-                  to="/consultation?type=paid"
+                  href="/consultation?type=paid"
                   className="bg-primary text-primary-foreground px-5 py-2.5 rounded-full text-xs font-bold hover:bg-primary/90 transition-colors shadow-sm"
                 >
                   정식 한끗 진단 신청 (유료)
@@ -271,13 +273,13 @@ export default function Report({ onSendEmail }: Props) {
               <p className="font-bold text-primary text-sm mb-3">1:1 무료 해석 상담 또는 정식 진단에서 해제됩니다</p>
               <div className="flex flex-wrap gap-2 justify-center">
                 <Link
-                  to="/consultation?type=free"
+                  href="/consultation?type=free"
                   className="bg-accent text-white px-5 py-2.5 rounded-full text-xs font-bold hover:bg-accent/90 transition-colors shadow-sm"
                 >
                   30분 무료 해석 상담 신청
                 </Link>
                 <Link
-                  to="/consultation?type=paid"
+                  href="/consultation?type=paid"
                   className="bg-primary text-primary-foreground px-5 py-2.5 rounded-full text-xs font-bold hover:bg-primary/90 transition-colors shadow-sm"
                 >
                   정식 한끗 진단 신청 (유료)
@@ -301,13 +303,13 @@ export default function Report({ onSendEmail }: Props) {
           </p>
           <div className="mt-10 flex flex-wrap justify-center items-center gap-4 max-w-3xl mx-auto">
             <Link
-              to="/consultation?type=free"
+              href="/consultation?type=free"
               className="inline-flex items-center justify-center bg-accent text-white px-6 py-3.5 rounded-full text-sm md:text-base font-bold hover:bg-accent/90 transition-colors shadow-lg hover:scale-105 transition-transform whitespace-nowrap shrink-0"
             >
               30분 무료 해석 상담 신청
             </Link>
             <Link
-              to="/consultation?type=paid"
+              href="/consultation?type=paid"
               className="inline-flex items-center justify-center bg-white text-primary px-6 py-3.5 rounded-full text-sm md:text-base font-bold hover:bg-white/90 transition-colors shadow-lg hover:scale-105 transition-transform border-2 border-white/20 whitespace-nowrap shrink-0"
             >
               정식 한끗 진단 신청 (유료)

@@ -1,0 +1,224 @@
+// =============================================================
+// Prisma 스키마 — 한끗프로젝트
+// supabase/migrations/*.sql 4개 파일에서 변환됨.
+//
+// 주의: 원본 SQL의 RLS(Row Level Security) 정책은 Prisma가 관리하지
+// 않습니다. Prisma는 서버(API Route)에서만 실행되며 DB 전체 접근 권한을
+// 가집니다. 인가(authorization)는 Next.js middleware + API Route
+// 레벨에서 처리합니다. (docs/DB-SETUP-GUIDE.md §보안 참조)
+// =============================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ──────────────────────────────────────────────────────────────
+// profiles — 사용자 프로필
+// ──────────────────────────────────────────────────────────────
+model Profile {
+  id          String   @id @default(uuid()) @db.Uuid
+  email       String   @unique
+  name        String?
+  phone       String?
+  role        String   @default("guest") // guest | member | admin
+  careerYears String?  @map("career_years")
+  field       String?
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  freeDiagnostics  FreeDiagnostic[]
+  payments         Payment[]
+  memberships      Membership[]
+  coachingSessions CoachingSession[]
+
+  @@map("profiles")
+}
+
+// ──────────────────────────────────────────────────────────────
+// free_diagnostics — 무료 진단 제출
+// ──────────────────────────────────────────────────────────────
+model FreeDiagnostic {
+  id           String    @id @default(uuid()) @db.Uuid
+  profileId    String?   @map("profile_id") @db.Uuid
+  profile      Profile?  @relation(fields: [profileId], references: [id], onDelete: SetNull)
+  email        String
+  name         String?
+  careerYears  String?   @map("career_years")
+  answers      Json      @default("{}")
+  bonusChecks  String[]  @default([]) @map("bonus_checks")
+  consentAt    DateTime  @map("consent_at") @db.Timestamptz
+  score        Json?
+  reportSentAt DateTime? @map("report_sent_at") @db.Timestamptz
+  status       String    @default("in_progress") // in_progress | completed | report_sent
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  ipAddress    String?   @map("ip_address")
+
+  leads Lead[]
+
+  @@index([email])
+  @@index([status])
+  @@index([createdAt(sort: Desc)])
+  @@map("free_diagnostics")
+}
+
+// ──────────────────────────────────────────────────────────────
+// leads — 영업 리드 (CRM)
+// ──────────────────────────────────────────────────────────────
+model Lead {
+  id                    String          @id @default(uuid()) @db.Uuid
+  email                 String
+  name                  String?
+  phone                 String?
+  source                String // free_diagnosis | consultation_form | manual | referral | sns
+  status                String          @default("new") // new | contacted | qualified | converted | lost
+  freeDiagnosisId       String?         @map("free_diagnosis_id") @db.Uuid
+  freeDiagnosis         FreeDiagnostic? @relation(fields: [freeDiagnosisId], references: [id])
+  convertedMembershipId String?         @map("converted_membership_id") @db.Uuid
+  assignedTo            String?         @map("assigned_to") @db.Uuid
+  score                 Int?
+  createdAt             DateTime        @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt             DateTime        @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  notes LeadNote[]
+
+  @@index([email])
+  @@index([status])
+  @@index([source])
+  @@map("leads")
+}
+
+// ──────────────────────────────────────────────────────────────
+// lead_notes — 리드 메모
+// ──────────────────────────────────────────────────────────────
+model LeadNote {
+  id        String   @id @default(uuid()) @db.Uuid
+  leadId    String   @map("lead_id") @db.Uuid
+  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  authorId  String   @map("author_id") @db.Uuid
+  content   String
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  @@map("lead_notes")
+}
+
+// ──────────────────────────────────────────────────────────────
+// payments — 결제 내역
+// ──────────────────────────────────────────────────────────────
+model Payment {
+  id           String    @id @default(uuid()) @db.Uuid
+  profileId    String    @map("profile_id") @db.Uuid
+  profile      Profile   @relation(fields: [profileId], references: [id])
+  productKey   String    @map("product_key")
+  amount       Int
+  currency     String    @default("KRW")
+  status       String    @default("pending") // pending | authorized | paid | cancelled | partial_refunded | refunded | failed
+  pgProvider   String    @default("tosspayments") @map("pg_provider")
+  pgOrderId    String    @unique @map("pg_order_id")
+  pgPaymentKey String?   @unique @map("pg_payment_key")
+  pgReceiptUrl String?   @map("pg_receipt_url")
+  paidAt       DateTime? @map("paid_at") @db.Timestamptz
+  cancelledAt  DateTime? @map("cancelled_at") @db.Timestamptz
+  cancelReason String?   @map("cancel_reason")
+  metadata     Json      @default("{}")
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  memberships Membership[]
+
+  @@index([profileId])
+  @@index([pgOrderId])
+  @@index([status])
+  @@map("payments")
+}
+
+// ──────────────────────────────────────────────────────────────
+// memberships — 유료 서비스 가입
+// ──────────────────────────────────────────────────────────────
+model Membership {
+  id            String    @id @default(uuid()) @db.Uuid
+  profileId     String    @map("profile_id") @db.Uuid
+  profile       Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  productKey    String    @map("product_key") // diagnosis | build | launch | partner
+  status        String    @default("pending") // pending | paid | active | completed | cancelled | refunded
+  startedAt     DateTime? @map("started_at") @db.Timestamptz
+  expiresAt     DateTime? @map("expires_at") @db.Timestamptz
+  paymentId     String?   @map("payment_id") @db.Uuid
+  payment       Payment?  @relation(fields: [paymentId], references: [id], onDelete: SetNull)
+  assignedAdmin String?   @map("assigned_admin") @db.Uuid
+  notes         String?
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt     DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  coachingSession CoachingSession?
+
+  @@index([profileId])
+  @@index([status])
+  @@map("memberships")
+}
+
+// ──────────────────────────────────────────────────────────────
+// coaching_sessions — 코칭 세션 (42문항)
+// ──────────────────────────────────────────────────────────────
+model CoachingSession {
+  id           String     @id @default(uuid()) @db.Uuid
+  membershipId String     @unique @map("membership_id") @db.Uuid
+  membership   Membership @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  profileId    String     @map("profile_id") @db.Uuid
+  profile      Profile    @relation(fields: [profileId], references: [id])
+  status       String     @default("in_progress") // in_progress | submitted | analyzing | analyzed | finalized
+  submittedAt  DateTime?  @map("submitted_at") @db.Timestamptz
+  analyzedAt   DateTime?  @map("analyzed_at") @db.Timestamptz
+  finalizedAt  DateTime?  @map("finalized_at") @db.Timestamptz
+  createdAt    DateTime   @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt    DateTime   @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  report  CoachingReport?
+  answers CoachingAnswer[]
+
+  @@index([profileId])
+  @@index([status])
+  @@map("coaching_sessions")
+}
+
+// ──────────────────────────────────────────────────────────────
+// coaching_reports — AI 분석 결과
+// ──────────────────────────────────────────────────────────────
+model CoachingReport {
+  id               String          @id @default(uuid()) @db.Uuid
+  sessionId        String          @unique @map("session_id") @db.Uuid
+  session          CoachingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  brandProfile     Json            @default("{}") @map("brand_profile")
+  questionInsights Json            @default("[]") @map("question_insights")
+  modelUsed        String?         @default("gpt-4o") @map("model_used")
+  tokensUsed       Int?            @map("tokens_used")
+  generatedAt      DateTime        @default(now()) @map("generated_at") @db.Timestamptz
+  finalizedBy      String?         @map("finalized_by") @db.Uuid
+  finalizedAt      DateTime?       @map("finalized_at") @db.Timestamptz
+  version          Int             @default(1)
+
+  @@map("coaching_reports")
+}
+
+// ──────────────────────────────────────────────────────────────
+// coaching_answers — 문항별 텍스트/음성 답변
+// ──────────────────────────────────────────────────────────────
+model CoachingAnswer {
+  id            String          @id @default(uuid()) @db.Uuid
+  sessionId     String          @map("session_id") @db.Uuid
+  session       CoachingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  questionId    Int             @map("question_id")
+  textAnswer    String?         @map("text_answer")
+  voiceUrl      String?         @map("voice_url")
+  voiceMime     String?         @map("voice_mime")
+  voiceDuration Int?            @map("voice_duration")
+  updatedAt     DateTime        @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  @@unique([sessionId, questionId])
+  @@index([sessionId])
+  @@map("coaching_answers")
+}

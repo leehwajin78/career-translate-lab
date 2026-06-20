@@ -3,14 +3,14 @@ import { COACHING_QUESTIONS } from "@/data/coachingQuestions";
 
 /**
  * 42문항 답변을 받아 분석을 실행합니다.
- * VITE_ANTHROPIC_API_KEY가 설정되어 있으면 Claude 3.5 Sonnet API를 호출하고,
+ * NEXT_PUBLIC_ANTHROPIC_API_KEY가 설정되어 있으면 Claude 3.5 Sonnet API를 호출하고,
  * 설정되어 있지 않거나 호출에 실패하면 로컬 하이브리드 Mock 분석기를 구동합니다.
  */
 export async function analyzeCoachingAnswers(
   memberName: string,
   answers: Record<number, QuestionAnswer>
 ): Promise<AIDraft> {
-  const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY;
+  const apiKey = process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY;
 
   if (apiKey && apiKey.trim() !== "") {
     try {

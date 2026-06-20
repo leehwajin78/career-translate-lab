@@ -37,9 +37,9 @@ const ASSET_LABELS: Record<string, string> = {
 };
 
 export async function notifyLead(lead: Lead): Promise<void> {
-  const accessKey = import.meta.env.VITE_LEAD_NOTIFY_KEY;
+  const accessKey = process.env.NEXT_PUBLIC_LEAD_NOTIFY_KEY;
   if (!accessKey) {
-    console.warn("VITE_LEAD_NOTIFY_KEY environment variable is not defined. Skipping email notification.");
+    console.warn("NEXT_PUBLIC_LEAD_NOTIFY_KEY environment variable is not defined. Skipping email notification.");
     return;
   }
 

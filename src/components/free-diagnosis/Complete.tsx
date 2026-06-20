@@ -1,5 +1,7 @@
+'use client';
+
 import { useFreeDiagnosticStore } from "@/store/freeDiagnosticStore";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Check } from "lucide-react";
 
 export default function Complete() {
@@ -31,7 +33,7 @@ export default function Complete() {
         <div className="bg-secondary/60 rounded-2xl p-8 text-center">
           <p className="text-foreground/80 font-medium mb-4">더 깊은 분석을 원하신다면</p>
           <Link
-            to="/consultation"
+            href="/consultation"
             className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-full text-base font-bold hover:bg-primary/90 transition-colors shadow-soft"
           >
             한끗 진단 신청하기

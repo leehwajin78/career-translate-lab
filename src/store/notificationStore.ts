@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { safeStorage } from "@/lib/safeStorage";
 
 export interface CoachingNotification {
   id: string;
@@ -152,6 +153,7 @@ export const useNotificationStore = create<NotificationState>()(
     }),
     {
       name: "kkummolda-notifications",
+      storage: safeStorage,
     }
   )
 );

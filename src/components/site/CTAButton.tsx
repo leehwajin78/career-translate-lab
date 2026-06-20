@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -18,7 +18,7 @@ export default function CTAButton({ to, children, variant = "primary", className
   } as const;
   const isExternal = to.startsWith("http");
   const Comp: any = isExternal ? "a" : Link;
-  const props: any = isExternal ? { href: to } : { to };
+  const props: any = { href: to };
   return (
     <Comp {...props} className={cn(base, styles[variant], className)}>
       {children}

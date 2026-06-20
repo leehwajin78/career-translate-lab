@@ -1,0 +1,130 @@
+@import '../styles/diagnosis.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 꿈몰다 — premium editorial Korean consulting design system. All colors HSL. */
+
+@font-face {
+  font-family: 'SCDream';
+  src: url('/fonts/SCDream3.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SCDream';
+  src: url('/fonts/SCDream5.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SCDream';
+  src: url('/fonts/SCDream8.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    /* White / light gray paper */
+    --background: 0 0% 100%;
+    --foreground: 220 20% 14%;
+
+    --surface: 220 20% 98%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 14%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 14%;
+
+    /* Royal Blue #0123B4 */
+    --primary: 230 99% 35%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 16% 96%;
+    --secondary-foreground: 220 20% 14%;
+
+    --muted: 220 14% 94%;
+    --muted-foreground: 220 10% 40%;
+
+    --accent: 230 99% 35%;           /* royal blue accent */
+    --accent-foreground: 0 0% 100%;
+    --accent-soft: 230 60% 94%;
+
+    --destructive: 0 65% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 14% 89%;
+    --input: 220 14% 89%;
+    --ring: 230 99% 35%;
+
+    --radius: 0.875rem;
+
+    /* Product confirm card — #F0EFFB 대응 연보라 배경 */
+    --product-confirm: 244 60% 96%;
+    --product-confirm-border: 230 99% 35%; /* primary와 동일 */
+
+    /* 에러·성공·경고 보조 토큰 */
+    --error-bg: 0 60% 97%;
+    --error-border: 0 50% 90%;
+    --success: 142 71% 35%;
+    --success-bg: 142 60% 96%;
+    --warning: 38 92% 50%;
+    --warning-bg: 38 90% 96%;
+
+    --shadow-soft: 0 1px 2px hsl(230 40% 20% / 0.05), 0 8px 24px -12px hsl(230 40% 20% / 0.10);
+    --shadow-elevated: 0 1px 2px hsl(230 40% 20% / 0.06), 0 24px 48px -24px hsl(230 50% 25% / 0.20);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+
+}
+
+@layer base {
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'SCDream', 'Pretendard', 'Noto Sans KR', system-ui, -apple-system, sans-serif;
+    font-weight: 300;
+    font-feature-settings: "ss01", "tnum";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    word-break: keep-all;
+  }
+  .font-serif { font-family: 'SCDream', 'Pretendard', 'Noto Sans KR', sans-serif; font-weight: 800; }
+  h1, h2, h3, h4 { font-family: 'SCDream', 'Pretendard', 'Noto Sans KR', sans-serif; font-weight: 800; letter-spacing: -0.02em; }
+}
+
+@layer utilities {
+  .shadow-soft { box-shadow: var(--shadow-soft); }
+  .shadow-elevated { box-shadow: var(--shadow-elevated); }
+  .gold-rule {
+    background: linear-gradient(90deg, transparent, hsl(var(--accent) / 0.6), transparent);
+    height: 1px;
+  }
+  .editorial-section { @apply py-24 md:py-32; }
+  .container-prose { @apply mx-auto w-full max-w-6xl px-6 md:px-10; }
+  .fade-in { animation: fadeUp 0.7s ease-out both; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Fluid Typography ── */
+  .text-fluid-hero { font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem); }       /* 40px → 72px */
+  .text-fluid-display { font-size: clamp(1.875rem, 3vw + 0.75rem, 3rem); }  /* 30px → 48px */
+  .text-fluid-section { font-size: clamp(1.875rem, 2.5vw + 0.5rem, 2.25rem); } /* 30px → 36px */
+}

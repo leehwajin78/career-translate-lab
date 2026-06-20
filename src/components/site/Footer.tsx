@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -15,8 +15,8 @@ export default function Footer() {
             <p>사업자등록번호. 133-13-04664</p>
             <p>통신판매업 신고번호. 제 2022-수원영통-0965호</p>
             <div className="pt-3 flex gap-4 text-xs text-primary/60">
-              <Link to="/terms" className="hover:text-primary transition-colors underline underline-offset-2">이용약관</Link>
-              <Link to="/privacy" className="hover:text-primary transition-colors font-bold">개인정보처리방침</Link>
+              <Link href="/terms" className="hover:text-primary transition-colors underline underline-offset-2">이용약관</Link>
+              <Link href="/privacy" className="hover:text-primary transition-colors font-bold">개인정보처리방침</Link>
             </div>
             <p className="text-primary/60 text-xs">
               Copyright © 2021 kkummolda All rights reserved

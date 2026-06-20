@@ -1,5 +1,7 @@
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+'use client'
+
+import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 
 /**
  * 라우트 변경 시 스크롤 제어:
@@ -7,21 +9,22 @@ import { useLocation } from "react-router-dom";
  * - hash가 없으면 페이지 최상단으로 스크롤
  */
 export function useScrollRestoration() {
-  const { pathname, hash } = useLocation();
+  const pathname = usePathname()
 
   useEffect(() => {
+    const hash = typeof window !== 'undefined' ? window.location.hash : ''
     if (hash) {
       // hash가 있으면 해당 요소로 스크롤 (DOM 렌더 대기)
       const timer = setTimeout(() => {
-        const el = document.getElementById(hash.replace("#", ""));
+        const el = document.getElementById(hash.replace('#', ''))
         if (el) {
-          el.scrollIntoView({ behavior: "smooth" });
+          el.scrollIntoView({ behavior: 'smooth' })
         }
-      }, 100);
-      return () => clearTimeout(timer);
+      }, 100)
+      return () => clearTimeout(timer)
     } else {
       // hash가 없으면 최상단으로
-      window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+      window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior })
     }
-  }, [pathname, hash]);
+  }, [pathname])
 }
