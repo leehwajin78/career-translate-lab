@@ -17,10 +17,10 @@ export default function Index() {
             경력 자산화 서비스
           </div>
           <h1 className="font-serif leading-[1.2] text-primary tracking-tight break-keep" style={{ fontSize: "clamp(2rem, 4vw + 0.8rem, 3.875rem)" }}>
-            30년을 일했는데,<br />나를 소개하는 한 문장이 없습니다.
+            30년을 일했는데,<br />나를 소개하는 한 문장이 없습니다
           </h1>
-          <p className="mt-5 max-w-3xl mx-auto text-base md:text-lg text-foreground/75 leading-relaxed break-keep">
-            30년 경력은 충분합니다. 부족한 건 그 경험을 시장이 알아보는 형태로 정리한 자료입니다.<br />
+          <p className="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-foreground/80 leading-relaxed font-medium break-keep">
+            30년 경력은 충분합니다. 부족한 건 시장이 알아보는 형태로 정리한 자료입니다.<br />
             한끗프로젝트가 당신의 경력을 시장이 선택하는 자산으로 만들어 드립니다.
           </p>
           <div className="mt-7 flex gap-3 justify-center flex-wrap">
@@ -229,7 +229,7 @@ export default function Index() {
       </div>
 
       {/* ⑦ #4 단계별 상품 — 연한 파랑 배경 */}
-      <div id="products" className="bg-[#EEF3FC]">
+      <div id="packages" className="bg-[#EEF3FC]">
         <div className="container-prose py-16">
           <div className="text-center">
             <div className={`${eyebrow} inline-flex items-center gap-2`}>

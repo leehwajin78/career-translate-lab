@@ -9,24 +9,16 @@ export default function Service() {
       {/* SECTION 1: HERO */}
       <section className="bg-white">
         <div className="container-prose pt-20 md:pt-28 pb-16 md:pb-24 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-bold mb-6 border border-accent/20">
-            <Sparkles size={16} />
-            <span>1:1 맞춤 6주 과정</span>
+          <div className="inline-flex items-center px-5 py-2 rounded-full bg-primary text-white text-sm font-bold mb-8">
+            한끗프로젝트
           </div>
-          <h1 className="font-serif text-fluid-hero leading-[1.15] text-primary tracking-tight break-keep">
-            한끗프로젝트가 뭔가요?
+          <h1 className="font-serif leading-[1.2] text-primary tracking-tight break-keep" style={{ fontSize: "clamp(2rem, 4vw + 0.8rem, 3.875rem)" }}>
+            30년 경력을 다시 일로 연결하는<br />경력 자산화 서비스입니다
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-foreground/80 leading-relaxed font-medium break-keep">
-            20~30년 경력 전문가의 경험을, 시장이 이해하는 언어로 옮겨<br />
-            강의안·제안서·프로필로 만드는 1:1 맞춤 프로그램입니다.
+            당신만을 위한 1:1 맞춤 과정으로, 경험 속 가장 강력한 이야기를 꺼내<br />
+            6주 안에 프로필·강의안·제안서로 만들어드립니다.
           </p>
-          <div className="mt-8 bg-primary text-white p-6 rounded-2xl max-w-2xl mx-auto text-center">
-            <p className="text-base md:text-lg font-medium leading-relaxed">
-              경력은 사라지는 것이 아니라, 번역되어야 살아남습니다.<br />
-              30년의 경험은 그 자체로 충분합니다. 다만 시장이 알아보려면,<br />
-              시장의 언어로 옮기는 작업이 필요합니다.
-            </p>
-          </div>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center flex-wrap">
             <CTAButton to="/diagnosis" variant="primary" className="w-full sm:w-auto justify-center">경력 가치 무료 진단받기 →</CTAButton>
             <CTAButton to="/consultation" variant="ghost" className="w-full sm:w-auto justify-center">30분 무료 상담 신청하기</CTAButton>
@@ -114,7 +106,7 @@ export default function Service() {
                   <th className="border border-border bg-secondary/30 px-5 py-4 text-left font-medium text-foreground/50 w-24"></th>
                   <th className="border border-border bg-secondary/30 px-5 py-4 text-center font-extrabold text-foreground">강사 양성 과정</th>
                   <th className="border border-border bg-secondary/30 px-5 py-4 text-center font-extrabold text-foreground">일반 브랜딩 컨설팅</th>
-                  <th className="border border-primary bg-primary px-5 py-4 text-center font-extrabold text-white rounded-t-lg">한끗프로젝트</th>
+                  <th className="border border-primary bg-primary px-5 py-4 text-center font-extrabold text-white">한끗프로젝트</th>
                 </tr>
               </thead>
               <tbody>
@@ -211,7 +203,7 @@ export default function Service() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto mb-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-4xl mx-auto mb-10">
             {[
               { v: "6주", l: "전체 기간" },
               { v: "주 1회", l: "약 90분 만남" },
@@ -326,10 +318,10 @@ export default function Service() {
           <div className="text-center mb-16">
             <NumberedLabel number="04">산출물</NumberedLabel>
             <h2 className="font-serif text-3xl md:text-4xl text-primary leading-snug mt-4 mb-6">
-              직접 고쳐 쓰는 6가지 원본 자산.
+              6가지 경력 자산을 만들어드립니다.
             </h2>
             <p className="text-foreground/70 text-lg max-w-4xl mx-auto">
-              모두 PPT·워드·PDF 원본으로, 인터넷 폴더로 전달되며 활동에 제한 없이 사용할 수 있습니다.
+              경험을 프로필, 강의안, 제안서, 소개 문장처럼 실제로 활용할 수 있는 자료로 정리합니다.
             </p>
           </div>
 
