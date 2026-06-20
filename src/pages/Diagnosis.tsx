@@ -36,9 +36,15 @@ export default function Diagnosis() {
     const controller = new AbortController();
     setTimeout(() => controller.abort(), TIMEOUT_MS);
 
+    const ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
+
     fetch(EDGE_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": ANON_KEY,
+        "Authorization": `Bearer ${ANON_KEY}`,
+      },
       body: JSON.stringify({
         email: lead.email,
         name: lead.name,
