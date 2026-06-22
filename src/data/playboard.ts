@@ -823,6 +823,7 @@ const CHANGES: Change[] = [
   { id: 'CHG-012', date: '2026-06-15', screens: [],       type: 'arch',  description: 'Supabase 인프라 초기화: @supabase/supabase-js 설치, src/integrations/supabase/client.ts 생성, supabase/migrations/ 4개 SQL 파일 작성 (profiles·free_diagnostics·leads·memberships·payments·coaching_sessions·coaching_reports·coaching_answers).', source: '기술 결정' },
   { id: 'CHG-013', date: '2026-06-15', screens: ['C-03'], type: 'add',   description: 'submit-free-diagnosis Edge Function 작성 (Zod 검증·24h Rate Limit·free_diagnostics·leads insert). Diagnosis.tsx 제출 핸들러에 Edge Function 연동 (10s 타임아웃·429·Toast 처리). ISSUE-02 미해결로 type: pending 반환.', source: '구현' },
   { id: 'CHG-014', date: '2026-06-22', screens: ['C-02', 'C-05'], type: 'modify', description: 'CTAButton prop을 to → href로 통일 (Next.js 관례). Service·Result 페이지 런타임 크래시(ErrorBoundary) 해결. ISSUE-09 해결.', source: '구현' },
+  { id: 'CHG-015', date: '2026-06-22', screens: ['C-01'], type: 'modify', description: '랜딩 히어로 뱃지 "경력 자산화 서비스" → "5060 경력 자산화 서비스"', source: 'PM 요청' },
 ]
 
 // ============================================================
