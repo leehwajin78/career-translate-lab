@@ -794,6 +794,15 @@ const ISSUES: Issue[] = [
     blockedBy: [],
     blocks: [],
   },
+  {
+    id: 'ISSUE-09', screens: ['C-02', 'C-05'],
+    type: 'impl', priority: 'high', status: 'resolved',
+    title: 'CTAButton prop 불일치로 /service·/result 런타임 크래시',
+    body: 'CTAButton은 `to` prop을 받도록 정의됐으나 Service.tsx·Result.tsx는 `href`로 호출 → to=undefined → to.startsWith() TypeError → ErrorBoundary("오류가 발생했습니다") 노출. React Router→Next.js 마이그레이션 중 컴포넌트 prop명만 미변경된 케이스. CTAButton prop을 href로 통일하여 해결.',
+    blockedBy: [],
+    blocks: [],
+    resolvedBy: 'CHG-014',
+  },
 ]
 
 // ============================================================
@@ -813,6 +822,7 @@ const CHANGES: Change[] = [
   { id: 'CHG-011', date: '2026-06-15', screens: ['C-15'], type: 'add',   description: 'src/pages/Privacy.tsx 생성 + /privacy 라우트 등록. ISSUE-03 해결.', source: '구현' },
   { id: 'CHG-012', date: '2026-06-15', screens: [],       type: 'arch',  description: 'Supabase 인프라 초기화: @supabase/supabase-js 설치, src/integrations/supabase/client.ts 생성, supabase/migrations/ 4개 SQL 파일 작성 (profiles·free_diagnostics·leads·memberships·payments·coaching_sessions·coaching_reports·coaching_answers).', source: '기술 결정' },
   { id: 'CHG-013', date: '2026-06-15', screens: ['C-03'], type: 'add',   description: 'submit-free-diagnosis Edge Function 작성 (Zod 검증·24h Rate Limit·free_diagnostics·leads insert). Diagnosis.tsx 제출 핸들러에 Edge Function 연동 (10s 타임아웃·429·Toast 처리). ISSUE-02 미해결로 type: pending 반환.', source: '구현' },
+  { id: 'CHG-014', date: '2026-06-22', screens: ['C-02', 'C-05'], type: 'modify', description: 'CTAButton prop을 to → href로 통일 (Next.js 관례). Service·Result 페이지 런타임 크래시(ErrorBoundary) 해결. ISSUE-09 해결.', source: '구현' },
 ]
 
 // ============================================================
@@ -820,7 +830,7 @@ const CHANGES: Change[] = [
 // ============================================================
 export const PLAYBOARD: PlayBoardData = {
   version: '2.0',
-  lastUpdated: '2026-06-15',
+  lastUpdated: '2026-06-22',
   screens: SCREENS,
   issues: ISSUES,
   changes: CHANGES,
