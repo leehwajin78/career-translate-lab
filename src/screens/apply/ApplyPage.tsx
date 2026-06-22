@@ -1,6 +1,5 @@
 'use client';
 
-import Link from "next/link";
 import { Phone, Mail } from "lucide-react";
 import ProductConfirmCard from "@/components/site/ProductConfirmCard";
 import ApplyForm from "@/components/site/ApplyForm";
@@ -14,16 +13,6 @@ export default function ApplyPage({ productKey }: ApplyPageProps) {
   return (
     <div className="container-prose py-12 md:py-20">
       <div className="max-w-3xl mx-auto">
-        {/* 상단 네비 링크 */}
-        <div className="flex justify-end mb-8">
-          <Link
-            href="/#packages"
-            className="text-sm text-[#1E2D8C]/60 hover:text-[#1E2D8C] transition-colors underline underline-offset-4 font-medium"
-          >
-            ← 단계별 상품 다시 보기
-          </Link>
-        </div>
-
         {/* 섹션 2: 상품 확인 카드 */}
         <ProductConfirmCard productKey={productKey} />
 

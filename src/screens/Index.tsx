@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from "react";
 import Link from "next/link";
 import { Clock, User, Briefcase, Monitor, Users, FolderOpen } from "lucide-react";
 
@@ -10,6 +11,18 @@ const btnPrimary = "inline-flex items-center justify-center gap-2 bg-primary tex
 const btnGhost = "inline-flex items-center justify-center gap-2 border border-border text-primary font-bold px-6 py-3 rounded-full text-sm md:text-base hover:border-primary hover:bg-primary/5 transition-colors bg-transparent";
 
 export default function Index() {
+  // 이 페이지는 client-only로 lazy-load되어, 다른 화면에서 /#packages 같은
+  // 해시로 진입하면 섹션이 렌더되기 전에 브라우저의 스크롤 시도가 끝나버린다.
+  // 마운트 후 직접 해시 대상으로 스크롤해 '단계별 상품 다시 보기' 진입을 보정한다.
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    if (!id) return;
+    const raf = requestAnimationFrame(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
   return (
     <>
       {/* ① Hero — 흰 배경 */}
@@ -231,7 +244,7 @@ export default function Index() {
       </div>
 
       {/* ⑦ #4 단계별 상품 — 연한 파랑 배경 */}
-      <div id="packages" className="bg-[#EEF3FC]">
+      <div id="packages" className="bg-[#EEF3FC] scroll-mt-16 md:scroll-mt-20">
         <div className="container-prose py-16">
           <div className="text-center">
             <div className={`${eyebrow} inline-flex items-center gap-2`}>
