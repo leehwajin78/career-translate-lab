@@ -1,91 +1,311 @@
-﻿<!DOCTYPE html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>운영 흐름 — 한끗프로젝트 프로토타입 v3</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="style.css"><script src="proto-hide.js"></script></head><body>
-<div class="proto-bar"><span class="pid">한끗</span><span class="pt">운영 흐름</span>
-<span class="sep">|</span><span class="route">PRD v3.0 · SRS v2.0</span>
-<nav><a href="pages.html">전체 화면 목록</a><a href="flow-customer.html">고객 흐름</a><a href="flow-coach.html">운영 흐름</a><a href="index.html">프로토타입 홈</a></nav></div>
-<div style="max-width:1240px;margin:0 auto;padding:2.2rem 1.6rem 5rem">
-<h1 style="font-size:1.6rem;font-weight:800">운영(코치) 흐름</h1>
-<p class="note" style="margin-top:.4rem">1인 운영 기준 운영 루프 — 리드 확인부터 리포트 확정까지. 'AI 초안 → 코치 검수 → 고객 전달' 원칙을 검수 게이트로 강제.</p>
+<!DOCTYPE html>
+<html lang="ko">
 
-<div class="lane"><div class="lt">운영 루프 1 — 리드 → 계약 → 계정 발급 <span class="phase curp1" style="font-size:.6rem">● 현행 +P1</span></div><p class="note" style="margin:.1rem 0 .6rem">상담·계약은 오프라인, 콘솔은 추적과 발급을 담당</p><div class="flowrow"><div class="fstep"><div class="stepno">STEP 1 · 알림 수신</div><a class="shot" href="admin-notifications.html">
-  <div class="thumb"><iframe src="admin-notifications.html" loading="lazy" tabindex="-1" scrolling="no" title="알림 시스템 미리보기"></iframe></div>
-  <div class="meta"><div class="t"><span>A-04 · 알림 시스템</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
-  <div class="d">차임벨·푸시·멀티탭 동기화 알림 관리</div>
-  <div class="codes"><b>/admin (notifications)</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">신규 리드·제출 차임벨 + 푸시 (FR-NOTIF)</p></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">STEP 2 · 리드 검토</div><a class="shot" href="admin.html">
-  <div class="thumb"><iframe src="admin.html" loading="lazy" tabindex="-1" scrolling="no" title="관리자 콘솔 미리보기"></iframe></div>
-  <div class="meta"><div class="t"><span>A-01 · 관리자 콘솔</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1] 보강</span></div>
-  <div class="d">리드 CRM + 멤버 계정 발급·진행 추적 2탭</div>
-  <div class="codes"><b>/admin</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">Tab1 리드 CRM — 상태·메모 (FR-ADMIN-01)</p></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">STEP 3 · 상세 분석</div><a class="shot" href="admin-lead-detail.html">
-  <div class="thumb"><iframe src="admin-lead-detail.html" loading="lazy" tabindex="-1" scrolling="no" title="리드 상세 미리보기"></iframe></div>
-  <div class="meta"><div class="t"><span>A-02 · 리드 상세</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
-  <div class="d">7문항 답변 전문 + 영역 점수 + 추천 패키지 + 메모</div>
-  <div class="codes"><b>/admin (lead detail)</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">7문항 답변·점수 → 추천 패키지 (FR-ADMIN-02)</p></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">STEP 4 · 계정 발급</div><a class="shot" href="admin.html">
-  <div class="thumb"><iframe src="admin.html" loading="lazy" tabindex="-1" scrolling="no" title="관리자 콘솔 미리보기"></iframe></div>
-  <div class="meta"><div class="t"><span>A-01 · 관리자 콘솔</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1] 보강</span></div>
-  <div class="d">리드 CRM + 멤버 계정 발급·진행 추적 2탭</div>
-  <div class="codes"><b>/admin</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">Tab2 — Auth 발급 + 안내문 복사 (FR-AUTH-04)</p></div></div></div>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>운영 흐름 — 한끗프로젝트 프로토타입 v3</title>
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="proto-hide.js"></script>
+</head>
 
-<div class="lane"><div class="lt">운영 루프 2 — 제출 검토 → 리포트 확정 <span class="phase curp1" style="font-size:.6rem">● 현행 +P1</span></div><p class="note" style="margin:.1rem 0 .6rem">AI 초안은 현행 로컬 알고리즘 → [P2] LLM API 대체</p><div class="flowrow"><div class="fstep"><div class="stepno">STEP 1 · 제출 알림</div><a class="shot" href="admin-notifications.html">
-  <div class="thumb"><iframe src="admin-notifications.html" loading="lazy" tabindex="-1" scrolling="no" title="알림 시스템 미리보기"></iframe></div>
-  <div class="meta"><div class="t"><span>A-04 · 알림 시스템</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span></div>
-  <div class="d">차임벨·푸시·멀티탭 동기화 알림 관리</div>
-  <div class="codes"><b>/admin (notifications)</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">멤버 submitted 이벤트</p></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">STEP 2 · 워크스페이스</div><a class="shot" href="workspace.html">
-  <div class="thumb"><iframe src="workspace.html" loading="lazy" tabindex="-1" scrolling="no" title="코칭 워크스페이스 미리보기"></iframe></div>
-  <div class="meta"><div class="t"><span>A-03 · 코칭 워크스페이스</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1] 보강</span></div>
-  <div class="d">42문항 심층 검토 + 음성 재생 + AIDraft + FinalProfile 확정</div>
-  <div class="codes"><b>/coaching/workspace/:memberId</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">42문항 검토 + 문항별 메모 (FR-WORK-01)</p></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">STEP 3 · 초안 검수</div><a class="shot" href="workspace.html">
-  <div class="thumb"><iframe src="workspace.html" loading="lazy" tabindex="-1" scrolling="no" title="코칭 워크스페이스 미리보기"></iframe></div>
-  <div class="meta"><div class="t"><span>A-03 · 코칭 워크스페이스</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1] 보강</span></div>
-  <div class="d">42문항 심층 검토 + 음성 재생 + AIDraft + FinalProfile 확정</div>
-  <div class="codes"><b>/coaching/workspace/:memberId</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">AIDraft 검토 → FinalProfile 확정 (FR-WORK-02·03)</p></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">STEP 4 · 고객 공개</div><a class="shot" href="coaching-report.html">
-  <div class="thumb"><iframe src="coaching-report.html" loading="lazy" tabindex="-1" scrolling="no" title="코칭 리포트 미리보기"></iframe></div>
-  <div class="meta"><div class="t"><span>C-14 · 코칭 리포트</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1] 보강</span></div>
-  <div class="d">유료 유형 4종 + 원라이너 초안 + 강점/보완 + 다음 단계</div>
-  <div class="codes"><b>/coaching/report</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">finalized — RLS로 노출 강제 (FR-WORK-04)</p></div></div></div>
+<body>
+  <div class="proto-bar"><span class="pid">한끗</span><span class="pt">운영 흐름</span>
+    <span class="sep">|</span><span class="route">PRD v3.0 · SRS v2.0</span>
+    <nav><a href="pages.html">전체 화면 목록</a><a href="flow-customer.html">고객 흐름</a><a href="flow-coach.html">운영 흐름</a><a
+        href="index.html">프로토타입 홈</a></nav>
+  </div>
+  <div style="max-width:1240px;margin:0 auto;padding:2.2rem 1.6rem 5rem">
+    <h1 style="font-size:1.6rem;font-weight:800">운영(코치) 흐름</h1>
+    <p class="note" style="margin-top:.4rem">1인 운영 기준 운영 루프 — 리드 확인부터 리포트 확정까지. 'AI 초안 → 코치 검수 → 고객 전달' 원칙을 검수 게이트로 강제.
+    </p>
 
-<div class="lane"><div class="lt">보안 게이트 — Phase 1 구현 대상 <span class="phase p1" style="font-size:.6rem">◆ P1</span></div><div class="flowrow"><div class="fstep"><div class="stepno">어드민 인증</div><a class="shot" href="admin-auth.html">
-  <div class="thumb"><iframe src="admin-auth.html" loading="lazy" tabindex="-1" scrolling="no" title="어드민 인증 게이트 미리보기"></iframe></div>
-  <div class="meta"><div class="t"><span>A-05 · 어드민 인증 게이트</span><span class="phase p1" style="font-size:.6rem">◆ Phase 1 구현 대상</span></div>
-  <div class="d">Supabase Auth 접근 통제 — As-Is/To-Be + 인수조건</div>
-  <div class="codes"><b>/admin (auth)</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">Supabase Auth — 비로그인·비어드민 차단 (FR-AUTH-01·02)</p></div></div></div>
+    <div class="lane">
+      <div class="lt">운영 루프 1 — 리드 → 계약 → 계정 발급 <span class="phase curp1" style="font-size:.6rem">● 현행 +P1</span></div>
+      <p class="note" style="margin:.1rem 0 .6rem">상담·계약은 오프라인, 콘솔은 추적과 발급을 담당</p>
+      <div class="flowrow">
+        <div class="fstep">
+          <div class="stepno">STEP 1 · 알림 수신</div><a class="shot" href="admin-notifications.html">
+            <div class="thumb"><iframe src="admin-notifications.html" loading="lazy" tabindex="-1" scrolling="no"
+                title="알림 시스템 미리보기"></iframe></div>
+            <div class="meta">
+              <div class="t"><span>A-04 · 알림 시스템</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span>
+              </div>
+              <div class="d">차임벨·푸시·멀티탭 동기화 알림 관리</div>
+              <div class="codes"><b>/admin (notifications)</b></div>
+            </div>
+          </a>
+          <p class="note" style="margin-top:.45rem;padding:0 .3rem">신규 리드·제출 차임벨 + 푸시 (FR-NOTIF)</p>
+        </div>
+        <div
+          style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">
+          →</div>
+        <div class="fstep">
+          <div class="stepno">STEP 2 · 리드 검토</div><a class="shot" href="admin.html">
+            <div class="thumb"><iframe src="admin.html" loading="lazy" tabindex="-1" scrolling="no"
+                title="관리자 콘솔 미리보기"></iframe></div>
+            <div class="meta">
+              <div class="t"><span>A-01 · 관리자 콘솔</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1]
+                  보강</span></div>
+              <div class="d">리드 CRM + 멤버 계정 발급·진행 추적 2탭</div>
+              <div class="codes"><b>/admin</b></div>
+            </div>
+          </a>
+          <p class="note" style="margin-top:.45rem;padding:0 .3rem">Tab1 리드 CRM — 상태·메모 (FR-ADMIN-01)</p>
+        </div>
+        <div
+          style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">
+          →</div>
+        <div class="fstep">
+          <div class="stepno">STEP 3 · 상세 분석</div><a class="shot" href="admin-lead-detail.html">
+            <div class="thumb"><iframe src="admin-lead-detail.html" loading="lazy" tabindex="-1" scrolling="no"
+                title="리드 상세 미리보기"></iframe></div>
+            <div class="meta">
+              <div class="t"><span>A-02 · 리드 상세</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span>
+              </div>
+              <div class="d">7문항 답변 전문 + 영역 점수 + 추천 패키지 + 메모</div>
+              <div class="codes"><b>/admin (lead detail)</b></div>
+            </div>
+          </a>
+          <p class="note" style="margin-top:.45rem;padding:0 .3rem">7문항 답변·점수 → 추천 패키지 (FR-ADMIN-02)</p>
+        </div>
+        <div
+          style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">
+          →</div>
+        <div class="fstep">
+          <div class="stepno">STEP 4 · 계정 발급</div><a class="shot" href="admin.html">
+            <div class="thumb"><iframe src="admin.html" loading="lazy" tabindex="-1" scrolling="no"
+                title="관리자 콘솔 미리보기"></iframe></div>
+            <div class="meta">
+              <div class="t"><span>A-01 · 관리자 콘솔</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1]
+                  보강</span></div>
+              <div class="d">리드 CRM + 멤버 계정 발급·진행 추적 2탭</div>
+              <div class="codes"><b>/admin</b></div>
+            </div>
+          </a>
+          <p class="note" style="margin-top:.45rem;padding:0 .3rem">Tab2 — Auth 발급 + 안내문 복사 (FR-AUTH-04)</p>
+        </div>
+      </div>
+    </div>
 
-<div class="lane"><div class="lt">로드맵 — Phase 2 AI 엔진 루프 <span class="phase p2" style="font-size:.6rem">◇ 보존</span></div><p class="note" style="margin:.1rem 0 .6rem">LLM API 연동 시 활성화 — 교차검증·핸드오프·룰엔진·피드백은 목록 페이지 참조</p><div class="flowrow"><div class="fstep"><div class="stepno">질문 아키텍처</div><a class="shot" href="admin-questions.html">
-  <div class="thumb"><iframe src="admin-questions.html" loading="lazy" tabindex="-1" scrolling="no" title="질문 아키텍처 미리보기"></iframe></div>
-  <div class="meta"><div class="t"><span>R-04 · 질문 아키텍처</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2 로드맵</span></div>
-  <div class="d">42문항 분류·트리거 관리 — [P2]</div>
-  <div class="codes"><b>질문 엔진</b></div></div></a></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">패턴 분류</div><a class="shot" href="admin-patterns.html">
-  <div class="thumb"><iframe src="admin-patterns.html" loading="lazy" tabindex="-1" scrolling="no" title="패턴 분류기 미리보기"></iframe></div>
-  <div class="meta"><div class="t"><span>R-05 · 패턴 분류기</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2 로드맵</span></div>
-  <div class="d">답변 패턴 자동 분류 — [P2]</div>
-  <div class="codes"><b>답변 패턴 분류</b></div></div></a></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">브랜딩 매퍼</div><a class="shot" href="admin-mapper.html">
-  <div class="thumb"><iframe src="admin-mapper.html" loading="lazy" tabindex="-1" scrolling="no" title="브랜딩 매퍼 미리보기"></iframe></div>
-  <div class="meta"><div class="t"><span>R-06 · 브랜딩 매퍼</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2 로드맵</span></div>
-  <div class="d">답변→브랜딩 요소 매핑 — [P2]</div>
-  <div class="codes"><b>브랜딩 요소 매핑</b></div></div></a></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">마스터 브리프</div><a class="shot" href="admin-brief.html">
-  <div class="thumb"><iframe src="admin-brief.html" loading="lazy" tabindex="-1" scrolling="no" title="마스터 브리프 미리보기"></iframe></div>
-  <div class="meta"><div class="t"><span>R-02 · 마스터 브리프</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2 로드맵</span></div>
-  <div class="d">42문항 기반 8섹션 브리프 자동 생성 — [P2] LLM 연동</div>
-  <div class="codes"><b>AI 마스터 브리프</b></div></div></a></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">원라이너 3종</div><a class="shot" href="admin-oneliner.html">
-  <div class="thumb"><iframe src="admin-oneliner.html" loading="lazy" tabindex="-1" scrolling="no" title="원라이너 3종 미리보기"></iframe></div>
-  <div class="meta"><div class="t"><span>R-03 · 원라이너 3종</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2 로드맵</span></div>
-  <div class="d">전문성형·공감형·결과형 3종 — [P2]</div>
-  <div class="codes"><b>원라이너 자동 생성</b></div></div></a></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">AI 호출 로그</div><a class="shot" href="admin-airuns.html">
-  <div class="thumb"><iframe src="admin-airuns.html" loading="lazy" tabindex="-1" scrolling="no" title="AI 호출 로그 미리보기"></iframe></div>
-  <div class="meta"><div class="t"><span>R-11 · AI 호출 로그</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2 로드맵</span></div>
-  <div class="d">호출 한도·로그 — [P2] API 연동 시 필수</div>
-  <div class="codes"><b>AI 호출 관리</b></div></div></a></div></div></div>
+    <div class="lane">
+      <div class="lt">운영 루프 2 — 제출 검토 → 리포트 확정 <span class="phase curp1" style="font-size:.6rem">● 현행 +P1</span></div>
+      <p class="note" style="margin:.1rem 0 .6rem">AI 초안은 현행 로컬 알고리즘 → [P2] LLM API 대체</p>
+      <div class="flowrow">
+        <div class="fstep">
+          <div class="stepno">STEP 1 · 제출 알림</div><a class="shot" href="admin-notifications.html">
+            <div class="thumb"><iframe src="admin-notifications.html" loading="lazy" tabindex="-1" scrolling="no"
+                title="알림 시스템 미리보기"></iframe></div>
+            <div class="meta">
+              <div class="t"><span>A-04 · 알림 시스템</span><span class="phase cur" style="font-size:.6rem">● 현행 구현</span>
+              </div>
+              <div class="d">차임벨·푸시·멀티탭 동기화 알림 관리</div>
+              <div class="codes"><b>/admin (notifications)</b></div>
+            </div>
+          </a>
+          <p class="note" style="margin-top:.45rem;padding:0 .3rem">멤버 submitted 이벤트</p>
+        </div>
+        <div
+          style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">
+          →</div>
+        <div class="fstep">
+          <div class="stepno">STEP 2 · 워크스페이스</div><a class="shot" href="workspace.html">
+            <div class="thumb"><iframe src="workspace.html" loading="lazy" tabindex="-1" scrolling="no"
+                title="코칭 워크스페이스 미리보기"></iframe></div>
+            <div class="meta">
+              <div class="t"><span>A-03 · 코칭 워크스페이스</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1]
+                  보강</span></div>
+              <div class="d">42문항 심층 검토 + 음성 재생 + AIDraft + FinalProfile 확정</div>
+              <div class="codes"><b>/coaching/workspace/:memberId</b></div>
+            </div>
+          </a>
+          <p class="note" style="margin-top:.45rem;padding:0 .3rem">42문항 검토 + 문항별 메모 (FR-WORK-01)</p>
+        </div>
+        <div
+          style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">
+          →</div>
+        <div class="fstep">
+          <div class="stepno">STEP 3 · 초안 검수</div><a class="shot" href="workspace.html">
+            <div class="thumb"><iframe src="workspace.html" loading="lazy" tabindex="-1" scrolling="no"
+                title="코칭 워크스페이스 미리보기"></iframe></div>
+            <div class="meta">
+              <div class="t"><span>A-03 · 코칭 워크스페이스</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1]
+                  보강</span></div>
+              <div class="d">42문항 심층 검토 + 음성 재생 + AIDraft + FinalProfile 확정</div>
+              <div class="codes"><b>/coaching/workspace/:memberId</b></div>
+            </div>
+          </a>
+          <p class="note" style="margin-top:.45rem;padding:0 .3rem">AIDraft 검토 → FinalProfile 확정 (FR-WORK-02·03)</p>
+        </div>
+        <div
+          style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">
+          →</div>
+        <div class="fstep">
+          <div class="stepno">STEP 4 · 고객 공개</div><a class="shot" href="coaching-report.html">
+            <div class="thumb"><iframe src="coaching-report.html" loading="lazy" tabindex="-1" scrolling="no"
+                title="코칭 리포트 미리보기"></iframe></div>
+            <div class="meta">
+              <div class="t"><span>C-14 · 코칭 리포트</span><span class="phase curp1" style="font-size:.6rem">● 현행 +[P1]
+                  보강</span></div>
+              <div class="d">유료 유형 4종 + 원라이너 초안 + 강점/보완 + 다음 단계</div>
+              <div class="codes"><b>/coaching/report</b></div>
+            </div>
+          </a>
+          <p class="note" style="margin-top:.45rem;padding:0 .3rem">finalized — RLS로 노출 강제 (FR-WORK-04)</p>
+        </div>
+      </div>
+    </div>
 
-<div class="lane"><div class="lt">로드맵 — Phase 3 확장 <span class="phase p3" style="font-size:.6rem">◇ 보존</span></div><div class="flowrow"><div class="fstep"><div class="stepno">리테이너 관리</div><a class="shot" href="admin-retainer.html">
-  <div class="thumb"><iframe src="admin-retainer.html" loading="lazy" tabindex="-1" scrolling="no" title="리테이너 관리 미리보기"></iframe></div>
-  <div class="meta"><div class="t"><span>R-12 · 리테이너 관리</span><span class="phase p3" style="font-size:.6rem">◇ Phase 3 로드맵</span></div>
-  <div class="d">한끗 파트너 월 구독 운영 — [P3]</div>
-  <div class="codes"><b>결제·구독 관리</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">한끗 파트너 월 구독</p></div><div style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">→</div><div class="fstep"><div class="stepno">PPT Export</div><a class="shot" href="admin-export.html">
-  <div class="thumb"><iframe src="admin-export.html" loading="lazy" tabindex="-1" scrolling="no" title="PPT Export 미리보기"></iframe></div>
-  <div class="meta"><div class="t"><span>R-13 · PPT Export</span><span class="phase p3" style="font-size:.6rem">◇ Phase 3 로드맵</span></div>
-  <div class="d">강의안 PPT 자동 출력 — [P3]</div>
-  <div class="codes"><b>산출물 자동 생성</b></div></div></a><p class="note" style="margin-top:.45rem;padding:0 .3rem">강의안 자동 출력</p></div></div></div>
-</div>
-</body></html>
+    <div class="lane">
+      <div class="lt">보안 게이트 — Phase 1 구현 대상 <span class="phase p1" style="font-size:.6rem">◆ P1</span></div>
+      <div class="flowrow">
+        <div class="fstep">
+          <div class="stepno">어드민 인증</div><a class="shot" href="admin-auth.html">
+            <div class="thumb"><iframe src="admin-auth.html" loading="lazy" tabindex="-1" scrolling="no"
+                title="어드민 인증 게이트 미리보기"></iframe></div>
+            <div class="meta">
+              <div class="t"><span>A-05 · 어드민 인증 게이트</span><span class="phase p1" style="font-size:.6rem">◆ Phase 1 구현
+                  대상</span></div>
+              <div class="d">Supabase Auth 접근 통제 — As-Is/To-Be + 인수조건</div>
+              <div class="codes"><b>/admin (auth)</b></div>
+            </div>
+          </a>
+          <p class="note" style="margin-top:.45rem;padding:0 .3rem">Supabase Auth — 비로그인·비어드민 차단 (FR-AUTH-01·02)</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="lane">
+      <div class="lt">로드맵 — Phase 2 AI 엔진 루프 <span class="phase p2" style="font-size:.6rem">◇ 보존</span></div>
+      <p class="note" style="margin:.1rem 0 .6rem">LLM API 연동 시 활성화 — 교차검증·핸드오프·룰엔진·피드백은 목록 페이지 참조</p>
+      <div class="flowrow">
+        <div class="fstep">
+          <div class="stepno">질문 아키텍처</div><a class="shot" href="admin-questions.html">
+            <div class="thumb"><iframe src="admin-questions.html" loading="lazy" tabindex="-1" scrolling="no"
+                title="질문 아키텍처 미리보기"></iframe></div>
+            <div class="meta">
+              <div class="t"><span>R-04 · 질문 아키텍처</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2
+                  로드맵</span></div>
+              <div class="d">42문항 분류·트리거 관리 — [P2]</div>
+              <div class="codes"><b>질문 엔진</b></div>
+            </div>
+          </a>
+        </div>
+        <div
+          style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">
+          →</div>
+        <div class="fstep">
+          <div class="stepno">패턴 분류</div><a class="shot" href="admin-patterns.html">
+            <div class="thumb"><iframe src="admin-patterns.html" loading="lazy" tabindex="-1" scrolling="no"
+                title="패턴 분류기 미리보기"></iframe></div>
+            <div class="meta">
+              <div class="t"><span>R-05 · 패턴 분류기</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2
+                  로드맵</span></div>
+              <div class="d">답변 패턴 자동 분류 — [P2]</div>
+              <div class="codes"><b>답변 패턴 분류</b></div>
+            </div>
+          </a>
+        </div>
+        <div
+          style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">
+          →</div>
+        <div class="fstep">
+          <div class="stepno">브랜딩 매퍼</div><a class="shot" href="admin-mapper.html">
+            <div class="thumb"><iframe src="admin-mapper.html" loading="lazy" tabindex="-1" scrolling="no"
+                title="브랜딩 매퍼 미리보기"></iframe></div>
+            <div class="meta">
+              <div class="t"><span>R-06 · 브랜딩 매퍼</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2
+                  로드맵</span></div>
+              <div class="d">답변→브랜딩 요소 매핑 — [P2]</div>
+              <div class="codes"><b>브랜딩 요소 매핑</b></div>
+            </div>
+          </a>
+        </div>
+        <div
+          style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">
+          →</div>
+        <div class="fstep">
+          <div class="stepno">마스터 브리프</div><a class="shot" href="admin-brief.html">
+            <div class="thumb"><iframe src="admin-brief.html" loading="lazy" tabindex="-1" scrolling="no"
+                title="마스터 브리프 미리보기"></iframe></div>
+            <div class="meta">
+              <div class="t"><span>R-02 · 마스터 브리프</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2
+                  로드맵</span></div>
+              <div class="d">42문항 기반 8섹션 브리프 자동 생성 — [P2] LLM 연동</div>
+              <div class="codes"><b>AI 마스터 브리프</b></div>
+            </div>
+          </a>
+        </div>
+        <div
+          style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">
+          →</div>
+        <div class="fstep">
+          <div class="stepno">원라이너 3종</div><a class="shot" href="admin-oneliner.html">
+            <div class="thumb"><iframe src="admin-oneliner.html" loading="lazy" tabindex="-1" scrolling="no"
+                title="원라이너 3종 미리보기"></iframe></div>
+            <div class="meta">
+              <div class="t"><span>R-03 · 원라이너 3종</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2
+                  로드맵</span></div>
+              <div class="d">전문성형·공감형·결과형 3종 — [P2]</div>
+              <div class="codes"><b>원라이너 자동 생성</b></div>
+            </div>
+          </a>
+        </div>
+        <div
+          style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">
+          →</div>
+        <div class="fstep">
+          <div class="stepno">AI 호출 로그</div><a class="shot" href="admin-airuns.html">
+            <div class="thumb"><iframe src="admin-airuns.html" loading="lazy" tabindex="-1" scrolling="no"
+                title="AI 호출 로그 미리보기"></iframe></div>
+            <div class="meta">
+              <div class="t"><span>R-11 · AI 호출 로그</span><span class="phase p2" style="font-size:.6rem">◇ Phase 2
+                  로드맵</span></div>
+              <div class="d">호출 한도·로그 — [P2] API 연동 시 필수</div>
+              <div class="codes"><b>AI 호출 관리</b></div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="lane">
+      <div class="lt">로드맵 — Phase 3 확장 <span class="phase p3" style="font-size:.6rem">◇ 보존</span></div>
+      <div class="flowrow">
+        <div class="fstep">
+          <div class="stepno">리테이너 관리</div><a class="shot" href="admin-retainer.html">
+            <div class="thumb"><iframe src="admin-retainer.html" loading="lazy" tabindex="-1" scrolling="no"
+                title="리테이너 관리 미리보기"></iframe></div>
+            <div class="meta">
+              <div class="t"><span>R-12 · 리테이너 관리</span><span class="phase p3" style="font-size:.6rem">◇ Phase 3
+                  로드맵</span></div>
+              <div class="d">한끗 파트너 월 구독 운영 — [P3]</div>
+              <div class="codes"><b>결제·구독 관리</b></div>
+            </div>
+          </a>
+          <p class="note" style="margin-top:.45rem;padding:0 .3rem">한끗 파트너 월 구독</p>
+        </div>
+        <div
+          style="flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#A9ADC4;font-size:1.2rem;padding-bottom:3rem">
+          →</div>
+        <div class="fstep">
+          <div class="stepno">PPT Export</div><a class="shot" href="admin-export.html">
+            <div class="thumb"><iframe src="admin-export.html" loading="lazy" tabindex="-1" scrolling="no"
+                title="PPT Export 미리보기"></iframe></div>
+            <div class="meta">
+              <div class="t"><span>R-13 · PPT Export</span><span class="phase p3" style="font-size:.6rem">◇ Phase 3
+                  로드맵</span></div>
+              <div class="d">강의안 PPT 자동 출력 — [P3]</div>
+              <div class="codes"><b>산출물 자동 생성</b></div>
+            </div>
+          </a>
+          <p class="note" style="margin-top:.45rem;padding:0 .3rem">강의안 자동 출력</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
