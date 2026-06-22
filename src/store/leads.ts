@@ -4,11 +4,11 @@ import { safeStorage } from "@/lib/safeStorage";
 import { DiagnosisType, PackageKey } from "@/data/content";
 import { notifyLead } from "@/lib/notifyLead";
 
+// DB(leads.status) CHECK 제약과 1:1 매핑되는 5종 (src/lib/leads.ts 참조)
 export type LeadStatus =
   | "신규 리드"
   | "상담 예정"
   | "상담 완료"
-  | "제안서 발송"
   | "계약 완료"
   | "보류";
 
@@ -16,7 +16,6 @@ export const LEAD_STATUSES: LeadStatus[] = [
   "신규 리드",
   "상담 예정",
   "상담 완료",
-  "제안서 발송",
   "계약 완료",
   "보류",
 ];

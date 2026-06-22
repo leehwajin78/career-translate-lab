@@ -82,6 +82,7 @@ model Lead {
   convertedMembershipId String?         @map("converted_membership_id") @db.Uuid
   assignedTo            String?         @map("assigned_to") @db.Uuid
   score                 Int?
+  memo                  String?
   createdAt             DateTime        @default(now()) @map("created_at") @db.Timestamptz
   updatedAt             DateTime        @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
 

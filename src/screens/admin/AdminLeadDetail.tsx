@@ -3,22 +3,23 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { useLeadsStore } from "@/store/leads";
 import { FREE_DIAGNOSTIC_QUESTIONS } from "@/data/content";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { LEAD_STATUSES } from "@/store/leads";
+import { useDbLeads } from "@/hooks/useDbLeads";
 
 export default function AdminLeadDetail() {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
-  const { leads, updateStatus, updateMemo } = useLeadsStore();
+  const { leads, loading, updateStatus, updateMemo } = useDbLeads();
   const lead = leads.find((l) => l.id === id);
 
   useEffect(() => {
-    if (!lead) router.replace("/admin");
-  }, [lead, router]);
+    if (!loading && !lead) router.replace("/admin");
+  }, [loading, lead, router]);
 
+  if (loading) return <div className="p-8 text-sm text-gray-400">불러오는 중…</div>;
   if (!lead) return null;
 
   const totalScore = lead.diagnosticScore ?? null;

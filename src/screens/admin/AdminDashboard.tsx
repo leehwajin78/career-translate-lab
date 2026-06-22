@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { LEAD_STATUSES, useLeadsStore } from "@/store/leads";
+import { LEAD_STATUSES } from "@/store/leads";
+import { useDbLeads } from "@/hooks/useDbLeads";
 import { PACKAGES, FREE_DIAGNOSTIC_QUESTIONS } from "@/data/content";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
@@ -54,7 +55,7 @@ const getRelativeTime = (isoString: string) => {
 };
 
 export default function AdminDashboard() {
-  const { leads, updateStatus, updateMemo } = useLeadsStore();
+  const { leads, updateStatus, updateMemo } = useDbLeads();
   const [expandedLeadId, setExpandedLeadId] = useState<string | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
   const router = useRouter();
@@ -87,7 +88,7 @@ export default function AdminDashboard() {
     const d = new Date(l.createdAt);
     return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
   });
-  const waitingLeads = leads.filter((l) => l.status === "대기중" || l.status === "신규");
+  const waitingLeads = leads.filter((l) => l.status === "신규 리드" || l.status === "상담 예정");
   const submittedMembers = members.filter((m) => getSession(m.id).status === "submitted");
 
   useEffect(() => {

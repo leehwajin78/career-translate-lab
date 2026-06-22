@@ -560,7 +560,7 @@ const SCREENS: Screen[] = [
   {
     id: 'A-01', name: '관리자 콘솔', route: '/admin',
     proto: 'admin.html', component: 'src/pages/Admin.tsx',
-    phase: 'current-p1', auth: 'Admin', fe: 'partial', be: 'not-started',
+    phase: 'current-p1', auth: 'Admin', fe: 'partial', be: 'partial',
     isMissionCritical: false,
     spec: { purpose: '리드 CRM + 멤버 계정 발급 2탭. 전체 운영 허브.', stores: ['leadsStore', 'authStore'], apis: ['GET /functions/v1/leads', 'GET /functions/v1/members', 'POST /functions/v1/create-member'], dataContract: { in: {}, out: {} } },
     frs: [
@@ -582,7 +582,7 @@ const SCREENS: Screen[] = [
   {
     id: 'A-02', name: '리드 상세', route: '/admin (panel)',
     proto: 'admin-lead-detail.html', component: 'src/pages/Admin.tsx (LeadDetail panel)',
-    phase: 'current', auth: 'Admin', fe: 'partial', be: 'not-started',
+    phase: 'current', auth: 'Admin', fe: 'partial', be: 'partial',
     isMissionCritical: false,
     spec: { purpose: '7문항 답변 전문 + 5영역 점수 + 메모 + 상태 변경.', stores: ['leadsStore'], apis: ['GET /functions/v1/leads/{id}', 'PATCH /functions/v1/leads/{id}'], dataContract: { in: {}, out: {} } },
     frs: [
@@ -659,8 +659,8 @@ const SCREENS: Screen[] = [
   // ── A-05 어드민 인증 게이트 ────────────────────────────────
   {
     id: 'A-05', name: '어드민 인증 게이트', route: '/admin (guard)',
-    proto: 'admin-auth.html', component: 'src/components/ProtectedRoute.tsx (role=admin)',
-    phase: 'p1', auth: 'Admin', fe: 'not-started', be: 'not-started',
+    proto: 'admin-auth.html', component: 'src/middleware.ts + src/screens/admin/AdminAuth.tsx (쿠키 세션 게이트)',
+    phase: 'p1', auth: 'Admin', fe: 'partial', be: 'partial',
     isMissionCritical: false,
     spec: { purpose: 'Supabase RBAC role=admin 검사. 미충족 → /unauthorized.', stores: ['authStore'], apis: ['Supabase auth.getUser()', 'onAuthStateChange'], dataContract: { in: {}, out: {} } },
     frs: [
@@ -824,6 +824,8 @@ const CHANGES: Change[] = [
   { id: 'CHG-013', date: '2026-06-15', screens: ['C-03'], type: 'add',   description: 'submit-free-diagnosis Edge Function 작성 (Zod 검증·24h Rate Limit·free_diagnostics·leads insert). Diagnosis.tsx 제출 핸들러에 Edge Function 연동 (10s 타임아웃·429·Toast 처리). ISSUE-02 미해결로 type: pending 반환.', source: '구현' },
   { id: 'CHG-014', date: '2026-06-22', screens: ['C-02', 'C-05'], type: 'modify', description: 'CTAButton prop을 to → href로 통일 (Next.js 관례). Service·Result 페이지 런타임 크래시(ErrorBoundary) 해결. ISSUE-09 해결.', source: '구현' },
   { id: 'CHG-015', date: '2026-06-22', screens: ['C-01'], type: 'modify', description: '랜딩 히어로 뱃지 "경력 자산화 서비스" → "5060 경력 자산화 서비스"', source: 'PM 요청' },
+  { id: 'CHG-016', date: '2026-06-22', screens: [], type: 'arch', description: 'MVP DB연동 Phase 1: leads.memo 컬럼 추가(Supabase) — 관리자 인라인 메모 영속화', source: '기술 결정' },
+  { id: 'CHG-017', date: '2026-06-22', screens: ['A-01', 'A-02', 'A-05'], type: 'add', description: 'MVP DB연동 Phase 1: 관리자 쿠키 세션 게이트(middleware + /api/admin/login, ADMIN_PASSWORD_HASH scrypt) + 리드 CRM을 DB로 전환(GET/PATCH /api/leads, /api/leads/[id], useDbLeads). 관리자 화면이 무료진단 리드·답변을 공용 DB에서 조회. A-01/A-02/A-05 be=partial.', source: '구현' },
 ]
 
 // ============================================================
