@@ -16,7 +16,7 @@ export default function Index() {
       <div className="bg-white">
         <div className="container-prose py-20 md:py-24 text-center">
           <div className="inline-block border border-primary rounded-full px-4 py-1.5 text-xs font-bold text-primary mb-4">
-            경력 자산화 서비스
+            5060 경력 자산화 서비스
           </div>
           <h1 className="font-serif leading-[1.2] text-primary tracking-tight break-keep" style={{ fontSize: "clamp(2rem, 4vw + 0.8rem, 3.875rem)" }}>
             30년을 일했는데,<br />나를 소개하는 한 문장이 없습니다
