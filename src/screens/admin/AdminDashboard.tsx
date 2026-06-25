@@ -9,11 +9,11 @@ import { PACKAGES, FREE_DIAGNOSTIC_QUESTIONS } from "@/data/content";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useDbMembers } from "@/hooks/useDbMembers";
-import { useCoachingStore, SubmissionStatus } from "@/store/coachingStore";
+import { useAdminCoaching } from "@/hooks/useAdminCoaching";
 import { COACHING_QUESTIONS, COACHING_PARTS } from "@/data/coachingQuestions";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/components/ui/use-toast";
-import { Trash2, UserPlus, Key, User, Mail, ShieldAlert, Award, FileText, CheckCircle, Clock, Volume2, Bell, Check } from "lucide-react";
+import { Trash2, UserPlus, Key, User, Mail, ShieldAlert, Award, FileText, CheckCircle, Clock, Bell, Check } from "lucide-react";
 import {
   useNotificationStore,
   playChime,
@@ -64,11 +64,8 @@ export default function AdminDashboard() {
   const [showNotifications, setShowNotifications] = useState(false);
   const unreadCount = notifications.filter((n) => !n.isRead).length;
 
-  const { members, addMember, removeMember, updateMember } = useDbMembers();
-  const getSession = useCoachingStore((s) => s.getSession);
-  const getCompletedCount = useCoachingStore((s) => s.getCompletedCount);
-  const getProgress = useCoachingStore((s) => s.getProgress);
-  const setStatus = useCoachingStore((s) => s.setStatus);
+  const { members, addMember, removeMember, updateMember, refresh: refreshMembers } = useDbMembers();
+  const { cache: coachingCache, fetchMember, patchStatus } = useAdminCoaching();
 
   const [memberStageFilter, setMemberStageFilter] = useState<string>("all");
   const filteredMembers = members.filter((m) => memberStageFilter === "all" || m.productKey === memberStageFilter);
@@ -86,7 +83,7 @@ export default function AdminDashboard() {
     return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
   });
   const waitingLeads = leads.filter((l) => l.status === "신규 리드" || l.status === "상담 예정");
-  const submittedMembers = members.filter((m) => getSession(m.id).status === "submitted");
+  const submittedMembers = members.filter((m) => m.coachingStatus === "submitted");
 
   useEffect(() => {
     requestNotificationPermission();
@@ -452,9 +449,8 @@ export default function AdminDashboard() {
                     </thead>
                     <tbody>
                       {filteredMembers.map((m) => {
-                        const session = getSession(m.id);
-                        const completedCount = getCompletedCount(m.id);
-                        const progress = getProgress(m.id);
+                        const progress = Math.round((m.answeredCount / 42) * 100);
+                        const session = coachingCache[m.id];
                         return (
                           <React.Fragment key={m.id}>
                             <tr className="border-t border-gray-100 align-middle hover:bg-gray-50/50">
@@ -475,12 +471,12 @@ export default function AdminDashboard() {
                                   <div className="w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden">
                                     <div className="h-full bg-primary" style={{ width: `${progress}%` }} />
                                   </div>
-                                  <span className="font-mono text-[10px]">{completedCount}/42 ({progress}%)</span>
+                                  <span className="font-mono text-[10px]">{m.answeredCount}/42 ({progress}%)</span>
                                 </div>
                               </td>
                               <td className="px-3 py-2.5">
-                                <Select value={session.status} onValueChange={(val) => { setStatus(m.id, val as SubmissionStatus); toast({ title: "상태 변경" }); }}>
-                                  <SelectTrigger className={`h-7 w-[100px] text-xs font-bold rounded-lg border ${session.status === "finalized" ? "text-amber-700 bg-amber-50 border-amber-200" : session.status === "submitted" ? "text-indigo-700 bg-indigo-50 border-indigo-200" : "text-amber-700 bg-amber-50 border-amber-200"}`}>
+                                <Select value={m.coachingStatus} onValueChange={(val) => { void patchStatus(m.id, val); setTimeout(() => refreshMembers(), 300); toast({ title: "상태 변경" }); }}>
+                                  <SelectTrigger className={`h-7 w-[100px] text-xs font-bold rounded-lg border ${m.coachingStatus === "finalized" ? "text-amber-700 bg-amber-50 border-amber-200" : m.coachingStatus === "submitted" ? "text-indigo-700 bg-indigo-50 border-indigo-200" : "text-amber-700 bg-amber-50 border-amber-200"}`}>
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent className="bg-white">
@@ -493,11 +489,11 @@ export default function AdminDashboard() {
                                 </Select>
                               </td>
                               <td className="px-3 py-2.5 text-right space-x-2 whitespace-nowrap">
-                                {(session.status === "submitted" || session.status === "analyzed" || session.status === "finalized") && (
+                                {(m.coachingStatus === "submitted" || m.coachingStatus === "analyzed" || m.coachingStatus === "finalized") && (
                                   <Link href={`/coaching/workspace/${m.id}`} className="text-xs font-bold text-amber-600 hover:underline">워크스페이스</Link>
                                 )}
                                 <button onClick={() => copyMemberNotice(m)} className="text-xs font-bold text-emerald-600 hover:underline">안내문 복사</button>
-                                <button onClick={() => setExpandedMemberId(expandedMemberId === m.id ? null : m.id)} className="text-xs font-bold text-primary hover:underline">답변 조회</button>
+                                <button onClick={() => { if (expandedMemberId === m.id) { setExpandedMemberId(null); } else { setExpandedMemberId(m.id); void fetchMember(m.id); } }} className="text-xs font-bold text-primary hover:underline">답변 조회</button>
                                 <button onClick={() => handleDeleteMember(m.id, m.name)} className="text-red-400 hover:text-red-600 inline-flex items-center align-middle"><Trash2 size={13} /></button>
                               </td>
                             </tr>
@@ -508,18 +504,21 @@ export default function AdminDashboard() {
                                     <div>
                                       <h4 className="font-bold text-primary text-sm">{m.name}님의 42문항 답변 목록</h4>
                                       <p className="text-[11px] text-gray-400 mt-0.5 flex items-center gap-2">
-                                        <span className="flex items-center gap-0.5"><FileText size={11} />응답 완료: {completedCount} / 42</span>
+                                        <span className="flex items-center gap-0.5"><FileText size={11} />응답 완료: {session?.completedCount ?? m.answeredCount} / 42</span>
                                         <span>•</span>
                                         <span className="flex items-center gap-0.5"><Clock size={11} />진행률: {progress}%</span>
-                                        {session.submittedAt && <><span>•</span><span className="flex items-center gap-0.5 text-emerald-700"><CheckCircle size={11} />제출일: {new Date(session.submittedAt).toLocaleString("ko-KR")}</span></>}
+                                        {session?.submittedAt && <><span>•</span><span className="flex items-center gap-0.5 text-emerald-700"><CheckCircle size={11} />제출일: {new Date(session.submittedAt).toLocaleString("ko-KR")}</span></>}
                                       </p>
                                     </div>
                                     <button onClick={() => setExpandedMemberId(null)} className="text-xs font-bold text-primary hover:underline">닫기</button>
                                   </div>
+                                  {!session ? (
+                                    <p className="text-xs text-gray-400 italic py-8 text-center">답변을 불러오는 중…</p>
+                                  ) : (
                                   <div className="grid gap-4 md:grid-cols-2">
                                     {COACHING_PARTS.map((part, partIdx) => {
                                       const partQs = COACHING_QUESTIONS.filter((q) => q.part === part.key);
-                                      const answeredQs = partQs.filter((q) => { const ans = session.answers[q.id]; return ans && ((ans.text && ans.text.trim().length > 0) || ans.voice); });
+                                      const answeredQs = partQs.filter((q) => { const ans = session.answers[q.id]; return !!(ans && ans.text && ans.text.trim().length > 0); });
                                       return (
                                         <div key={part.key} className="border border-gray-200 p-4 rounded-xl bg-white shadow-sm">
                                           <h5 className="font-bold text-xs text-gray-500 uppercase tracking-widest mb-3 flex items-center justify-between border-b border-gray-100 pb-2">
@@ -529,19 +528,13 @@ export default function AdminDashboard() {
                                           <div className="space-y-3 max-h-72 overflow-y-auto pr-1">
                                             {partQs.map((q) => {
                                               const ans = session.answers[q.id];
-                                              const hasAnswer = ans && ((ans.text && ans.text.trim().length > 0) || ans.voice);
+                                              const hasAnswer = !!(ans && ans.text && ans.text.trim().length > 0);
                                               return (
                                                 <div key={q.id} className={`pb-2.5 last:border-0 border-b border-gray-100 ${hasAnswer ? "" : "opacity-40"}`}>
                                                   <p className="font-semibold text-primary text-[11px] leading-relaxed">Q{q.id}. {q.question}</p>
                                                   {hasAnswer ? (
                                                     <div className="mt-1.5 space-y-1.5 pl-1">
-                                                      {ans.text && <p className="bg-gray-50 border border-gray-100 p-2 rounded-lg text-xs text-gray-700 whitespace-pre-wrap leading-relaxed">{ans.text}</p>}
-                                                      {ans.voice && (
-                                                        <div className="p-2 bg-blue-50 rounded-lg border border-blue-100 flex items-center gap-2">
-                                                          <span className="text-[10px] font-semibold text-primary flex items-center gap-1"><Volume2 size={11} />음성 ({Math.round(ans.voice.duration)}초)</span>
-                                                          <audio controls src={ans.voice.data} className="h-7 max-w-[160px]" />
-                                                        </div>
-                                                      )}
+                                                      <p className="bg-gray-50 border border-gray-100 p-2 rounded-lg text-xs text-gray-700 whitespace-pre-wrap leading-relaxed">{ans!.text}</p>
                                                     </div>
                                                   ) : <p className="text-[10px] text-gray-400 italic mt-1 pl-1">— 답변 없음</p>}
                                                 </div>
@@ -552,6 +545,7 @@ export default function AdminDashboard() {
                                       );
                                     })}
                                   </div>
+                                  )}
                                 </td>
                               </tr>
                             )}

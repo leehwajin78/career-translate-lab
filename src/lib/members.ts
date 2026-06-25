@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client'
 import { prisma } from '@/lib/db'
 import { hashPassword, verifyPassword } from '@/lib/password'
+import { getProgressByProfiles } from '@/lib/coaching'
 
 /* =============================================================
  * 멤버(고객) 계정 — profiles(role=member) + memberships
@@ -17,6 +18,10 @@ export interface MemberView {
   /** 가장 최근 membership의 상품 (diagnosis | build | launch | partner) */
   productKey: string
   createdAt: string
+  /** 42문항 응답 완료 수 (관리자 목록용, 기본 0) */
+  answeredCount: number
+  /** 코칭 세션 상태 (in-progress | submitted | ... , 기본 in-progress) */
+  coachingStatus: string
 }
 
 const memberInclude = {
@@ -35,6 +40,8 @@ function mapMember(p: MemberRow): MemberView {
     email: p.email,
     productKey: p.memberships[0]?.productKey ?? 'diagnosis',
     createdAt: p.createdAt.toISOString(),
+    answeredCount: 0,
+    coachingStatus: 'in-progress',
   }
 }
 
@@ -64,6 +71,8 @@ export async function createMember(input: {
     email: profile.email,
     productKey: input.productKey,
     createdAt: profile.createdAt.toISOString(),
+    answeredCount: 0,
+    coachingStatus: 'in-progress',
   }
 }
 
@@ -107,5 +116,12 @@ export async function listMembers(): Promise<MemberView[]> {
     include: memberInclude,
     orderBy: { createdAt: 'desc' },
   })
-  return profiles.map(mapMember)
+  const progress = await getProgressByProfiles(profiles.map((p) => p.id))
+  return profiles.map((p) => {
+    const base = mapMember(p)
+    const prog = progress[p.id]
+    return prog
+      ? { ...base, answeredCount: prog.completedCount, coachingStatus: prog.status }
+      : base
+  })
 }
