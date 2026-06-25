@@ -10,21 +10,39 @@ import { ErrorBox } from "@/components/ui/error-message";
 export default function Login() {
   const [form, setForm] = useState({ userId: "", password: "" });
   const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
   const navigate = (p: string) => router.push(p);
-  const login = useAuthStore((s) => s.login);
+  const setCurrentMember = useAuthStore((s) => s.setCurrentMember);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.userId.trim() || !form.password.trim()) {
       setError("아이디와 비밀번호를 모두 입력해 주세요.");
       return;
     }
-    const member = login(form.userId.trim(), form.password.trim());
-    if (member) {
-      navigate((member as { role?: string }).role === "admin" ? "/admin" : "/coaching");
-    } else {
-      setError("발급된 회원 정보가 아니거나, 비밀번호가 올바르지 않습니다. 관리자에게 문의해 주세요.");
+    setError("");
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: form.userId.trim(),
+          password: form.password.trim(),
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data?.member) {
+        setCurrentMember(data.member);
+        navigate("/coaching");
+      } else {
+        setError("발급된 회원 정보가 아니거나, 비밀번호가 올바르지 않습니다. 관리자에게 문의해 주세요.");
+      }
+    } catch {
+      setError("로그인 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -82,10 +100,11 @@ export default function Login() {
 
           <button
             type="submit"
-            className="w-full bg-primary text-primary-foreground py-3.5 rounded-xl text-sm font-bold hover:bg-primary/90 transition-all shadow-soft flex items-center justify-center gap-1.5 mt-2"
+            disabled={submitting}
+            className="w-full bg-primary text-primary-foreground py-3.5 rounded-xl text-sm font-bold hover:bg-primary/90 transition-all shadow-soft flex items-center justify-center gap-1.5 mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
           >
             <Lock size={14} />
-            로그인하기
+            {submitting ? "로그인 중…" : "로그인하기"}
           </button>
         </form>
 

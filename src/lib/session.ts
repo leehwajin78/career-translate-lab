@@ -7,9 +7,12 @@
  * ============================================================= */
 
 export const ADMIN_COOKIE = 'hk_admin'
+export const MEMBER_COOKIE = 'hk_member'
 
 export interface SessionPayload {
-  role: 'admin'
+  role: 'admin' | 'member'
+  /** member 세션일 때 profileId (profiles.id) */
+  sub?: string
   /** epoch seconds 만료 */
   exp: number
 }
@@ -75,7 +78,7 @@ export async function verifySession(
     const payload = JSON.parse(
       new TextDecoder().decode(base64urlDecode(body)),
     ) as SessionPayload
-    if (payload.role !== 'admin') return null
+    if (payload.role !== 'admin' && payload.role !== 'member') return null
     if (typeof payload.exp !== 'number' || payload.exp < Date.now() / 1000)
       return null
     return payload
@@ -88,4 +91,10 @@ export async function verifySession(
 export async function createAdminSession(): Promise<string> {
   const exp = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7
   return signSession({ role: 'admin', exp })
+}
+
+/** 7일 만료 멤버 세션 토큰 생성 (profileId 포함) */
+export async function createMemberSession(profileId: string): Promise<string> {
+  const exp = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7
+  return signSession({ role: 'member', sub: profileId, exp })
 }

@@ -384,7 +384,7 @@ const SCREENS: Screen[] = [
   {
     id: 'C-09', name: '멤버 로그인', route: '/login',
     proto: 'login.html', component: 'src/pages/Login.tsx',
-    phase: 'current-p1', auth: 'Guest', fe: 'partial', be: 'not-started',
+    phase: 'current-p1', auth: 'Guest', fe: 'partial', be: 'partial',
     isMissionCritical: false,
     spec: {
       purpose: 'Supabase Auth 로그인. currentMember 세팅 후 /coaching 또는 이전 경로로 이동.',
@@ -826,6 +826,7 @@ const CHANGES: Change[] = [
   { id: 'CHG-015', date: '2026-06-22', screens: ['C-01'], type: 'modify', description: '랜딩 히어로 뱃지 "경력 자산화 서비스" → "5060 경력 자산화 서비스"', source: 'PM 요청' },
   { id: 'CHG-016', date: '2026-06-22', screens: [], type: 'arch', description: 'MVP DB연동 Phase 1: leads.memo 컬럼 추가(Supabase) — 관리자 인라인 메모 영속화', source: '기술 결정' },
   { id: 'CHG-017', date: '2026-06-22', screens: ['A-01', 'A-02', 'A-05'], type: 'add', description: 'MVP DB연동 Phase 1: 관리자 쿠키 세션 게이트(middleware + /api/admin/login, ADMIN_PASSWORD_HASH scrypt) + 리드 CRM을 DB로 전환(GET/PATCH /api/leads, /api/leads/[id], useDbLeads). 관리자 화면이 무료진단 리드·답변을 공용 DB에서 조회. A-01/A-02/A-05 be=partial.', source: '구현' },
+  { id: 'CHG-018', date: '2026-06-25', screens: ['C-09', 'A-01'], type: 'add', description: 'MVP DB연동 Phase 2 PR1: 멤버 인증 DB화. profiles.password_hash 추가 + 커스텀 세션(hk_member, scrypt) — Supabase Auth 대신 관리자 게이트와 동일 방식 채택. /api/auth/login·me(멤버 로그인/현재멤버), /api/admin/members GET·POST·[id] PATCH·DELETE 로 멤버 발급/목록/수정/삭제를 DB(profiles+memberships)로 전환. middleware에 /coaching·/api/coaching 멤버 보호 + /api/admin/** 관리자 보호 추가. Login·AdminDashboard·CoachingWorkspace를 DB 연동(authStore.setCurrentMember, useDbMembers). 코칭 42문항 답변 저장(coaching_answers)은 PR2 예정. C-09 be=partial.', source: '구현' },
 ]
 
 // ============================================================
@@ -833,7 +834,7 @@ const CHANGES: Change[] = [
 // ============================================================
 export const PLAYBOARD: PlayBoardData = {
   version: '2.0',
-  lastUpdated: '2026-06-22',
+  lastUpdated: '2026-06-25',
   screens: SCREENS,
   issues: ISSUES,
   changes: CHANGES,
