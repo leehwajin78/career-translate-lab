@@ -8,7 +8,7 @@ export interface Member {
   id: string;
   name: string;
   email: string;
-  password: string;
+  password?: string; // 서버 세션(DB) 멤버는 평문 비밀번호를 보관하지 않음
   role?: "member" | "admin";
   productKey: string; // "diagnosis" | "build" etc
   createdAt: string;
@@ -21,10 +21,13 @@ interface AuthState {
   /** 관리자가 발급한 멤버 목록 */
   members: Member[];
 
-  /** 로그인 시도 → 성공 시 Member 반환, 실패 시 null */
+  /** 로그인 시도 → 성공 시 Member 반환, 실패 시 null (레거시 로컬, 미사용) */
   login: (email: string, password: string) => Member | null;
 
-  /** 로그아웃 */
+  /** 서버 로그인 결과로 현재 멤버 캐시 설정 (/api/auth/login 응답) */
+  setCurrentMember: (member: Member | null) => void;
+
+  /** 로그아웃 (멤버 세션 쿠키 제거 + 캐시 비움) */
   logout: () => void;
 
   /** 관리자: 멤버 발급 */
@@ -75,7 +78,16 @@ export const useAuthStore = create<AuthState>()(
         return null;
       },
 
-      logout: () => set({ currentMember: null }),
+      setCurrentMember: (member) => set({ currentMember: member }),
+
+      logout: () => {
+        try {
+          void fetch("/api/auth/login", { method: "DELETE" }).catch(() => {});
+        } catch {
+          /* fetch 미지원(SSR/테스트) 환경 무시 */
+        }
+        set({ currentMember: null });
+      },
 
       addMember: (data) => {
         const member: Member = {

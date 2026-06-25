@@ -26,10 +26,11 @@ model Profile {
   email       String   @unique
   name        String?
   phone       String?
-  role        String   @default("guest") // guest | member | admin
-  careerYears String?  @map("career_years")
-  field       String?
-  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz
+  role         String   @default("guest") // guest | member | admin
+  passwordHash String?  @map("password_hash") // 멤버 로그인 (scrypt "salt:hash"). 평문 저장 금지.
+  careerYears  String?  @map("career_years")
+  field        String?
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz
   updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
 
   freeDiagnostics  FreeDiagnostic[]

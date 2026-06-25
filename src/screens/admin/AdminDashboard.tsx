@@ -8,7 +8,7 @@ import { useDbLeads } from "@/hooks/useDbLeads";
 import { PACKAGES, FREE_DIAGNOSTIC_QUESTIONS } from "@/data/content";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useAuthStore } from "@/store/authStore";
+import { useDbMembers } from "@/hooks/useDbMembers";
 import { useCoachingStore, SubmissionStatus } from "@/store/coachingStore";
 import { COACHING_QUESTIONS, COACHING_PARTS } from "@/data/coachingQuestions";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -64,10 +64,7 @@ export default function AdminDashboard() {
   const [showNotifications, setShowNotifications] = useState(false);
   const unreadCount = notifications.filter((n) => !n.isRead).length;
 
-  const members = useAuthStore((s) => s.members);
-  const addMember = useAuthStore((s) => s.addMember);
-  const removeMember = useAuthStore((s) => s.removeMember);
-  const updateMember = useAuthStore((s) => s.updateMember);
+  const { members, addMember, removeMember, updateMember } = useDbMembers();
   const getSession = useCoachingStore((s) => s.getSession);
   const getCompletedCount = useCoachingStore((s) => s.getCompletedCount);
   const getProgress = useCoachingStore((s) => s.getProgress);
@@ -129,14 +126,15 @@ export default function AdminDashboard() {
     return true;
   });
 
-  const handleCreateMember = (e: React.FormEvent) => {
+  const handleCreateMember = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError(""); setFormSuccess("");
     const { name, email, password, productKey } = newMember;
     if (!name.trim() || !email.trim() || !password.trim()) { setFormError("모든 필수 필드를 입력해 주세요."); return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) { setFormError("유효한 이메일 주소를 입력해 주세요."); return; }
     if (members.some((m) => m.email.toLowerCase() === email.trim().toLowerCase())) { setFormError("이미 등록된 이메일 ID입니다."); return; }
-    addMember({ name: name.trim(), email: email.trim(), password: password.trim(), productKey });
+    const result = await addMember({ name: name.trim(), email: email.trim(), password: password.trim(), productKey });
+    if ("error" in result) { setFormError(result.error); return; }
     setIssuedInfo({ name: name.trim(), email: email.trim(), password: password.trim() });
     setFormSuccess(`${name}님의 계정이 발급되었습니다.`);
     setNewMember({ name: "", email: "", password: "", productKey: "diagnosis" });
@@ -153,7 +151,7 @@ export default function AdminDashboard() {
 
   const copyMemberNotice = (member: any) => {
     const loginUrl = `${window.location.origin}/login`;
-    const message = `안녕하세요 ${member.name}님, 한끗프로젝트입니다.\n\n${member.name}님의 나다운 브랜딩 코칭을 위한 멤버 전용 계정이 다음과 같이 발급되었습니다.\n\n■ 로그인 주소: ${loginUrl}\n■ 로그인 ID (이메일): ${member.email}\n■ 임시 비밀번호: ${member.password}\n\n💡 스마트폰에서 본 메시지의 아이디와 비밀번호를 꾹 눌러 복사하신 후 로그인 창에 차례로 붙여넣으시면 편리하게 접속하실 수 있습니다.\n\n감사합니다.`;
+    const message = `안녕하세요 ${member.name}님, 한끗프로젝트입니다.\n\n${member.name}님의 나다운 브랜딩 코칭을 위한 멤버 전용 계정이 다음과 같이 발급되었습니다.\n\n■ 로그인 주소: ${loginUrl}\n■ 로그인 ID (이메일): ${member.email}\n■ 비밀번호: 계정 발급 시 안내드린 비밀번호를 사용해 주세요.\n\n💡 스마트폰에서 본 메시지의 아이디를 꾹 눌러 복사하신 후 로그인 창에 붙여넣으시면 편리하게 접속하실 수 있습니다.\n\n감사합니다.`;
     navigator.clipboard.writeText(message);
     toast({ title: "안내 문구 복사 완료", description: `${member.name}님의 계정 정보 안내문이 복사되었습니다.` });
   };

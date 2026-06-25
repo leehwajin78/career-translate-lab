@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { useAuthStore } from "@/store/authStore";
+import { useDbMembers } from "@/hooks/useDbMembers";
 import { useCoachingStore, FinalProfile, AIDraft } from "@/store/coachingStore";
 import { COACHING_QUESTIONS, COACHING_PARTS } from "@/data/coachingQuestions";
 import { ArrowLeft, Save, Send, Volume2, Sparkles, RotateCcw, HelpCircle, Check, Award, FileText, Lock } from "lucide-react";
@@ -12,8 +12,8 @@ export default function CoachingWorkspace() {
   const { memberId } = useParams<{ memberId: string }>();
   const router = useRouter();
   const navigate = (p: string) => router.push(p);
-  const members = useAuthStore((s) => s.members);
-  
+  const { members } = useDbMembers();
+
   const getSession = useCoachingStore((s) => s.getSession);
   const saveCoachNote = useCoachingStore((s) => s.saveCoachNote);
   const finalizeCoaching = useCoachingStore((s) => s.finalizeCoaching);
