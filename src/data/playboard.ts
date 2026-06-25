@@ -437,7 +437,7 @@ const SCREENS: Screen[] = [
   {
     id: 'C-11', name: '42문항 작성', route: '/coaching/questions',
     proto: 'coaching-questions.html', component: 'src/pages/coaching/CoachingQuestions.tsx',
-    phase: 'current-p1', auth: 'Member', fe: 'partial', be: 'not-started',
+    phase: 'current-p1', auth: 'Member', fe: 'partial', be: 'partial',
     isMissionCritical: true,
     spec: {
       purpose: '42문항 텍스트/음성 입력. 1초 debounce 자동 저장. 코칭의 핵심 데이터 수집.',
@@ -486,7 +486,7 @@ const SCREENS: Screen[] = [
   {
     id: 'C-12', name: '답변 리뷰·제출', route: '/coaching/review',
     proto: 'coaching-review.html', component: 'src/pages/coaching/CoachingReview.tsx',
-    phase: 'current', auth: 'Member', fe: 'partial', be: 'not-started',
+    phase: 'current', auth: 'Member', fe: 'partial', be: 'partial',
     isMissionCritical: false,
     spec: { purpose: '42문항 전체 검토 + 최종 제출. session.status = "submitted".', stores: ['coachingStore'], apis: ['POST /functions/v1/submit-coaching'], dataContract: { in: { sessionId: 'UUID' }, out: { status: "'submitted'", submittedAt: 'ISO8601' } } },
     frs: [
@@ -827,6 +827,7 @@ const CHANGES: Change[] = [
   { id: 'CHG-016', date: '2026-06-22', screens: [], type: 'arch', description: 'MVP DB연동 Phase 1: leads.memo 컬럼 추가(Supabase) — 관리자 인라인 메모 영속화', source: '기술 결정' },
   { id: 'CHG-017', date: '2026-06-22', screens: ['A-01', 'A-02', 'A-05'], type: 'add', description: 'MVP DB연동 Phase 1: 관리자 쿠키 세션 게이트(middleware + /api/admin/login, ADMIN_PASSWORD_HASH scrypt) + 리드 CRM을 DB로 전환(GET/PATCH /api/leads, /api/leads/[id], useDbLeads). 관리자 화면이 무료진단 리드·답변을 공용 DB에서 조회. A-01/A-02/A-05 be=partial.', source: '구현' },
   { id: 'CHG-018', date: '2026-06-25', screens: ['C-09', 'A-01'], type: 'add', description: 'MVP DB연동 Phase 2 PR1: 멤버 인증 DB화. profiles.password_hash 추가 + 커스텀 세션(hk_member, scrypt) — Supabase Auth 대신 관리자 게이트와 동일 방식 채택. /api/auth/login·me(멤버 로그인/현재멤버), /api/admin/members GET·POST·[id] PATCH·DELETE 로 멤버 발급/목록/수정/삭제를 DB(profiles+memberships)로 전환. middleware에 /coaching·/api/coaching 멤버 보호 + /api/admin/** 관리자 보호 추가. Login·AdminDashboard·CoachingWorkspace를 DB 연동(authStore.setCurrentMember, useDbMembers). 코칭 42문항 답변 저장(coaching_answers)은 PR2 예정. C-09 be=partial.', source: '구현' },
+  { id: 'CHG-019', date: '2026-06-25', screens: ['C-11', 'C-12', 'C-10', 'A-01'], type: 'add', description: 'MVP DB연동 Phase 2 PR2: 42문항 코칭 답변을 DB로 전환. coaching_sessions/coaching_answers 연동(lib/coaching.ts) + /api/coaching/session·answers(자동저장 upsert)·submit + /api/admin/coaching/[memberId](관리자 조회·상태변경). useDbCoaching/useAdminCoaching 훅 신설. CoachingQuestions·Review·Dashboard를 DB 연동하고 React 훅 순서를 정상화(조건부 return 앞으로) — 멤버 코칭 진입 시 ErrorBoundary 원인 해소. 관리자 멤버목록 진행률·답변조회를 DB에서 표시(lib/members 진행률 머지). 텍스트 답변만(음성 후순위), AI 분석/리포트는 PR4. C-11/C-12 be=partial.', source: '구현' },
 ]
 
 // ============================================================

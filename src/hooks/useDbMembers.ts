@@ -18,6 +18,10 @@ export interface DbMember {
   email: string
   productKey: string
   createdAt: string
+  /** 42문항 응답 완료 수 (기본 0) */
+  answeredCount: number
+  /** 코칭 세션 상태 (in-progress | submitted | ...) */
+  coachingStatus: string
 }
 
 export function useDbMembers() {
