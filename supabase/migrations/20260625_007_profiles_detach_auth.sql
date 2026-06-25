@@ -12,15 +12,16 @@
 DO $$
 DECLARE c text;
 BEGIN
-  SELECT conname INTO c
-  FROM pg_constraint
-  WHERE conrelid = 'profiles'::regclass
-    AND contype = 'f'
-    AND conkey = ARRAY[
-      (SELECT attnum FROM pg_attribute WHERE attrelid = 'profiles'::regclass AND attname = 'id')
-    ];
+  SELECT con.conname INTO c
+  FROM pg_constraint con
+  JOIN pg_attribute att
+    ON att.attrelid = con.conrelid AND att.attnum = ANY (con.conkey)
+  WHERE con.conrelid = 'profiles'::regclass
+    AND con.contype = 'f'
+    AND att.attname = 'id';
   IF c IS NOT NULL THEN
     EXECUTE format('ALTER TABLE profiles DROP CONSTRAINT %I', c);
+    RAISE NOTICE 'dropped constraint %', c;
   END IF;
 END $$;
 
