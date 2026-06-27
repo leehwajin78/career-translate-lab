@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>데스크톱 흐름 — 한끗프로젝트 PlayBoard</title>
+<link rel="stylesheet" href="assets/playboard.css">
+<style>
+  .bigcap { border:1px solid var(--line); border-radius:var(--r); overflow:hidden; background:#fff; height:620px; box-shadow:var(--shadow); }
+  .bigcap iframe { width:100%; height:100%; border:0; }
+</style>
+</head>
+<body>
+<div id="shell"></div>
+<main id="main"></main>
+<script src="data/registry.js"></script>
+<script src="assets/playboard.js"></script>
+<script>
+(function () {
+  var PB = window.PB, U = window.PBUI;
+  var flowId = U.qs('flow');
+  var f = flowId && PB.getFlow(flowId);
+  U.shell({ section: 'index', crumbs: [{ label: '데스크톱 흐름' }, { label: f ? f.title : '?' }] });
+  if (!f) { U.notFound('흐름 "' + U.esc(flowId) + '"는 레지스트리에 없습니다.'); return; }
+
+  var seq = f.kind === 'sequence';
+  var screens = f.screens.map(function (sl) { return PB.getScreen(f.plane, sl); }).filter(Boolean);
+
+  // 썸네일 스트립
+  var strip = '';
+  screens.forEach(function (sc, i) {
+    if (i > 0) strip += '<div class="arrow">' + (seq ? '→' : '·') + '</div>';
+    strip += '<div class="step"><div class="stepno">' + (seq ? (i + 1) + '단계' : '케이스') + '</div>'
+      + U.screenCard(sc) + '</div>';
+  });
+
+  var hero = '<div class="tile read"><div class="inner"><span class="eyebrow">데스크톱 흐름 오버뷰</span>'
+    + '<h2>' + U.esc(f.title) + '</h2><p class="lead">' + U.esc(f.desc) + '</p>'
+    + '<div class="statline mt2"><span class="chip">화면 ' + screens.length + '개 · ' + (seq ? '순차 흐름' : '독립 케이스 ' + screens.length + '개') + '</span>'
+    + (seq ? '<a class="chip" href="scenario.html?flow=' + f.id + '">시나리오 walkthrough →</a>' : '')
+    + '<a class="chip" href="mobile-flow.html?flow=' + f.id + '">모바일 오버뷰 →</a></div>'
+    + '<div class="strip mt2">' + strip + '</div></div></div>';
+
+  var body = screens.map(function (sc, i) {
+    var demoHref = 'screens.html?plane=' + sc.plane + '&slug=' + sc.slug;
+    var line = seq ? (U.esc(sc.flowNote) + ' · 실 라우트 ' + U.esc(sc.route || '미등록'))
+      : ('트리거: ' + U.esc(sc.route || '상태') + ' · ' + U.esc(sc.flowNote));
+    var cap = '<a class="bigcap" href="' + demoHref + '" style="display:block"><iframe src="' + U.esc(PB.demoPath(sc)) + '" loading="lazy" tabindex="-1" title="' + U.esc(sc.title) + '"></iframe></a>';
+    return '<div class="tile read"><div class="inner"><div class="row-between">'
+      + '<span class="eyebrow">' + (seq ? (i + 1) + '단계' : '예외 케이스') + ' · ' + U.esc(sc.designSpecType) + '</span>'
+      + '<a class="chip" href="' + demoHref + '">화면 데모 ↗</a></div>'
+      + '<h2 style="font-size:1.2rem">' + U.esc(sc.id) + ' · ' + U.esc(sc.title) + ' ' + U.statusBadge(sc.status, { short: true }) + '</h2>'
+      + '<p class="note">' + line + '</p>'
+      + '<div class="mt2">' + cap + '</div></div></div>';
+  }).join('');
+
+  document.getElementById('main').innerHTML = hero + body;
+})();
+</script>
+</body>
+</html>

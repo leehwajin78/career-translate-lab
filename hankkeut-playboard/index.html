@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>상황판 — 한끗프로젝트 PlayBoard</title>
+<link rel="stylesheet" href="assets/playboard.css">
+</head>
+<body>
+<div id="shell"></div>
+<main id="main"></main>
+<script src="data/registry.js"></script>
+<script src="assets/playboard.js"></script>
+<script>
+(function () {
+  var PB = window.PB, U = window.PBUI;
+  U.shell({ section: 'index', crumbs: [{ label: '상황판' }] });
+
+  var counts = PB.screenStatusCounts();
+  var wcounts = PB.workStatusCounts();
+  var waves = PB.computeWaves();
+
+  function countChips(c, statuses) {
+    return statuses.map(function (st) {
+      return '<span class="chip">' + U.statusBadge(st.id, { short: true }) + ' ' + (c[st.id] || 0) + '</span>';
+    }).join(' ');
+  }
+
+  // 흐름 aside (UX Flow)
+  var seqFlows = PB.flows.filter(function (f) { return f.kind === 'sequence'; });
+  var setFlows = PB.flows.filter(function (f) { return f.kind === 'set'; });
+  function flowLine(f) {
+    return '<div class="row-between" style="padding:.35rem 0;border-bottom:1px solid var(--line-soft)">'
+      + '<span style="font-weight:500">' + U.esc(f.title) + '</span>'
+      + '<span class="statline"><a class="chip" href="ux-flow.html?flow=' + f.id + '">데스크톱</a>'
+      + '<a class="chip" href="mobile-flow.html?flow=' + f.id + '">모바일</a></span></div>';
+  }
+
+  // ── 타일1 히어로 ─────────────────────────────────────────────────────
+  var hero =
+    '<div class="tile"><div class="inner"><div class="grid" style="grid-template-columns:1.5fr 1fr">'
+    + '<div><span class="eyebrow">PlayBoard · 단일 진실 공급원</span>'
+    + '<h2 style="font-size:1.9rem">' + U.esc(PB.meta.project) + ' 기획·구현 상황판</h2>'
+    + '<p class="lead">' + U.esc(PB.meta.subtitle) + '. 6개 레지스트리에서 10개 표면을 파생 렌더 — 데이터 한 줄을 바꾸면 모든 뷰가 동시에 갱신됩니다.</p>'
+    + '<ul class="clean mt2">'
+    + '<li>기획·요구사항·구현현황·일정·기술정책·디자인이 한 표면으로 수렴</li>'
+    + '<li>같은 화면이 카드·칸반·매트릭스·시나리오·스펙·흐름에서 동일 식별자로 반복</li>'
+    + '<li>구현 상태 4단계 배지가 전 표면에서 일관</li>'
+    + '<li>mission-critical 정책 허브(제어 영역)와 미해소 갭을 정직하게 추적</li>'
+    + '<li>프로토타입 화면이 곧 살아있는 데모이자 캡처 대상</li>'
+    + '</ul></div>'
+    + '<aside class="panel"><h3>UX Flow</h3>'
+    + '<div class="note" style="margin-bottom:.3rem">사용자 유형별 Flow</div>'
+    + seqFlows.map(flowLine).join('')
+    + '<div class="note" style="margin:.7rem 0 .3rem">예외 처리 Flow</div>'
+    + setFlows.map(flowLine).join('')
+    + '</aside></div></div></div>';
+
+  // ── 타일2 구현 상황판 | 일반 ─────────────────────────────────────────
+  var nextWave = waves[0];
+  var general =
+    '<div class="tile"><div class="inner"><h2>구현 상황판<span class="sub">레지스트리 요약 — 클릭하면 해당 표면으로</span></h2>'
+    + '<div class="grid cols-3 mt2">'
+    + '<a class="panel" href="implement-summary.html"><h3>화면 ' + PB.screens.length + '개</h3>'
+    + '<div class="statline mt1">' + countChips(counts, PB.screenStatuses) + '</div>'
+    + '<p class="note mt2">구현 통계 매트릭스 →</p></a>'
+    + '<a class="panel" href="plan.html"><h3>작업 ' + PB.workItems.length + '개</h3>'
+    + '<div class="statline mt1">' + countChips(wcounts, PB.workStatuses) + '</div>'
+    + '<p class="note mt2">실행 계획(DAG) →</p></a>'
+    + '<a class="panel" href="schedule.html"><h3>병렬 일정표 · ' + waves.length + ' waves</h3>'
+    + '<div class="statline mt1">' + (nextWave ? '<span class="chip">다음: Wave ' + nextWave.index + ' · ' + nextWave.items.map(function (w) { return w.id; }).join(', ') + '</span>' : '<span class="chip">잔여 작업 없음</span>') + '</div>'
+    + '<p class="note mt2">병렬 일정표 →</p></a>'
+    + '</div></div></div>';
+
+  // ── 타일3 제어 영역 ──────────────────────────────────────────────────
+  var areaCards = PB.controlAreas.map(function (a) {
+    var cov = PB.areaCoverage(a.area);
+    return '<a class="panel" href="control-area.html?area=' + a.area + '">'
+      + '<h3>' + U.esc(a.label) + '</h3>'
+      + '<p class="note">' + U.esc(a.goal) + '</p>'
+      + '<div class="statline mt1"><span class="chip">대응 화면 ' + cov.covered + '/' + cov.total + '</span>'
+      + (a.gaps.length ? '<span class="chip" style="color:var(--warn)">갭 ' + a.gaps.length + '</span>' : '<span class="chip" style="color:var(--ok)">갭 0</span>') + '</div></a>';
+  }).join('');
+  var areas =
+    '<div class="tile"><div class="inner"><h2>구현 상황판<span class="sub">제어 영역 — 횡단 비기능 정책축</span></h2>'
+    + '<div class="grid cols-3 mt2">' + areaCards + '</div></div></div>';
+
+  // ── 타일4 시나리오 진입 카드 ────────────────────────────────────────
+  function entryCard(f) {
+    var scs = f.screens.map(function (sl) { return PB.getScreen(f.plane, sl); }).filter(Boolean);
+    var c = PB.screenStatusCounts(scs);
+    var strip = scs.slice(0, 6).map(function (sc) {
+      return '<div class="c"><iframe src="' + U.esc(PB.demoPath(sc)) + '" loading="lazy" tabindex="-1" scrolling="no"></iframe></div>';
+    }).join('');
+    return '<a class="entry" href="scenario.html?flow=' + f.id + '">'
+      + '<div class="mini-strip">' + strip + '</div>'
+      + '<div class="body"><h3>' + U.esc(f.title) + '<span class="note">화면 ' + scs.length + '개</span></h3>'
+      + '<p class="note">' + U.esc(f.desc) + '</p>'
+      + '<div class="cnt">' + PB.screenStatuses.map(function (st) { return '<span class="chip">' + U.statusBadge(st.id, { short: true }) + ' ' + (c[st.id] || 0) + '</span>'; }).join('') + '</div>'
+      + '<span class="go">기획·구현 walkthrough 들어가기 →</span></div></a>';
+  }
+  var scenarios =
+    '<div class="tile"><div class="inner"><h2>사용자 유형별 기획·구현 PlayBoard<span class="sub">순차 흐름별 walkthrough 진입</span></h2>'
+    + '<div class="grid cols-3 mt2">' + seqFlows.map(entryCard).join('') + '</div></div></div>';
+
+  // ── 타일5 ScreenBoard ────────────────────────────────────────────────
+  var board = '<div class="tile"><div class="inner"><h2>화면별 기획·구현 현황<span class="sub">전체 ' + PB.screens.length + '개 산출물 — 타일/칸반 토글</span></h2><div id="board" class="mt2"></div></div></div>';
+
+  var footer = '<footer class="footer"><div class="inner"><span>' + U.esc(PB.meta.version) + '</span>'
+    + '<span>· SoT: <span class="mono">src/data/playboard.ts</span></span>'
+    + '<span>· 데모: <span class="mono">hankkeut-prototype/*.html</span></span>'
+    + '<span style="margin-left:auto">표시되는 모든 것은 레지스트리에서 파생합니다 — 두 곳을 손으로 맞추지 않습니다.</span></div></footer>';
+
+  document.getElementById('main').innerHTML = hero + general + areas + scenarios + board + footer;
+  U.screenBoard(document.getElementById('board'), PB.screens);
+})();
+</script>
+</body>
+</html>

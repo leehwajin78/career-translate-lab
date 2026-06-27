@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>시나리오 — 한끗프로젝트 PlayBoard</title>
+<link rel="stylesheet" href="assets/playboard.css">
+</head>
+<body>
+<div id="shell"></div>
+<main id="main"></main>
+<script src="data/registry.js"></script>
+<script src="assets/playboard.js"></script>
+<script>
+(function () {
+  var PB = window.PB, U = window.PBUI;
+  var flowId = U.qs('flow');
+  var f = flowId && PB.getFlow(flowId);
+  U.shell({ section: 'index', crumbs: [{ label: '시나리오' }, { label: f ? f.title : '?' }] });
+  if (!f) { U.notFound('흐름 "' + U.esc(flowId) + '"는 레지스트리에 없습니다.'); return; }
+  if (f.kind !== 'sequence') {
+    document.getElementById('main').innerHTML = '<div class="tile"><div class="inner"><span class="eyebrow">시나리오</span><h2>' + U.esc(f.title) + '</h2>'
+      + '<p class="lead">이 흐름은 <strong>순차가 아닌 독립 케이스 집합</strong>입니다. 시나리오 walkthrough는 순차 흐름 전용이므로, '
+      + '<a href="ux-flow.html?flow=' + f.id + '">데스크톱 흐름 오버뷰</a> 또는 <a href="mobile-flow.html?flow=' + f.id + '">모바일 흐름</a>에서 순서 없는 케이스로 확인하세요.</p></div></div>';
+    return;
+  }
+
+  var screens = f.screens.map(function (sl) { return PB.getScreen(f.plane, sl); }).filter(Boolean);
+
+  var hero = '<div class="tile"><div class="inner"><span class="eyebrow">시나리오 walkthrough · 순차 흐름</span>'
+    + '<h2>' + U.esc(f.title) + '</h2><p class="lead">' + U.esc(f.desc) + '</p>'
+    + '<div class="statline mt2"><span class="chip">화면 ' + screens.length + '개</span>'
+    + '<a class="chip" href="ux-flow.html?flow=' + f.id + '">데스크톱 오버뷰</a>'
+    + '<a class="chip" href="mobile-flow.html?flow=' + f.id + '">모바일 오버뷰</a></div></div></div>';
+
+  function row(sc, i) {
+    var e = sc.engineering;
+    var dataSummary = '읽기 ' + e.dataReads.length + ' · 쓰기 ' + e.dataWrites.length + ' · 이벤트 ' + e.telemetryEvents.length;
+    var areaLinks = Object.keys(e.controlAreaNotes).map(function (area) {
+      return '<a class="chip" href="control-area.html?area=' + area + '">' + U.esc(PB.getArea(area).label) + '</a>';
+    }).join(' ');
+    var cap = '<div class="frame"><iframe src="' + U.esc(PB.demoPath(sc)) + '" loading="lazy" tabindex="-1" scrolling="no" title="' + U.esc(sc.title) + '"></iframe></div>';
+    return '<div class="srow"><div class="cap"><div class="head"><span>' + U.esc(f.title) + ' · ' + (i + 1) + '단계</span><span class="mono">' + U.esc(sc.route || '미등록') + '</span></div>' + cap + '</div>'
+      + '<div class="sp"><div class="ttl"><h4>' + U.esc(sc.id) + ' · ' + U.esc(sc.title) + ' ' + U.mcBadge(sc) + '</h4>' + U.statusBadge(sc.status, { short: true }) + '</div>'
+      + '<p class="note">' + U.esc(sc.flowNote) + (sc.statusNote ? ' · ' + U.esc(sc.statusNote) : '') + '</p>'
+      + '<div class="twocol">'
+      + '<div class="mini"><h5>클라이언트 동작</h5><ul>' + e.clientActions.map(function (x) { return '<li>' + U.esc(x) + '</li>'; }).join('') + '</ul></div>'
+      + '<div class="mini"><h5>서버 동작</h5>' + (e.serverActions.length ? '<ul>' + e.serverActions.map(function (x) { return '<li>' + U.esc(x) + '</li>'; }).join('') + '</ul>' : '<span class="note">없음</span>') + '</div>'
+      + '</div>'
+      + '<div class="statline"><span class="chip">인가: ' + U.esc(e.authGate.split('—')[0].trim()) + '</span><span class="chip">' + dataSummary + '</span>'
+      + '<span class="chip">' + U.esc(sc.designSpecType) + '</span>' + ((sc.workItems || []).length ? '<span class="chip mono">' + sc.workItems.join(', ') + '</span>' : '') + '</div>'
+      + '<div class="foot"><div class="statline">' + (areaLinks || '<span class="note">제어 영역 요점 없음</span>') + '</div>'
+      + '<a href="spec.html?plane=' + sc.plane + '&slug=' + sc.slug + '">기술 스펙 상세 →</a></div>'
+      + '</div></div>';
+  }
+
+  var rows = '<div class="tile"><div class="inner">' + screens.map(row).join('') + '</div></div>';
+
+  var others = PB.flows.filter(function (x) { return x.id !== f.id && x.kind === 'sequence'; });
+  var tail = '<div class="tile"><div class="inner"><h2>다른 흐름</h2><div class="statline mt2">'
+    + others.map(function (x) { return '<a class="chip" href="scenario.html?flow=' + x.id + '">' + U.esc(x.title) + ' →</a>'; }).join(' ')
+    + '<a class="chip" href="ux-flow.html?flow=' + f.id + '">이 흐름 데스크톱 오버뷰 →</a></div></div></div>';
+
+  document.getElementById('main').innerHTML = hero + rows + tail;
+})();
+</script>
+</body>
+</html>
