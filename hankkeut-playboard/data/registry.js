@@ -239,8 +239,8 @@
         telemetryEvents: ['(정의 필요) 진단 제출 성공/실패'],
         exceptionStates: ['analyzing-free'], workItems: ['WI-02'], requirementRefs: ['SRS FR-FREE-01', 'FR-PRIV'],
         implLocation: 'src/pages/Diagnosis.tsx + supabase/functions/submit-free-diagnosis'
-      }, { mc: true, statusNote: 'Edge Function 머지(be partial) — 4유형 분류는 ISSUE-02 대기' }),
-    s('customer', 'report-free', 'C-05', '무료 진단 리포트', '/result', '콘텐츠형', 'p1-mvp', 'Guest',
+      }, { mc: true, statusNote: '제출 + 규칙 기반 분류 서버 영속화 머지(CHG-020) — LLM 분류는 Phase 2' }),
+    s('customer', 'report-free', 'C-05', '무료 진단 리포트', '/diagnosis (report)', '콘텐츠형', 'p1-mvp', 'Guest',
       '4유형 분류 + 5영역 점수 시각화. 유료 전환 CTA.',
       { auth: 'na', accessControl: 'na', dataIntegrity: 'na', failureRecovery: 'gap', observability: 'partial', performance: 'gap' },
       {
@@ -248,8 +248,8 @@
         clientActions: ['유형 표시(4종)', '5영역 차트', '전환 CTA(상담/빌드)'],
         serverActions: [], dataReads: ['diagnosticStore(type, scores)'], dataWrites: [],
         telemetryEvents: ['(정의 필요) 리포트 조회·CTA'],
-        exceptionStates: [], workItems: ['WI-07', 'WI-08'], requirementRefs: ['SRS FR-FREE-04'], implLocation: 'src/pages/Result.tsx'
-      }, { statusNote: '4유형 분류 알고리즘(ISSUE-02) 미정의로 렌더 보류' }),
+        exceptionStates: [], workItems: ['WI-07', 'WI-08'], requirementRefs: ['SRS FR-FREE-04'], implLocation: 'src/components/free-diagnosis/Report.tsx (인페이지)'
+      }, { statusNote: '리포트는 인페이지 즉시 렌더 + 서버 분류 영속화(CHG-020). System 2(/result) 제거 완료(CHG-021). 잔여: E2E' }),
     s('customer', 'consultation', 'C-06', '무료 상담 신청', '/consultation', '서비스형', 'p1-mvp', 'Guest',
       '상담 신청 리드 수집. ConsultationSchema 폼 → DB insert.',
       { auth: 'covered', accessControl: 'na', dataIntegrity: 'covered', failureRecovery: 'partial', observability: 'gap', performance: 'na' },
@@ -452,10 +452,10 @@
       'profiles.password_hash + hk_member 세션 + /api/auth + /api/admin/members'),
     w('WI-06', '42문항 코칭 답변 DB (PR2)', 'p1-mvp', 'done', 'CHG-019 · 7bc13c2', ['WI-05'], ['member/coaching-questions', 'member/coaching-review', 'member/coaching-dashboard', 'operator/admin'],
       'coaching_sessions/answers + /api/coaching + useDbCoaching'),
-    w('WI-07', '4유형 분류 알고리즘 결정·구현', 'p1-remaining', 'todo', 'ISSUE-01 · ISSUE-02', ['WI-02'], ['customer/diagnosis', 'customer/report-free'],
-      '5영역 점수 가중치·임계값 정의 → submit-free-diagnosis 핵심 로직'),
-    w('WI-08', '무료 진단 리포트 렌더', 'p1-remaining', 'todo', '', ['WI-07'], ['customer/report-free'],
-      '4유형 + 5영역 차트 + 전환 CTA'),
+    w('WI-07', '4유형 분류 결정·서버 영속화', 'p1-remaining', 'done', 'CHG-020 · ISSUE-01/02', ['WI-02'], ['customer/diagnosis', 'customer/report-free'],
+      '규칙 기반 analyzeFree를 /api/diagnoses 서버에서 계산 → free_diagnostics.score·leads.score 영속화'),
+    w('WI-08', '무료 진단 리포트 검증(E2E) + CI', 'p1-remaining', 'done', 'CHG-022~024', ['WI-07'], ['customer/report-free'],
+      'green: vitest 16/16(분류 8 + /api/diagnoses 영속화 5) + Playwright E2E 2/2(퍼널→리포트, /result 리다이렉트). CI 연결 완료(.github/workflows/ci.yml: unit + e2e 잡)'),
     w('WI-09', '워크스페이스 Finalize + 리포트 공개 (PR4)', 'p1-remaining', 'todo', '', ['WI-06'], ['operator/workspace', 'member/coaching-report'],
       'Finalize 트랜잭션 + RLS 공개 게이트'),
     w('WI-10', 'AI 분석 파이프라인 (GPT-4o, PR4)', 'p1-remaining', 'todo', '', ['WI-06'], ['system/coaching-analyzing', 'operator/workspace'],
@@ -549,7 +549,7 @@
    * 정규화 — be 머지 화면을 merged 로 승격 + controlAreaNotes 파생
    * ======================================================================== */
   // be(백엔드)가 머지된 화면(PR 통과) = merged. 원천: CHANGES PR1/PR2 + Edge/리드.
-  var MERGED = { 'C-03': 1, 'C-09': 1, 'C-11': 1, 'C-12': 1, 'A-01': 1, 'A-02': 1, 'A-05': 1 };
+  var MERGED = { 'C-03': 1, 'C-05': 1, 'C-09': 1, 'C-11': 1, 'C-12': 1, 'A-01': 1, 'A-02': 1, 'A-05': 1 };
   var areaKeys = controlAreas.map(function (a) { return a.area; });
   var areaLabel = {};
   controlAreas.forEach(function (a) { areaLabel[a.area] = a.label; });

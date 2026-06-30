@@ -1,48 +1,3 @@
-export type CategoryKey =
-  | "identity"
-  | "values"
-  | "strength"
-  | "story"
-  | "target"
-  | "channel"
-  | "why";
-
-export const CATEGORY_LABEL: Record<CategoryKey, string> = {
-  identity: "정체성 진단",
-  values: "핵심 가치",
-  strength: "강점과 전문성",
-  story: "브랜드 스토리",
-  target: "타깃과 메시지",
-  channel: "채널과 비전",
-  why: "원라이너와 WHY",
-};
-
-export interface DiagnosticQuestion {
-  id: number;
-  category: CategoryKey;
-  question: string;
-  helper: string;
-}
-
-export const DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
-  { id: 1, category: "identity", question: "직함 없이 나를 소개한다면 어떻게 말할 수 있나요?", helper: "회사명·직위를 제외하고 ‘나는 어떤 일을 하는 사람인가’를 한두 문장으로 적어보세요." },
-  { id: 2, category: "identity", question: "지금까지의 경력 중 가장 자랑스러운 순간은 무엇인가요?", helper: "한 장면을 떠올리고, 그때 무엇을 해냈는지 구체적으로 적어주세요." },
-  { id: 3, category: "strength", question: "가장 오래, 가장 깊이 해온 전문 영역은 무엇인가요?", helper: "산업·기능·주제 어떤 단위든 좋습니다. 햇수와 함께 적어보세요." },
-  { id: 4, category: "values", question: "중요한 선택을 할 때 반복적으로 지켜온 기준은 무엇인가요?", helper: "결정의 순간 양보하지 않은 원칙을 떠올려보세요." },
-  { id: 5, category: "values", question: "내 삶과 일에서 반복해서 드러나는 태도나 가치는 무엇인가요?", helper: "주변 사람들이 자주 언급하는 단어가 있다면 함께 적어주세요." },
-  { id: 6, category: "story", question: "내 경력에서 중요한 전환점이 되었던 사건은 무엇인가요?", helper: "Before–Turning–After 구조로 짧게 적어도 좋습니다." },
-  { id: 7, category: "target", question: "내가 돕고 싶은 사람은 누구인가요?", helper: "직군, 연차, 상황까지 구체적일수록 진단이 선명해집니다." },
-  { id: 8, category: "strength", question: "사람들이 나에게 자주 도움을 요청하는 영역은 무엇인가요?", helper: "공식 업무가 아니어도 좋습니다. 반복되는 요청을 떠올려보세요." },
-  { id: 9, category: "strength", question: "내가 자연스럽게 설명하거나 해결해주는 문제는 무엇인가요?", helper: "특별한 노력 없이도 잘 풀어내는 주제를 적어주세요." },
-  { id: 10, category: "story", question: "실패나 어려움에서 배운 것이 있다면 무엇인가요?", helper: "결과가 아닌 ‘얻은 관점’을 중심으로 적어주세요." },
-  { id: 11, category: "target", question: "내가 가장 에너지를 얻는 고객이나 대상은 누구인가요?", helper: "함께 일할 때 시간이 빨리 가는 대상을 떠올려보세요." },
-  { id: 12, category: "channel", question: "내가 가장 편하게 표현할 수 있는 채널은 무엇인가요?", helper: "글, 강연, 영상, 1:1 대화 등 가장 자연스러운 형식을 적어주세요." },
-  { id: 13, category: "target", question: "내가 가장 잘 도울 수 있는 사람의 구체적인 상황은 무엇인가요?", helper: "그 사람이 처한 문제·맥락·감정을 함께 묘사해보세요." },
-  { id: 14, category: "channel", question: "앞으로 나를 알리고 싶은 대표 채널은 무엇인가요?", helper: "지금 활용하지 않더라도 가고 싶은 방향을 적어주세요." },
-  { id: 15, category: "why", question: "나를 한 문장으로 표현한다면 어떻게 말하고 싶나요?", helper: "완성된 카피가 아니어도 좋습니다. 키워드만 적어도 충분합니다." },
-  { id: 16, category: "why", question: "내가 이 일을 계속하려는 궁극적인 이유는 무엇인가요?", helper: "돈·지위 너머의 이유를 솔직하게 적어주세요." },
-];
-
 export const PROBLEMS = [
   { title: "직함은 있지만, 직함을 벗긴 언어가 없습니다", body: "대표, 임원, 전문가, 교수, 컨설턴트라는 이름은 있지만 ‘나는 어떤 가치를 주는 사람인가’를 한 문장으로 설명하기 어렵습니다." },
   { title: "경험은 많지만, 시장이 이해할 메시지가 없습니다", body: "오랜 경력과 암묵지는 있지만 그것이 제안서, 강의안, 프로필, 콘텐츠로 변환되지 않았습니다." },
@@ -133,30 +88,12 @@ export const PURPOSE_OPTIONS = ["강의", "자문", "컨설팅", "코칭", "콘�
 export const OUTCOME_OPTIONS = ["브랜드 프로필", "강의안", "B2B 제안서", "SNS/채널 전략", "전체 패키지"];
 export const CHANNEL_OPTIONS = ["전화", "Zoom", "대면"];
 
+// 무료 진단 리드의 유형 라벨로 store/leads 에서 사용. (구버전 5문항 진단 UI는 제거됨)
 export type DiagnosisType =
   | "title-dependent"
   | "experience-list"
   | "hidden-expert"
   | "market-ready";
-
-export const TYPE_INFO: Record<DiagnosisType, { name: string; description: string }> = {
-  "title-dependent": {
-    name: "직함 의존형",
-    description: "경력은 충분하지만, 직함을 벗긴 자기 언어가 아직 약한 상태입니다.",
-  },
-  "experience-list": {
-    name: "경험 나열형",
-    description: "많은 경험을 가지고 있지만, 하나의 메시지와 방법론으로 압축되지 않은 상태입니다.",
-  },
-  "hidden-expert": {
-    name: "숨은 전문성형",
-    description: "타인은 이미 가치를 느끼지만, 본인은 그것을 브랜드 자산으로 인식하지 못하는 상태입니다.",
-  },
-  "market-ready": {
-    name: "시장 진입 준비형",
-    description: "브랜드 언어와 방향은 어느 정도 있으나, 제안서·강의안·채널 실행 자산이 필요한 상태입니다.",
-  },
-};
 
 export const FAQS = [
   {

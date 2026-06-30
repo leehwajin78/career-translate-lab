@@ -264,7 +264,7 @@ const SCREENS: Screen[] = [
       observability: 'partial',  // 제출 성공/실패 로그 정의 필요
       performance: 'covered',    // 10초 타임아웃 + 200ms 전환
     },
-    openIssues: ['ISSUE-01', 'ISSUE-02'],
+    openIssues: [],
   },
 
   // ── C-04 분석 로딩 ─────────────────────────────────────────
@@ -273,10 +273,10 @@ const SCREENS: Screen[] = [
     proto: 'analyzing-free.html', component: 'src/pages/Diagnosis.tsx (loading state)',
     phase: 'current', auth: 'Guest', fe: 'partial', be: 'not-started',
     isMissionCritical: false,
-    spec: { purpose: 'Edge Function 응답 대기 연출. 완료 시 /result 자동 이동.', stores: ['diagnosticStore'], apis: ['POST /functions/v1/submit-free-diagnosis (응답 대기)'], dataContract: { in: {}, out: {} } },
+    spec: { purpose: '분석 대기 연출. 완료 시 인페이지 report 단계로 전환(System 1 통일).', stores: ['freeDiagnosticStore'], apis: ['POST /api/diagnoses (백그라운드 영속화)'], dataContract: { in: {}, out: {} } },
     frs: [
       { id: 'FR-C04-01', title: '로딩 연출', detail: '펄스 아이콘 + "답변을 분석하고 있습니다..."' },
-      { id: 'FR-C04-02', title: '완료 시 이동', detail: 'Edge Function 응답 수신 → navigate("/result", { replace: true })' },
+      { id: 'FR-C04-02', title: '완료 시 이동', detail: '분석 완료 → 인페이지 report 단계 전환(System 1 통일, 구버전 /result 제거)' },
       { id: 'FR-C04-03', title: '타임아웃', detail: '10초 초과 → "분석 지연" 안내 + 재시도' },
     ],
     nfrs: [], edges: [
@@ -284,13 +284,13 @@ const SCREENS: Screen[] = [
     ],
     acceptanceCriteria: ['10초 응답 없으면 타임아웃 메시지', '응답 수신 시 /result 자동 이동'],
     coverage: COV_STATIC,
-    openIssues: ['ISSUE-01'],
+    openIssues: [],
   },
 
   // ── C-05 무료 진단 리포트 ──────────────────────────────────
   {
-    id: 'C-05', name: '무료 진단 리포트', route: '/result',
-    proto: 'report-free.html', component: 'src/pages/Result.tsx',
+    id: 'C-05', name: '무료 진단 리포트', route: '/diagnosis (report step)',
+    proto: 'report-free.html', component: 'src/components/free-diagnosis/Report.tsx (인페이지)',
     phase: 'current', auth: 'Guest', fe: 'partial', be: 'not-started',
     isMissionCritical: false,
     spec: {
@@ -313,7 +313,7 @@ const SCREENS: Screen[] = [
     ],
     acceptanceCriteria: ['4유형 정확 표시', '5영역 차트 렌더링', '직접 접근 시 리다이렉트'],
     coverage: { ...COV_STATIC, observability: 'partial' },
-    openIssues: ['ISSUE-02'],
+    openIssues: [],
   },
 
   // ── C-06 무료 상담 신청 ────────────────────────────────────
@@ -731,19 +731,21 @@ const SCREENS: Screen[] = [
 const ISSUES: Issue[] = [
   {
     id: 'ISSUE-01', screens: ['C-03', 'C-04', 'C-05'],
-    type: 'decision', priority: 'high', status: 'open',
+    type: 'decision', priority: 'high', status: 'resolved',
     title: '무료 진단 결과 표시 정책',
-    body: '제출 후 즉시 결과를 보여줄지 vs. 어드민 검수 후 이메일로 발송할지 정책 결정 필요. 즉시: UX 좋음, 자동화 필요. 이메일: 품질 관리 가능, 전환율 저하 위험.',
+    body: '제출 후 즉시 결과를 보여줄지 vs. 어드민 검수 후 이메일로 발송할지 정책 결정 필요. 즉시: UX 좋음, 자동화 필요. 이메일: 품질 관리 가능, 전환율 저하 위험. → 결정(2026-06-27): 무료 진단은 검수 없이 즉시 자동 표시(전환율 우선). 검수 게이트는 유료 코칭 리포트(A-03→C-14)에만 적용.',
     blockedBy: [],
     blocks: ['ISSUE-02'],
+    resolvedBy: 'CHG-020',
   },
   {
     id: 'ISSUE-02', screens: ['C-05'],
-    type: 'design', priority: 'high', status: 'open',
+    type: 'design', priority: 'high', status: 'resolved',
     title: '4유형 분류 알고리즘 미정의',
-    body: '준비형/성과형/관계형/통합형 분류를 위한 5개 영역 점수 가중치·임계값 정의 필요. Edge Function submit-free-diagnosis의 핵심 로직.',
+    body: '4유형 분류를 위한 영역 점수 가중치·임계값 정의 필요. → 해결(2026-06-27, CHG-020): MVP는 규칙 기반 분류(lib/freeDiagnostic.ts analyzeFree — 4영역 정체성/강점/타깃/차별화 + 4유형 explorer/preparer/transitioner/executor, 키워드·길이 휴리스틱)를 채택. 기존 클라이언트 전용 분류를 /api/diagnoses 서버에서 동일 로직으로 계산해 free_diagnostics.score·leads.score에 영속화. LLM 분류는 Phase 2. (주의: 본 화면 실제 계약은 4영역/영문 유형이며, 본 파일 상단의 5영역/한글 유형 표기는 구버전 — 추후 정합 필요.)',
     blockedBy: ['ISSUE-01'],
     blocks: [],
+    resolvedBy: 'CHG-020',
   },
   {
     id: 'ISSUE-03', screens: ['C-15'],
@@ -828,6 +830,11 @@ const CHANGES: Change[] = [
   { id: 'CHG-017', date: '2026-06-22', screens: ['A-01', 'A-02', 'A-05'], type: 'add', description: 'MVP DB연동 Phase 1: 관리자 쿠키 세션 게이트(middleware + /api/admin/login, ADMIN_PASSWORD_HASH scrypt) + 리드 CRM을 DB로 전환(GET/PATCH /api/leads, /api/leads/[id], useDbLeads). 관리자 화면이 무료진단 리드·답변을 공용 DB에서 조회. A-01/A-02/A-05 be=partial.', source: '구현' },
   { id: 'CHG-018', date: '2026-06-25', screens: ['C-09', 'A-01'], type: 'add', description: 'MVP DB연동 Phase 2 PR1: 멤버 인증 DB화. profiles.password_hash 추가 + 커스텀 세션(hk_member, scrypt) — Supabase Auth 대신 관리자 게이트와 동일 방식 채택. /api/auth/login·me(멤버 로그인/현재멤버), /api/admin/members GET·POST·[id] PATCH·DELETE 로 멤버 발급/목록/수정/삭제를 DB(profiles+memberships)로 전환. middleware에 /coaching·/api/coaching 멤버 보호 + /api/admin/** 관리자 보호 추가. Login·AdminDashboard·CoachingWorkspace를 DB 연동(authStore.setCurrentMember, useDbMembers). 코칭 42문항 답변 저장(coaching_answers)은 PR2 예정. C-09 be=partial.', source: '구현' },
   { id: 'CHG-019', date: '2026-06-25', screens: ['C-11', 'C-12', 'C-10', 'A-01'], type: 'add', description: 'MVP DB연동 Phase 2 PR2: 42문항 코칭 답변을 DB로 전환. coaching_sessions/coaching_answers 연동(lib/coaching.ts) + /api/coaching/session·answers(자동저장 upsert)·submit + /api/admin/coaching/[memberId](관리자 조회·상태변경). useDbCoaching/useAdminCoaching 훅 신설. CoachingQuestions·Review·Dashboard를 DB 연동하고 React 훅 순서를 정상화(조건부 return 앞으로) — 멤버 코칭 진입 시 ErrorBoundary 원인 해소. 관리자 멤버목록 진행률·답변조회를 DB에서 표시(lib/members 진행률 머지). 텍스트 답변만(음성 후순위), AI 분석/리포트는 PR4. C-11/C-12 be=partial.', source: '구현' },
+  { id: 'CHG-020', date: '2026-06-27', screens: ['C-03', 'C-05', 'A-02'], type: 'decision', description: 'ISSUE-01/02 결정·구현: 무료 진단 결과를 검수 없이 즉시 표시 + 규칙 기반 분류(analyzeFree) 채택. /api/diagnoses(route.ts)에서 서버가 클라이언트와 동일한 analyzeFree 로직으로 score·type을 계산해 free_diagnostics.score(Json) + leads.score(Int)에 영속화하고 실제 {type, scores, totalScore} 반환(기존 type:pending 제거). 분류 실패는 try/catch로 제출과 분리(현행 동작 보존). 클라이언트 즉시 표시는 기존대로 유지 → 서버=클라이언트 동일 알고리즘. 이로써 관리자(A-02)가 유형·점수를 조회 가능. LLM 분류 고도화는 Phase 2. ISSUE-01·ISSUE-02 해결.', source: 'PM 결정 + 구현' },
+  { id: 'CHG-021', date: '2026-06-27', screens: ['C-04', 'C-05', 'C-06'], type: 'arch', description: '무료 진단을 System 1(인페이지 /diagnosis: freeDiagnosticStore + analyzeFree + Report.tsx)로 통일. 구버전 System 2(/result · Result.tsx · store/diagnostic.ts · lib/diagnostic.ts — 16문항·5축·recommendedPackage) 전면 제거하고 /result는 /diagnosis로 영구 리다이렉트. Consultation.tsx의 미사용 useDiagnosticStore import 제거. content.ts의 사장 상수(DIAGNOSTIC_QUESTIONS·TYPE_INFO·CATEGORY_LABEL·CategoryKey·DiagnosticQuestion) 삭제(DiagnosisType·PACKAGES는 leads/admin 공용으로 유지). tsc 신규 에러 0.', source: '구현' },
+  { id: 'CHG-022', date: '2026-06-27', screens: ['C-03', 'C-05'], type: 'add', description: 'WI-08 무료 진단 E2E 검증 착수. vitest: (1) 분류 코어 analyzeFree 단위테스트 8종(4영역·4유형·캡 규칙·산출물 점수), (2) /api/diagnoses 통합테스트 5종(Prisma 모킹 — 분류→free_diagnostics.score·leads.score 영속화·실제 type/scores 반환·429·422) 전부 green(전체 16/16). 브라우저 E2E는 Playwright 스펙(e2e/free-diagnosis.spec.ts)+playwright.config.ts 스캐폴드(설치 후 pnpm test:e2e). 리포트는 클라이언트 analyzeFree 계산이라 DB 없이 통과. 잔여: 브라우저 E2E 실제 실행·CI 연결.', source: '구현' },
+  { id: 'CHG-023', date: '2026-06-27', screens: ['C-03', 'C-05'], type: 'add', description: 'WI-08 완료: Playwright 설치(@playwright/test 1.61.1 + chromium headless shell) 후 브라우저 E2E 실제 실행 green(2/2) — 무료 진단 퍼널(기본정보→7문항+Q8→12초 분석 로딩→리포트에 유형·총점 표시) + /result→/diagnosis 리다이렉트. AnalysisLoading 12초 고정에 맞춰 playwright test timeout 90s 조정, 총점/산출물점수 셀렉터 exact 구분. C-03 mission-critical 브라우저 E2E 확보. 잔여: CI 파이프라인 연결.', source: '구현' },
+  { id: 'CHG-024', date: '2026-06-27', screens: [], type: 'arch', description: 'CI 파이프라인 연결: .github/workflows/ci.yml 신설(push main + pull_request) — unit 잡(pnpm test, vitest 16) + e2e 잡(playwright install --with-deps chromium → pnpm test:e2e). 더미 DATABASE_URL/DIRECT_URL/NEXT_PUBLIC_APP_URL env로 prisma generate·next dev 부팅 보장(실 DB 미연결). CI는 html 리포터 + 실패 시 playwright-report 아티팩트 업로드, test-results·playwright-report는 gitignore. CI 모드 로컬 드라이런 2/2 green. WI-08 종료.', source: '기술 결정' },
 ]
 
 // ============================================================
@@ -835,7 +842,7 @@ const CHANGES: Change[] = [
 // ============================================================
 export const PLAYBOARD: PlayBoardData = {
   version: '2.0',
-  lastUpdated: '2026-06-25',
+  lastUpdated: '2026-06-27',
   screens: SCREENS,
   issues: ISSUES,
   changes: CHANGES,
