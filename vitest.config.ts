@@ -11,6 +11,10 @@ export default defineConfig({
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
   },
   resolve: {
-    alias: { "@": path.resolve(__dirname, "./src") },
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+      // 'server-only' 는 node/vitest 에서 import 시 throw → 서버 전용 모듈 테스트용 빈 스텁
+      "server-only": path.resolve(__dirname, "./src/test/stubs/server-only.ts"),
+    },
   },
 });

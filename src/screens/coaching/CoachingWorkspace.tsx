@@ -21,6 +21,8 @@ export default function CoachingWorkspace() {
   const [session, setSession] = useState<WsSession | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [aiDraft, setAiDraft] = useState<AIDraft | undefined>(undefined);
+  const [analyzing, setAnalyzing] = useState(false);
 
   // 대상 회원 찾기
   const targetMember = members.find((m) => m.id === memberId);
@@ -62,6 +64,35 @@ export default function CoachingWorkspace() {
   // 초안 대조용 상태 (각 항목별 원본 뷰 모드 토글)
   const [showOriginal, setShowOriginal] = useState<Record<string, boolean>>({});
 
+  // 서버 응답(session + report)을 에디터/aiDraft 상태로 반영 (최초 로드 + AI 초안 생성 후 재적용)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const applyWorkspaceData = (data: any) => {
+    const s = data.session ?? { status: "in-progress", answers: {} };
+    setSession({ status: s.status ?? "in-progress", answers: s.answers ?? {} });
+
+    // 리포트 초안(코치 이전 작성분 또는 AI 초안)으로 에디터 채우기
+    const bp = data.report?.brandProfile;
+    if (bp) {
+      setOneLiner(bp.oneLiner || "");
+      setCoreValue1(bp.coreValues?.[0] || "");
+      setCoreValue2(bp.coreValues?.[1] || "");
+      setCoreValue3(bp.coreValues?.[2] || "");
+      setStrengthStatement(bp.strengthStatement || "");
+      setTargetPersona(bp.targetPersona || "");
+      setBrandStory(bp.brandStory || "");
+      setCoreMessage(bp.coreMessage || "");
+      setChannelStrategy(bp.channelStrategy || "");
+      setBrandWhy(bp.brandWhy || "");
+      setCoachComment(bp.coachComment || "");
+    }
+
+    // AI 초안(초안대조/복원 + 문항별 인사이트) — questionInsights 가 있을 때만
+    const insights = data.report?.questionInsights;
+    if (bp && Array.isArray(insights) && insights.length > 0) {
+      setAiDraft({ brandProfile: bp, questionInsights: insights });
+    }
+  };
+
   // 세션(실제 답변) + 리포트 초안 로드
   useEffect(() => {
     if (!memberId) return;
@@ -72,29 +103,12 @@ export default function CoachingWorkspace() {
         const data = await res.json();
         if (!alive) return;
 
-        const s = data.session ?? { status: "in-progress", answers: {} };
-        setSession({ status: s.status ?? "in-progress", answers: s.answers ?? {} });
+        applyWorkspaceData(data);
 
         // 코치 메모(비공개 필기)는 로컬에 보관
         const savedNotes = localStorage.getItem(`workspace-notes:${memberId}`);
         if (savedNotes) {
           try { setLocalNotes(JSON.parse(savedNotes)); } catch { /* ignore */ }
-        }
-
-        // 리포트 초안(코치 이전 작성분)으로 에디터 채우기
-        const bp = data.report?.brandProfile;
-        if (bp) {
-          setOneLiner(bp.oneLiner || "");
-          setCoreValue1(bp.coreValues?.[0] || "");
-          setCoreValue2(bp.coreValues?.[1] || "");
-          setCoreValue3(bp.coreValues?.[2] || "");
-          setStrengthStatement(bp.strengthStatement || "");
-          setTargetPersona(bp.targetPersona || "");
-          setBrandStory(bp.brandStory || "");
-          setCoreMessage(bp.coreMessage || "");
-          setChannelStrategy(bp.channelStrategy || "");
-          setBrandWhy(bp.brandWhy || "");
-          setCoachComment(bp.coachComment || "");
         }
       } catch {
         if (alive) toast({ title: "오류", description: "코칭 세션을 불러오지 못했습니다.", variant: "destructive" });
@@ -113,9 +127,6 @@ export default function CoachingWorkspace() {
       </div>
     );
   }
-
-  // AI 자동 초안은 Phase 2(WI-10) — MVP는 코치 수동 작성이므로 undefined
-  const aiDraft: AIDraft | undefined = undefined;
 
   // 질문 매핑 데이터 도우미
   const currentQ = COACHING_QUESTIONS.find((q) => q.id === selectedQId);
@@ -171,6 +182,37 @@ export default function CoachingWorkspace() {
         ? { title: "임시 저장 완료", description: "작성 중인 브랜드 프로필이 서버에 저장되었습니다." }
         : { title: "저장 실패", description: "잠시 후 다시 시도해주세요.", variant: "destructive" },
     );
+  };
+
+  // AI 자동 초안 생성 (WI-10) — 코치 수동 트리거. 서버가 42문항 답변을 분석해 초안 저장.
+  const handleAnalyze = async () => {
+    if (!memberId || analyzing) return;
+    if (!confirm("AI가 42문항 답변을 분석해 브랜드 프로필 초안을 생성합니다. 작성 중인 초안이 있으면 덮어씁니다. 진행할까요?")) return;
+    setAnalyzing(true);
+    try {
+      const res = await fetch(`/api/admin/coaching/${memberId}/analyze`, { method: "POST" });
+      if (!res.ok) {
+        toast({
+          title: "초안 생성 실패",
+          description: res.status === 400 ? "분석할 답변이 없습니다." : "잠시 후 다시 시도해주세요.",
+          variant: "destructive",
+        });
+        return;
+      }
+      const info = await res.json().catch(() => ({}));
+      const reloaded = await fetch(`/api/admin/coaching/${memberId}`, { cache: "no-store" });
+      applyWorkspaceData(await reloaded.json());
+      toast({
+        title: "AI 초안 생성 완료",
+        description: info.source === "mock"
+          ? "로컬 분석기로 초안을 생성했습니다(ANTHROPIC_API_KEY 미설정). 내용을 검토·수정해 주세요."
+          : "claude-opus-4-8 로 브랜드 프로필 초안을 생성했습니다. 내용을 검토·수정해 주세요.",
+      });
+    } catch {
+      toast({ title: "초안 생성 실패", description: "잠시 후 다시 시도해주세요.", variant: "destructive" });
+    } finally {
+      setAnalyzing(false);
+    }
   };
 
   // 리포트 최종 승인 및 회원 공개 (DB status=finalized)
@@ -285,6 +327,15 @@ export default function CoachingWorkspace() {
         </div>
 
         <div className="flex items-center gap-3">
+          <button
+            onClick={handleAnalyze}
+            disabled={analyzing}
+            className="flex items-center gap-1.5 bg-[#1E2D8C]/5 border border-[#1E2D8C]/25 text-[#1E2D8C] hover:bg-[#1E2D8C]/10 disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2 rounded-xl text-xs font-bold transition-all"
+            title="42문항 답변을 분석해 브랜드 프로필 초안을 생성합니다"
+          >
+            <Sparkles size={14} className={analyzing ? "animate-pulse" : ""} />
+            {analyzing ? "분석 중…" : "AI 초안 생성"}
+          </button>
           <button
             onClick={handleSaveDraft}
             className="flex items-center gap-1.5 bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 px-4 py-2 rounded-xl text-xs font-bold transition-all"

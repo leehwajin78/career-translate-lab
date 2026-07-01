@@ -3,52 +3,50 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
-import { useCoachingStore } from "@/store/coachingStore";
-import { useNotificationStore } from "@/store/notificationStore";
-import { analyzeCoachingAnswers } from "@/lib/coachingAI";
 import { Loader2, Check } from "lucide-react";
+
+/* =============================================================
+ * C-13 — 제출 완료 전환 화면
+ *
+ * 42문항 제출은 C-12(CoachingReview)에서 서버(POST /api/coaching/submit)로
+ * 이미 영속화된다. AI 브랜드 프로필 초안 생성은 코치가 관리자 워크스페이스
+ * (A-03)에서 수동 트리거하는 서버 전용 작업(WI-10)으로 이관되었다.
+ * 따라서 이 화면은 브라우저에서 AI를 호출하지 않고, 안내 애니메이션 후
+ * 코칭 대시보드(/coaching)로 이동시키는 전환 화면 역할만 한다.
+ * ============================================================= */
 
 export default function CoachingAnalyzing() {
   const router = useRouter();
-  const navigate = (p: string) => router.push(p);
   const member = useAuthStore((s) => s.currentMember);
-  const { getSession, saveAiDraft, submit, setStatus } = useCoachingStore();
   const [progress, setProgress] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
 
   const steps = [
-    { label: "삶의 경험 패턴 분석 중...", duration: 600 },
-    { label: "보유 역량 및 강점 데이터 매핑 중...", duration: 800 },
-    { label: "미래 비전 및 성장 적합성 탐색 중...", duration: 600 },
-    { label: "8대 핵심 브랜드 프로필 초안 구성 중...", duration: 500 },
+    { label: "제출된 42가지 이야기 정리 중...", duration: 600 },
+    { label: "코치 검토용 응답 데이터 매핑 중...", duration: 800 },
+    { label: "브랜딩 코칭 큐 등록 중...", duration: 600 },
+    { label: "코칭 대시보드 준비 중...", duration: 500 },
   ];
 
   useEffect(() => {
     if (!member) {
-      navigate("/login");
-      return;
-    }
-
-    const session = getSession(member.id);
-
-    // 42문항 답변 미비 시 비정상 진입으로 보고 리다이렉트
-    if (Object.keys(session.answers).length === 0) {
-      navigate("/coaching");
+      router.push("/login");
       return;
     }
 
     let isMounted = true;
-
-    // 1. 분석 상태 설정
-    setStatus(member.id, "analyzing");
-
-    // 2. 가상 프로그레스 애니메이션 (API 호출 대기 동안 시각적 만족 유도)
     let currentStep = 0;
-    let stepTimer: NodeJS.Timeout;
+    let stepTimer: ReturnType<typeof setTimeout>;
 
     const runStepAnimation = () => {
-      if (currentStep >= steps.length) return;
-      
+      if (currentStep >= steps.length) {
+        setProgress(100);
+        setActiveStep(steps.length);
+        stepTimer = setTimeout(() => {
+          if (isMounted) router.push("/coaching");
+        }, 1000);
+        return;
+      }
       stepTimer = setTimeout(() => {
         if (!isMounted) return;
         currentStep++;
@@ -60,59 +58,12 @@ export default function CoachingAnalyzing() {
 
     runStepAnimation();
 
-    // 3. 실제 Claude AI 분석 호출
-    const runAnalysis = async () => {
-      try {
-        const result = await analyzeCoachingAnswers(member.name, session.answers);
-        if (!isMounted) return;
-
-        // AI 초안 저장 (이 메서드는 스토어 내부에서 상태를 analyzed로 바꿔줌)
-        saveAiDraft(member.id, result);
-        submit(member.id); // 최종 제출 일자 및 상태 갱신
-
-        // 4. 실시간 알림 트리거 (BroadcastChannel, Desktop push, etc.)
-        useNotificationStore.getState().triggerNotification(member.id, member.name);
-
-        // 5. Netlify Forms 비동기 전송
-        const formData = new URLSearchParams();
-        formData.append("form-name", "coaching-submissions");
-        formData.append("memberId", member.id);
-        formData.append("memberName", member.name);
-        formData.append("memberEmail", member.email || "");
-        formData.append("submittedAt", new Date().toISOString());
-
-        fetch("/", {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: formData.toString(),
-        }).catch((err) => {
-          console.warn("Netlify Form submission failed:", err);
-        });
-
-        // 부드러운 전환을 위해 약간의 여유 부여
-        setProgress(100);
-        setActiveStep(steps.length);
-        setTimeout(() => {
-          if (isMounted) {
-            navigate("/coaching");
-          }
-        }, 1000);
-      } catch (err) {
-        console.error("분석 중 치명적 오류 발생", err);
-        if (isMounted) {
-          // 오류 발생하더라도 로컬 백업이 수행되지 않았다면 강제 이전
-          navigate("/coaching");
-        }
-      }
-    };
-
-    runAnalysis();
-
     return () => {
       isMounted = false;
       clearTimeout(stepTimer);
     };
-  }, [member, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [member, router]);
 
   if (!member) return null;
 
@@ -127,18 +78,18 @@ export default function CoachingAnalyzing() {
         </div>
 
         <h2 className="font-serif text-2xl text-[#1E2D8C] font-extrabold mb-2">
-          브랜드 정체성 정밀 분석
+          소중한 이야기가 제출되었습니다
         </h2>
         <p className="text-sm text-foreground/50 leading-relaxed mb-8 break-keep">
-          {member.name}님이 정성껏 응답하신 42가지 이야기를 기반으로
-          코칭 가이드에 맞춰 브랜드 프로필 초안을 구성하고 있습니다.
+          {member.name}님이 정성껏 응답하신 42가지 이야기가 코치에게 안전하게 전달되었습니다.
+          전담 코치가 검토 후 브랜드 프로필 리포트를 작성해 드립니다.
         </p>
 
         {/* Progress bar */}
         <div className="mb-8">
           <div className="flex justify-between items-center mb-2">
             <span className="text-xs font-bold text-[#1E2D8C]">
-              분석 분석률
+              제출 처리율
             </span>
             <span className="font-mono text-xs font-bold text-[#C4A265]">
               {Math.min(Math.round(progress), 100)}%
@@ -193,9 +144,8 @@ export default function CoachingAnalyzing() {
         </div>
 
         <div className="mt-8 pt-6 border-t border-border/80 text-[10px] text-foreground/40 leading-relaxed break-keep">
-          💡 이 진단은 단순 AI 답변 생성이 아닙니다. <br />
-          나다운브랜딩 5060 코칭 매뉴얼에 명시된 168가지 내러티브 패턴을 
-          추출하여 1차 프로필을 빌드합니다.
+          💡 코치 검토가 완료되면 대시보드에서 리포트를 확인하실 수 있습니다.
+          잠시 후 코칭 대시보드로 이동합니다.
         </div>
       </div>
     </div>
