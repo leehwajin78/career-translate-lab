@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { prisma } from '@/lib/db'
 import { analyzeFree } from '@/lib/freeDiagnostic'
+import { notifyLead } from '@/lib/notifyLead'
+import type { Lead } from '@/store/leads'
 
 /* =============================================================
  * POST /api/diagnoses — 무료 진단 제출
@@ -121,6 +123,33 @@ export async function POST(req: NextRequest) {
       })
     } catch (leadErr) {
       console.error('[api/diagnoses] insert leads', leadErr)
+    }
+
+    // 어드민 신규 리드 알림 메일(무료 진단). 실패해도 제출에 영향 없음.
+    // 클라이언트 제출은 fire-and-forget이라 이 await로 인한 지연은 UX에 드러나지 않는다.
+    try {
+      const notifyPayload: Lead = {
+        id: diagnosis.id,
+        createdAt: new Date().toISOString(),
+        name,
+        email,
+        phone: '',
+        field: careerYears,
+        career: '',
+        purposes: [],
+        challenge: '',
+        outcomes: [],
+        channel: '',
+        diagnosticScore: scorePayload?.total,
+        diagnosticType: scorePayload?.type,
+        outputAssets: bonusChecks,
+        scores: scorePayload?.areas as Lead['scores'],
+        status: '신규 리드',
+        memo: '',
+      }
+      await notifyLead(notifyPayload, { categoryLabel: '무료 진단' })
+    } catch (mailErr) {
+      console.error('[api/diagnoses] notifyLead', mailErr)
     }
 
     return NextResponse.json({

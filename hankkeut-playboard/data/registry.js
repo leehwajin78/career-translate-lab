@@ -373,7 +373,7 @@
         dataReads: ['coaching_answers', 'coaching_reports'], dataWrites: ['coaching_sessions(status)', 'coaching_reports'],
         telemetryEvents: ['(정의 필요) Finalize audit log'],
         exceptionStates: [], workItems: ['WI-09', 'WI-10'], requirementRefs: ['SRS FR-WORK-01~04'], implLocation: 'src/pages/coaching/CoachingWorkspace.tsx'
-      }, { mc: true, statusNote: '관리자 조회 DB화(PR2) — Finalize·이메일은 PR4 대기' }),
+      }, { mc: true, statusNote: 'Finalize DB화 완료(CHG-027) — 코치 수동 작성 → 리포트 공개. AI 초안은 Phase 2, 이메일 알림 후순위' }),
     s('operator', 'admin-notifications', 'A-04', '알림 시스템', '/admin (overlay)', '서비스형', 'p1-mvp', 'Admin',
       '실시간 알림. 미읽음 카운트 뱃지.',
       { auth: 'covered', accessControl: 'covered', dataIntegrity: 'partial', failureRecovery: 'partial', observability: 'gap', performance: 'na' },
@@ -456,8 +456,8 @@
       '규칙 기반 analyzeFree를 /api/diagnoses 서버에서 계산 → free_diagnostics.score·leads.score 영속화'),
     w('WI-08', '무료 진단 리포트 검증(E2E) + CI', 'p1-remaining', 'done', 'CHG-022~024', ['WI-07'], ['customer/report-free'],
       'green: vitest 16/16(분류 8 + /api/diagnoses 영속화 5) + Playwright E2E 2/2(퍼널→리포트, /result 리다이렉트). CI 연결 완료(.github/workflows/ci.yml: unit + e2e 잡)'),
-    w('WI-09', '워크스페이스 Finalize + 리포트 공개 (PR4)', 'p1-remaining', 'todo', '', ['WI-06'], ['operator/workspace', 'member/coaching-report'],
-      'Finalize 트랜잭션 + RLS 공개 게이트'),
+    w('WI-09', '워크스페이스 Finalize + 리포트 공개', 'p1-remaining', 'done', 'CHG-027', ['WI-06'], ['operator/workspace', 'member/coaching-report'],
+      'MVP(코치 수동 작성) green: finalizeReport($transaction) + 공개 게이트 + A-03/C-14 DB 전환, vitest 5 (총 22)'),
     w('WI-10', 'AI 분석 파이프라인 (GPT-4o, PR4)', 'p1-remaining', 'todo', '', ['WI-06'], ['system/coaching-analyzing', 'operator/workspace'],
       'submitted → analyzed 자동 분석'),
     w('WI-11', '이메일 알림 (Resend) + 검수 대기', 'p1.5', 'todo', '', ['WI-09'], ['operator/workspace', 'system/report-pending'],
@@ -549,7 +549,7 @@
    * 정규화 — be 머지 화면을 merged 로 승격 + controlAreaNotes 파생
    * ======================================================================== */
   // be(백엔드)가 머지된 화면(PR 통과) = merged. 원천: CHANGES PR1/PR2 + Edge/리드.
-  var MERGED = { 'C-03': 1, 'C-05': 1, 'C-09': 1, 'C-11': 1, 'C-12': 1, 'A-01': 1, 'A-02': 1, 'A-05': 1 };
+  var MERGED = { 'C-03': 1, 'C-05': 1, 'C-09': 1, 'C-11': 1, 'C-12': 1, 'C-14': 1, 'A-01': 1, 'A-02': 1, 'A-03': 1, 'A-05': 1 };
   var areaKeys = controlAreas.map(function (a) { return a.area; });
   var areaLabel = {};
   controlAreas.forEach(function (a) { areaLabel[a.area] = a.label; });
