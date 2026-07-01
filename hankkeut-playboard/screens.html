@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>화면 데모 — 한끗프로젝트 PlayBoard</title>
+<link rel="stylesheet" href="assets/playboard.css">
+</head>
+<body>
+<div id="shell"></div>
+<main id="main"></main>
+<script src="data/registry.js"></script>
+<script src="assets/playboard.js"></script>
+<script>
+(function () {
+  var PB = window.PB, U = window.PBUI;
+  var plane = U.qs('plane'), slug = U.qs('slug');
+  var sc = plane && slug && PB.getScreen(plane, slug);
+  U.shell({ section: 'index', crumbs: [{ label: '화면 데모' }, { label: sc ? sc.title : '?' }] });
+  if (!sc) { U.notFound('화면 "' + U.esc(plane) + '/' + U.esc(slug) + '"는 레지스트리에 없습니다.'); return; }
+
+  var bar = '<div class="tile" style="padding:1rem 1.2rem"><div class="inner"><div class="row-between">'
+    + '<div><span class="eyebrow">화면 데모 · 캡처 대상</span> <strong>' + U.esc(sc.id) + ' · ' + U.esc(sc.title) + '</strong> '
+    + U.statusBadge(sc.status, { short: true }) + ' <span class="note mono">' + U.esc(sc.route || '미등록') + '</span></div>'
+    + '<a class="btn ghost sm" href="spec.html?plane=' + sc.plane + '&slug=' + sc.slug + '">← 기술 스펙</a></div></div></div>';
+
+  var note = sc.route ? '' : '<div class="tile" style="padding:.5rem 1.2rem"><div class="inner"><p class="note">프로토타입 목업 — 앱 라우트 미등록(로드맵). 아래는 살아있는 데모입니다.</p></div></div>';
+  var body = note + '<div class="demo-wrap"><iframe src="' + U.esc(PB.demoPath(sc)) + '" title="' + U.esc(sc.title) + ' 데모"></iframe></div>';
+
+  document.getElementById('main').innerHTML = bar + body;
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>구현 통계 — 한끗프로젝트 PlayBoard</title>
+<link rel="stylesheet" href="assets/playboard.css">
+</head>
+<body>
+<div id="shell"></div>
+<main id="main"></main>
+<script src="data/registry.js"></script>
+<script src="assets/playboard.js"></script>
+<script>
+(function () {
+  var PB = window.PB, U = window.PBUI;
+  U.shell({ section: 'summary', crumbs: [{ label: '구현 통계' }] });
+
+  var counts = PB.screenStatusCounts();
+  var chips = PB.screenStatuses.map(function (st) {
+    return '<span class="chip">' + U.statusBadge(st.id) + ' ' + (counts[st.id] || 0) + '</span>';
+  }).join(' ');
+
+  var intro = '<div class="tile"><div class="inner"><span class="eyebrow">구현 통계</span>'
+    + '<h2>화면 × 제어 영역 매트릭스</h2>'
+    + '<p class="lead">각 화면이 어떤 구현 상태이고 어떤 횡단 제어 영역을 다루는지 한 표로 봅니다. '
+    + '<strong>●</strong> = 그 영역 요점이 레지스트리에 기재됨(hover로 요점 확인), <strong>·</strong> = 해당없음 또는 기획 갭(갭 여부는 영역 상세의 미해소 갭에서 판정). 컬럼 헤더를 클릭하면 정렬됩니다.</p>'
+    + '<div class="statline mt2">' + chips + '</div></div></div>';
+
+  var matrixTile = '<div class="tile"><div class="inner"><div id="matrix"></div>'
+    + '<p class="note mt2">푸터 숫자 = 영역별 대응 화면 수(인덱스 제어영역 카드의 covered와 동일 정의). 클릭하면 영역 상세로 이동합니다.</p></div></div>';
+
+  document.getElementById('main').innerHTML = intro + matrixTile;
+  U.sortableMatrix(document.getElementById('matrix'), PB.screens);
+})();
+</script>
+</body>
+</html>

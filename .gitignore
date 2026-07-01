@@ -30,6 +30,12 @@ dist-ssr
 # Prisma
 prisma/*.db
 
+# Playwright
+/test-results
+/playwright-report
+/playwright/.cache
+/blob-report
+
 # Supabase CLI local
 supabase/.branches
 supabase/.temp

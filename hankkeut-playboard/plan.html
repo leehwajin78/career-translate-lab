@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>실행 계획 — 한끗프로젝트 PlayBoard</title>
+<link rel="stylesheet" href="assets/playboard.css">
+</head>
+<body>
+<div id="shell"></div>
+<main id="main"></main>
+<script src="data/registry.js"></script>
+<script src="assets/playboard.js"></script>
+<script>
+(function () {
+  var PB = window.PB, U = window.PBUI;
+  U.shell({ section: 'plan', crumbs: [{ label: '실행 계획' }] });
+
+  function sid(id) { return id.replace(/-/g, '_'); }
+  function short(t) { return t.length > 18 ? t.slice(0, 17) + '…' : t; }
+  function clean(t) { return t.replace(/[:,#"<>]/g, ' ').trim(); }
+
+  // ── DAG 소스 (작업 레지스트리에서 파생) ──────────────────────────────
+  var lines = ['flowchart TD'];
+  PB.workItems.forEach(function (w) {
+    lines.push('  ' + sid(w.id) + '["' + w.id + ' · ' + clean(short(w.title)) + '"]');
+  });
+  PB.workItems.forEach(function (w) {
+    (w.dependsOn || []).forEach(function (d) { lines.push('  ' + sid(d) + ' --> ' + sid(w.id)); });
+  });
+  lines.push('  classDef done fill:#E4F3EA,stroke:#1E7F4F,color:#15301f;');
+  lines.push('  classDef todo fill:#ECEDEA,stroke:#9aa0ad,color:#2b2f3a;');
+  lines.push('  classDef review fill:#FBF1DC,stroke:#d97e2b,color:#5a3a0a;');
+  ['done', 'todo', 'review'].forEach(function (st) {
+    var ids = PB.workItems.filter(function (w) { return w.status === st; }).map(function (w) { return sid(w.id); });
+    if (ids.length) lines.push('  class ' + ids.join(',') + ' ' + st + ';');
+  });
+  var dagCode = lines.join('\n');
+
+  var wcounts = PB.workStatusCounts();
+  var waves = PB.computeWaves();
+
+  var intro = '<div class="tile"><div class="inner"><span class="eyebrow">실행 계획</span>'
+    + '<h2>작업 항목 의존성 DAG</h2>'
+    + '<p class="lead">총 ' + PB.workItems.length + '개 작업 항목. 출처는 변경 이력(CHANGES)과 PR 로드맵이며, 상태는 코드와 동시에 전이합니다. 일정 추정은 <a href="schedule.html">일정표</a>에서 Wave로 파생합니다.</p>'
+    + '<div class="statline mt2">' + PB.workStatuses.map(function (st) { return '<span class="chip">' + U.statusBadge(st.id) + ' ' + (wcounts[st.id] || 0) + '</span>'; }).join('') + '</div>'
+    + '</div></div>';
+
+  var dagTile = '<div class="tile"><div class="inner"><h2>의존성 DAG<span class="sub">노드 색 = 작업 상태 · 간선 = dependsOn</span></h2><div id="dag" class="mt2"></div></div></div>';
+
+  var nextWave = waves[0];
+  var nextTile = '<div class="tile"><div class="inner"><h2>다음 착수 묶음<span class="sub">차단 선행이 없는 병렬 착수 그룹</span></h2>'
+    + '<p class="lead mt1">' + (nextWave ? 'Wave ' + nextWave.index + ' · ' + nextWave.startDate + ' 착수 가능 · ' + nextWave.items.length + '건 병렬: '
+      + nextWave.items.map(function (w) { return '<strong>' + w.id + '</strong> ' + U.esc(w.title); }).join(' · ') : '잔여 작업 없음')
+    + '</p><p class="mt2"><a class="btn primary" href="schedule.html">병렬 일정표 보기 →</a></p></div></div>';
+
+  // ── 단계별 현황 표 ───────────────────────────────────────────────────
+  function firstScreenHref(w) {
+    if (!w.screens || !w.screens.length) return null;
+    var key = w.screens[0]; var parts = key.split('/');
+    var sc = PB.getScreen(parts[0], parts[1]);
+    return sc ? 'spec.html?plane=' + sc.plane + '&slug=' + sc.slug : null;
+  }
+  var phaseTables = PB.phaseOrder.map(function (ph) {
+    var items = PB.workItems.filter(function (w) { return w.phase === ph.id; });
+    if (!items.length) return '';
+    var rows = items.map(function (w) {
+      var href = firstScreenHref(w);
+      var title = href ? '<a href="' + href + '">' + U.esc(w.title) + '</a>' : U.esc(w.title);
+      var deps = (w.dependsOn || []).length ? w.dependsOn.join(', ') : '<span class="note">없음</span>';
+      var ext = w.externalRefs ? ' <span class="note mono">' + U.esc(w.externalRefs) + '</span>' : '';
+      return '<tr><td class="mono">' + U.esc(w.id) + ext + '</td><td>' + title + '<div class="note">' + U.esc(w.doc) + '</div></td>'
+        + '<td>' + U.statusBadge(w.status) + '</td><td class="mono">' + deps + '</td></tr>';
+    }).join('');
+    return '<div class="panel mt2"><h3>' + U.esc(ph.label) + '</h3>'
+      + '<div class="mwrap" style="box-shadow:none;border:0"><table class="matrix"><thead><tr><th>항목</th><th>제목</th><th>상태</th><th>선행</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>';
+  }).join('');
+  var phaseTile = '<div class="tile"><div class="inner"><h2>단계별 현황<span class="sub">Phase 명시 순서 · 비어있는 단계는 생략</span></h2>' + phaseTables + '</div></div>';
+
+  document.getElementById('main').innerHTML = intro + dagTile + nextTile + phaseTile;
+  U.diagram(document.getElementById('dag'), { title: '작업 항목 의존성 DAG', code: dagCode, legend: U.workLegend() });
+})();
+</script>
+</body>
+</html>

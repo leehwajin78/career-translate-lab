@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { prisma } from '@/lib/db'
+import { analyzeFree } from '@/lib/freeDiagnostic'
 
 /* =============================================================
  * POST /api/diagnoses — 무료 진단 제출
@@ -71,8 +72,26 @@ export async function POST(req: NextRequest) {
     const ip =
       req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? null
 
-    // free_diagnostics 저장
-    // TODO: [ISSUE-02] score·diagnosisType 계산 로직 미구현
+    // [ISSUE-02] 규칙 기반 분류를 서버에서 계산해 영속화한다.
+    // 클라이언트 store(analyzeFree)와 동일 로직을 재사용 → 서버·클라이언트 결과 일치.
+    // 분류가 실패해도 제출 자체는 계속(현행 동작 보존).
+    // 저장 shape은 관리자 매핑(lib/leads mapLead)이 읽는 { total, type, areas } 로 맞춘다.
+    let scorePayload:
+      | { total: number; type: string; areas: Record<string, number> }
+      | null = null
+    try {
+      const answersByNum: Record<number, string> = {}
+      for (let i = 1; i <= 7; i++) {
+        const v = answers[`q${i}`]
+        if (v) answersByNum[i] = v
+      }
+      const r = analyzeFree(answersByNum, bonusChecks)
+      scorePayload = { total: r.totalScore, type: r.type, areas: r.scores }
+    } catch (classifyErr) {
+      console.error('[api/diagnoses] classify', classifyErr)
+    }
+
+    // free_diagnostics 저장 (분류 결과는 score(Json)에 함께 보관)
     const diagnosis = await prisma.freeDiagnostic.create({
       data: {
         email,
@@ -81,13 +100,14 @@ export async function POST(req: NextRequest) {
         answers,
         bonusChecks,
         consentAt: new Date(consentAt),
-        status: 'in_progress',
+        score: scorePayload ?? undefined,
+        status: scorePayload ? 'completed' : 'in_progress',
         ipAddress: ip,
       },
       select: { id: true },
     })
 
-    // leads 테이블 등록 (실패해도 진단 결과 반환 계속)
+    // leads 테이블 등록 (총점을 CRM 정렬용으로 함께 저장 / 실패해도 결과 반환 계속)
     try {
       await prisma.lead.create({
         data: {
@@ -96,6 +116,7 @@ export async function POST(req: NextRequest) {
           source: 'free_diagnosis',
           freeDiagnosisId: diagnosis.id,
           status: 'new',
+          score: scorePayload?.total ?? null,
         },
       })
     } catch (leadErr) {
@@ -104,8 +125,9 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       id: diagnosis.id,
-      type: 'pending', // TODO: [ISSUE-02] 유형 분류 알고리즘 구현 후 실제 type 반환
-      scores: {}, // TODO: [ISSUE-02] 5개 영역 점수 계산 후 반환
+      type: scorePayload?.type ?? 'pending',
+      scores: scorePayload?.areas ?? {},
+      totalScore: scorePayload?.total ?? null,
     })
   } catch (err) {
     console.error('[api/diagnoses] error', err)

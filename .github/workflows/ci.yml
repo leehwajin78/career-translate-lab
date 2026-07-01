@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: ["main", "feat/**", "fix/**", "arch/**", "docs/**"]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# 테스트는 실제 DB에 연결하지 않는다(분류·리포트는 클라이언트, API 통합테스트는 Prisma 모킹,
+# E2E는 fire-and-forget POST). 단, env 검증/Prisma generate 가 throw 하지 않도록 더미 값을 둔다.
+env:
+  DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1:54322/postgres?schema=public"
+  DIRECT_URL: "postgresql://postgres:postgres@127.0.0.1:54322/postgres?schema=public"
+  NEXT_PUBLIC_APP_URL: "http://localhost:3000"
+
+jobs:
+  unit:
+    name: Unit & integration (vitest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Run vitest
+        run: pnpm test
+
+  e2e:
+    name: E2E (Playwright)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Install Playwright browser (chromium)
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Run E2E
+        run: pnpm test:e2e
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>제어 영역 — 한끗프로젝트 PlayBoard</title>
+<link rel="stylesheet" href="assets/playboard.css">
+</head>
+<body>
+<div id="shell"></div>
+<main id="main"></main>
+<script src="data/registry.js"></script>
+<script src="assets/playboard.js"></script>
+<script>
+(function () {
+  var PB = window.PB, U = window.PBUI;
+  var areaId = U.qs('area');
+  var a = areaId && PB.getArea(areaId);
+  U.shell({ section: 'summary', crumbs: [{ label: '구현 통계', href: 'implement-summary.html' }, { label: a ? a.label : '제어 영역' }] });
+  if (!a) { U.notFound('제어 영역 "' + U.esc(areaId) + '"는 레지스트리에 없습니다.'); return; }
+
+  var cov = PB.areaCoverage(a.area);
+
+  // 1 개요
+  var s1 = '<div class="tile"><div class="inner"><span class="eyebrow">제어 영역</span>'
+    + '<h2>' + U.esc(a.label) + '</h2>'
+    + '<p class="lead" style="color:var(--blue);font-weight:500">' + U.esc(a.goal) + '</p>'
+    + '<p class="lead">' + U.esc(a.summary) + '</p>'
+    + '<div class="statline mt2"><span class="chip">대응 화면 ' + cov.covered + '/' + cov.total + '</span>'
+    + '<span class="chip">확정 정책 ' + a.policies.length + '</span><span class="chip">미해소 갭 ' + a.gaps.length + '</span></div></div></div>';
+
+  // 2 확정 정책
+  var pol = a.policies.map(function (p, i) {
+    return '<div class="panel"><div class="row-between"><span class="badge blue">' + (i + 1) + '</span></div>'
+      + '<div style="font-weight:800;margin:.4rem 0 .3rem">' + U.esc(p.statement) + '</div>'
+      + '<p class="note">' + U.esc(p.detail) + '</p></div>';
+  }).join('');
+  var s2 = '<div class="tile"><div class="inner"><h2>확정 정책<span class="sub">결정 잠김 — 이 목록이 단일 기준</span></h2>'
+    + '<div class="grid cols-2 mt2">' + (pol || '<p class="note">확정된 정책이 아직 없습니다.</p>') + '</div></div></div>';
+
+  // 3 운영 결정값 + 기준 문서
+  var decRows = a.decisions.length
+    ? '<div class="spec">' + a.decisions.map(function (d) { return '<div class="row"><div class="k">' + U.esc(d.name) + '</div><div class="v"><span class="mono">' + U.esc(d.value) + '</span></div></div>'; }).join('') + '</div>'
+    : '<p class="note">고정된 결정값 없음</p>';
+  var stdList = a.standards.map(function (st) { return '<li>' + U.esc(st.title) + ' — <span class="mono note">' + U.esc(st.path) + '</span></li>'; }).join('');
+  var s3 = '<div class="tile"><div class="inner"><h2>운영 결정값 · 기준 문서</h2>'
+    + '<div class="grid cols-2 mt2">'
+    + '<div class="panel"><h3>운영 결정값</h3>' + decRows + '</div>'
+    + '<div class="panel"><h3>기준 문서(위성)</h3><ul class="clean">' + stdList + '</ul>'
+    + '<div class="callout mt2">싱크 규칙: 위 기준 문서와 PlayBoard 레지스트리는 <strong>같은 PR에서 양방향 갱신</strong>하고 양쪽에 동일하게 고지합니다.</div></div>'
+    + '</div></div></div>';
+
+  // 4 대응 화면 + 관련 작업
+  var screenCards = PB.screensForArea(a.area).map(function (sc) {
+    var n = sc.engineering.controlAreaNotes[a.area];
+    return '<div class="panel"><div class="row-between"><a style="font-weight:800" href="spec.html?plane=' + sc.plane + '&slug=' + sc.slug + '">' + U.esc(sc.id) + ' ' + U.esc(sc.title) + '</a>' + U.statusBadge(sc.status, { short: true }) + '</div>'
+      + '<p class="note mt1">' + U.esc(n.text) + '</p></div>';
+  }).join('');
+  var workCards = (a.workItems || []).map(function (id) {
+    var w = PB.getWorkItem(id); if (!w) return '';
+    return '<div class="panel"><div class="row-between"><strong class="mono">' + U.esc(w.id) + '</strong>' + U.statusBadge(w.status) + '</div><div style="font-weight:500;margin-top:.3rem">' + U.esc(w.title) + '</div></div>';
+  }).join('');
+  var s4 = '<div class="tile"><div class="inner"><h2>대응 화면 · 관련 작업</h2>'
+    + '<h3 class="mt2">대응 화면 (' + cov.covered + ')</h3>'
+    + '<div class="grid cols-3 mt1">' + (screenCards || '<p class="note">대응 화면 없음</p>') + '</div>'
+    + '<h3 class="mt3">관련 작업</h3>'
+    + '<div class="grid cols-3 mt1">' + (workCards || '<p class="note">연결된 작업 없음</p>') + '</div></div></div>';
+
+  // 5 미해소 갭
+  var s5 = '<div class="tile"><div class="inner"><h2>미해소 갭<span class="sub">해소되면 확정 정책/결정값으로 승격하고 목록에서 제거</span></h2>'
+    + (a.gaps.length
+      ? '<div class="gapbox mt2"><strong>아직 잠그지 못한 항목 ' + a.gaps.length + '건</strong><ul>' + a.gaps.map(function (g) { return '<li>' + U.esc(g) + '</li>'; }).join('') + '</ul></div>'
+      : '<div class="callout mt2">미해소 갭이 없습니다 — 이 영역은 모두 확정 정책/결정값으로 잠겼습니다.</div>')
+    + '</div></div>';
+
+  document.getElementById('main').innerHTML = s1 + s2 + s3 + s4 + s5;
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>모바일 흐름 — 한끗프로젝트 PlayBoard</title>
+<link rel="stylesheet" href="assets/playboard.css">
+</head>
+<body>
+<div id="shell"></div>
+<main id="main"></main>
+<script src="data/registry.js"></script>
+<script src="assets/playboard.js"></script>
+<script>
+(function () {
+  var PB = window.PB, U = window.PBUI;
+  var flowId = U.qs('flow');
+  var f = flowId && PB.getFlow(flowId);
+  U.shell({ section: 'index', crumbs: [{ label: '모바일 흐름' }, { label: f ? f.title : '?' }] });
+  if (!f) { U.notFound('흐름 "' + U.esc(flowId) + '"는 레지스트리에 없습니다.'); return; }
+
+  var seq = f.kind === 'sequence';
+  var screens = f.screens.map(function (sl) { return PB.getScreen(f.plane, sl); }).filter(Boolean);
+
+  var hero = '<div class="tile"><div class="inner"><span class="eyebrow">모바일 UX 오버뷰</span>'
+    + '<h2>모바일 흐름 — ' + U.esc(f.title) + '</h2>'
+    + '<p class="lead">캡처가 아니라 실제 반응형 데모를 폰 프레임(뷰포트 375px)에 담아 가로로 넘겨봅니다. 데모 라우트를 모바일 폭으로 직접 로드하므로, 데모가 곧 모바일 검증 수단입니다.</p>'
+    + '<p class="mt2"><a class="btn ghost" href="ux-flow.html?flow=' + f.id + '">데스크톱 오버뷰 →</a></p></div></div>';
+
+  var items = '';
+  screens.forEach(function (sc, i) {
+    if (i > 0 && seq) items += '<div class="arrow">→</div>';
+    var demoHref = 'screens.html?plane=' + sc.plane + '&slug=' + sc.slug;
+    var phone = '<div class="phone"><iframe src="' + U.esc(PB.demoPath(sc)) + '" loading="lazy" title="' + U.esc(sc.title) + '"></iframe></div>';
+    items += '<div class="pitem">' + phone
+      + '<div class="pcap"><span>(' + (seq ? i + 1 : '·') + ') ' + U.esc(sc.title) + '</span>'
+      + '<a class="chip" href="' + demoHref + '">스펙</a></div></div>';
+  });
+
+  var carousel = '<div class="tile"><div class="inner"><div class="carousel">' + items + '</div>'
+    + '<p class="note mt1">← 가로로 스크롤하세요. 각 프레임은 살아있는 데모입니다.</p></div></div>';
+
+  document.getElementById('main').innerHTML = hero + carousel;
+  U.mobileCarousel(document.querySelector('.carousel'));
+})();
+</script>
+</body>
+</html>

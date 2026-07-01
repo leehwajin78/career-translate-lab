@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>기술 스펙 — 한끗프로젝트 PlayBoard</title>
+<link rel="stylesheet" href="assets/playboard.css">
+<style>
+  .capframe { border:1px solid var(--line); border-radius:var(--r); overflow:hidden; background:#fff; height:560px; }
+  .capframe iframe { width:100%; height:100%; border:0; }
+</style>
+</head>
+<body>
+<div id="shell"></div>
+<main id="main"></main>
+<script src="data/registry.js"></script>
+<script src="assets/playboard.js"></script>
+<script>
+(function () {
+  var PB = window.PB, U = window.PBUI;
+  var plane = U.qs('plane'), slug = U.qs('slug');
+  var sc = plane && slug && PB.getScreen(plane, slug);
+  var planeMeta = sc && PB.getPlane(sc.plane);
+  U.shell({ section: 'summary', crumbs: [{ label: '구현 통계', href: 'implement-summary.html' }, { label: sc ? (planeMeta.title) : '스펙' }, { label: sc ? sc.title : '?' }] });
+  if (!sc) { U.notFound('화면 "' + U.esc(plane) + '/' + U.esc(slug) + '"는 레지스트리에 없습니다.'); return; }
+
+  var e = sc.engineering;
+  var demoHref = 'screens.html?plane=' + sc.plane + '&slug=' + sc.slug;
+
+  // 헤더
+  var header = '<div class="tile"><div class="inner"><span class="eyebrow">' + U.esc(planeMeta.title) + ' · 기술 스펙</span>'
+    + '<div class="row-between"><h2>' + U.esc(sc.id) + ' · ' + U.esc(sc.title) + ' ' + U.mcBadge(sc) + '</h2>' + U.statusBadge(sc.status) + '</div>'
+    + '<p class="lead">' + U.esc(sc.flowNote) + '</p>'
+    + (sc.statusNote ? '<p class="note mt1">⛳ ' + U.esc(sc.statusNote) + '</p>' : '')
+    + '<p class="mt2"><a class="btn primary" href="' + demoHref + '">화면 데모 열기 ↗</a></p></div></div>';
+
+  // 화면 계약 개요 + 캡처
+  var capture = '<div class="capframe"><iframe src="' + U.esc(PB.demoPath(sc)) + '" loading="lazy" title="' + U.esc(sc.title) + ' 데모"></iframe></div>';
+  var contract = '<div class="tile"><div class="inner"><h2>화면 계약 개요</h2>'
+    + '<div class="grid" style="grid-template-columns:1fr 1.1fr" >'
+    + '<div>' + U.specRows([
+      { k: '앱 라우트', v: sc.route ? '<span class="mono">' + U.esc(sc.route) + '</span>' : null, empty: '미등록' },
+      { k: '디자인 분류', v: U.esc(sc.designSpecType) },
+      { k: '평면', v: U.esc(planeMeta.title) + ' — ' + U.esc(planeMeta.desc) },
+      { k: '구현 위치', v: sc.implLocation ? '<span class="mono">' + U.esc(sc.implLocation) + '</span>' : null, empty: '미구현' },
+      { k: '요구사항 근거', v: sc.requirementRefs.map(function (r) { return U.esc(r); }) }
+    ]) + '</div>'
+    + '<div>' + capture + '<p class="note mt1">캡처 = 프로토타입 라이브 데모(계약의 진짜 모습).</p></div>'
+    + '</div></div></div>';
+
+  // 엔지니어링 제어 스펙
+  function exLinks() {
+    if (!e.exceptionStates.length) return null;
+    return e.exceptionStates.map(function (es) {
+      var t = PB.getScreen('system', es);
+      return t ? '<a href="spec.html?plane=system&slug=' + es + '">' + U.esc(t.id + ' ' + t.title) + '</a>' : U.esc(es);
+    });
+  }
+  var eng = '<div class="tile"><div class="inner"><h2>엔지니어링 제어 스펙</h2>'
+    + U.specRows([
+      { k: '인가 게이트', v: U.esc(e.authGate) },
+      { k: '클라이언트 동작', v: e.clientActions.map(function (x) { return U.esc(x); }) },
+      { k: '서버 동작', v: e.serverActions.map(function (x) { return U.esc(x); }), empty: '없음(정적/클라이언트)' },
+      { k: '데이터 읽기', v: e.dataReads.map(function (x) { return '<span class="mono">' + U.esc(x) + '</span>'; }), empty: '없음' },
+      { k: '데이터 쓰기', v: e.dataWrites.map(function (x) { return '<span class="mono">' + U.esc(x) + '</span>'; }), empty: '없음' },
+      { k: '계측 이벤트', v: e.telemetryEvents.map(function (x) { return U.esc(x); }), empty: '수집 없음' },
+      { k: '예외 상태', v: exLinks(), empty: '없음' }
+    ]) + '</div></div>';
+
+  // 제어 영역 관심사
+  var areaCards = Object.keys(e.controlAreaNotes).map(function (area) {
+    var ar = PB.getArea(area); var n = e.controlAreaNotes[area];
+    return '<div class="panel"><div class="row-between"><a style="font-weight:800" href="control-area.html?area=' + area + '">' + U.esc(ar.label) + '</a>'
+      + '<span class="badge ' + (n.level === 'covered' ? 'ok' : 'warn') + '">' + (n.level === 'covered' ? '충족' : '부분') + '</span></div>'
+      + '<p class="note mt1">' + U.esc(n.text) + '</p></div>';
+  }).join('');
+  var areaTile = '<div class="tile"><div class="inner"><h2>제어 영역 관심사<span class="sub">이 화면이 다루는 횡단 정책 — 매트릭스 ●와 동일 출처</span></h2>'
+    + '<div class="grid cols-3 mt2">' + (areaCards || '<p class="note">기재된 제어 영역 요점이 없습니다(기획 갭 가능).</p>') + '</div></div></div>';
+
+  // 연결된 작업
+  var wiCards = (sc.workItems || []).map(function (id) {
+    var w = PB.getWorkItem(id); if (!w) return '';
+    var ext = w.externalRefs ? ' <span class="note mono">' + U.esc(w.externalRefs) + '</span>' : '';
+    return '<div class="panel"><div class="row-between"><strong class="mono">' + U.esc(w.id) + '</strong>' + ext + U.statusBadge(w.status) + '</div>'
+      + '<div style="font-weight:500;margin:.3rem 0">' + U.esc(w.title) + '</div><p class="note">' + U.esc(w.doc) + '</p></div>';
+  }).join('');
+  var wiTile = '<div class="tile"><div class="inner"><h2>연결된 작업 (' + (sc.workItems || []).length + ')</h2>'
+    + '<div class="grid cols-3 mt2">' + (wiCards || '<p class="note">연결된 작업 항목이 없습니다.</p>') + '</div></div></div>';
+
+  document.getElementById('main').innerHTML = header + contract + eng + areaTile + wiTile;
+})();
+</script>
+</body>
+</html>

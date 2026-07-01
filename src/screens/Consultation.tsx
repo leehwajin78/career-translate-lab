@@ -12,7 +12,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { CHANNEL_OPTIONS, OUTCOME_OPTIONS, PURPOSE_OPTIONS } from "@/data/content";
-import { useDiagnosticStore } from "@/store/diagnostic";
 import { useFreeDiagnosticStore } from "@/store/freeDiagnosticStore";
 import { useLeadsStore } from "@/store/leads";
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel } from "@/components/ui/alert-dialog";
