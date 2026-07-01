@@ -7,9 +7,13 @@ vi.mock("@/lib/db", () => ({
     lead: { create: vi.fn() },
   },
 }));
+// 알림 메일은 외부(Web3Forms) 네트워크 호출이므로 모킹한다.
+vi.mock("@/lib/notifyLead", () => ({ notifyLead: vi.fn(() => Promise.resolve()) }));
 
 import { POST } from "@/app/api/diagnoses/route";
 import { prisma } from "@/lib/db";
+import { notifyLead } from "@/lib/notifyLead";
+const notify = notifyLead as unknown as ReturnType<typeof vi.fn>;
 
 const fd = prisma.freeDiagnostic as unknown as { findFirst: any; create: any };
 const lead = prisma.lead as unknown as { create: any };
@@ -78,6 +82,16 @@ describe("POST /api/diagnoses — 분류 영속화", () => {
     expect(typeof body.totalScore).toBe("number");
     expect(body.scores).toBeTypeOf("object");
     expect(Object.keys(body.scores).length).toBeGreaterThan(0);
+  });
+
+  it("무료 진단 리드 알림 메일(notifyLead)을 '무료 진단' 카테고리로 발송한다", async () => {
+    await POST(makeReq(VALID));
+    expect(notify).toHaveBeenCalledTimes(1);
+    const [payload, opts] = notify.mock.calls[0];
+    expect(opts).toEqual({ categoryLabel: "무료 진단" });
+    expect(payload.email).toBe(VALID.email);
+    expect(typeof payload.diagnosticType).toBe("string");
+    expect(typeof payload.diagnosticScore).toBe("number");
   });
 });
 

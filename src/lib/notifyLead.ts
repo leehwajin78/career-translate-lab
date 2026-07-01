@@ -36,7 +36,10 @@ const ASSET_LABELS: Record<string, string> = {
   online: "온라인에 정리된 소개 페이지",
 };
 
-export async function notifyLead(lead: Lead): Promise<void> {
+export async function notifyLead(
+  lead: Lead,
+  opts?: { categoryLabel?: string },
+): Promise<void> {
   const accessKey = process.env.NEXT_PUBLIC_LEAD_NOTIFY_KEY;
   if (!accessKey) {
     console.warn("NEXT_PUBLIC_LEAD_NOTIFY_KEY environment variable is not defined. Skipping email notification.");
@@ -44,7 +47,7 @@ export async function notifyLead(lead: Lead): Promise<void> {
   }
 
   try {
-    const category = getApplyCategoryLabel(lead);
+    const category = opts?.categoryLabel ?? getApplyCategoryLabel(lead);
     const subject = `[한끗 신규리드] ${category} - ${lead.name}님`;
 
     // Format output assets
