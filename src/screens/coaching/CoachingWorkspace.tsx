@@ -3,10 +3,13 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useDbMembers } from "@/hooks/useDbMembers";
-import { useCoachingStore, FinalProfile, AIDraft } from "@/store/coachingStore";
+import type { FinalProfile, AIDraft } from "@/store/coachingStore";
 import { COACHING_QUESTIONS, COACHING_PARTS } from "@/data/coachingQuestions";
 import { ArrowLeft, Save, Send, Volume2, Sparkles, RotateCcw, HelpCircle, Check, Award, FileText, Lock } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
+
+interface WsAnswer { text: string; voice?: { data: string; duration: number } }
+interface WsSession { status: string; answers: Record<number, WsAnswer> }
 
 export default function CoachingWorkspace() {
   const { memberId } = useParams<{ memberId: string }>();
@@ -14,13 +17,13 @@ export default function CoachingWorkspace() {
   const navigate = (p: string) => router.push(p);
   const { members } = useDbMembers();
 
-  const getSession = useCoachingStore((s) => s.getSession);
-  const saveCoachNote = useCoachingStore((s) => s.saveCoachNote);
-  const finalizeCoaching = useCoachingStore((s) => s.finalizeCoaching);
+  // DB에서 세션(실제 답변) + 리포트 초안 로드 (localStorage 스토어 대체)
+  const [session, setSession] = useState<WsSession | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
   // 대상 회원 찾기
   const targetMember = members.find((m) => m.id === memberId);
-  const session = memberId ? getSession(memberId) : null;
 
   // 상태 변수들
   const [selectedQId, setSelectedQId] = useState<number>(1);
@@ -59,106 +62,123 @@ export default function CoachingWorkspace() {
   // 초안 대조용 상태 (각 항목별 원본 뷰 모드 토글)
   const [showOriginal, setShowOriginal] = useState<Record<string, boolean>>({});
 
-  // 1단계: 세션 데이터 로드 및 초기화
+  // 세션(실제 답변) + 리포트 초안 로드
   useEffect(() => {
-    if (!targetMember || !session) {
-      toast({
-        title: "오류",
-        description: "회원 정보 또는 코칭 세션을 찾을 수 없습니다.",
-        variant: "destructive",
-      });
-      navigate("/admin");
-      return;
-    }
+    if (!memberId) return;
+    let alive = true;
+    (async () => {
+      try {
+        const res = await fetch(`/api/admin/coaching/${memberId}`, { cache: "no-store" });
+        const data = await res.json();
+        if (!alive) return;
 
-    // 코치 메모장 동기화
-    if (session.coachNotes) {
-      setLocalNotes(session.coachNotes);
-    }
+        const s = data.session ?? { status: "in-progress", answers: {} };
+        setSession({ status: s.status ?? "in-progress", answers: s.answers ?? {} });
 
-    // 최종 프로필이 있으면 최종 프로필로, 없으면 AI 초안으로 에디터 상태 채우기
-    const sourceProfile = session.finalProfile || session.aiDraft?.brandProfile;
-    if (sourceProfile) {
-      setOneLiner(sourceProfile.oneLiner || "");
-      setCoreValue1(sourceProfile.coreValues?.[0] || "");
-      setCoreValue2(sourceProfile.coreValues?.[1] || "");
-      setCoreValue3(sourceProfile.coreValues?.[2] || "");
-      setStrengthStatement(sourceProfile.strengthStatement || "");
-      setTargetPersona(sourceProfile.targetPersona || "");
-      setBrandStory(sourceProfile.brandStory || "");
-      setCoreMessage(sourceProfile.coreMessage || "");
-      setChannelStrategy(sourceProfile.channelStrategy || "");
-      setBrandWhy(sourceProfile.brandWhy || "");
-      setCoachComment(sourceProfile.coachComment || "");
-    }
-  }, [memberId, targetMember]);
+        // 코치 메모(비공개 필기)는 로컬에 보관
+        const savedNotes = localStorage.getItem(`workspace-notes:${memberId}`);
+        if (savedNotes) {
+          try { setLocalNotes(JSON.parse(savedNotes)); } catch { /* ignore */ }
+        }
 
-  if (!targetMember || !session) return null;
+        // 리포트 초안(코치 이전 작성분)으로 에디터 채우기
+        const bp = data.report?.brandProfile;
+        if (bp) {
+          setOneLiner(bp.oneLiner || "");
+          setCoreValue1(bp.coreValues?.[0] || "");
+          setCoreValue2(bp.coreValues?.[1] || "");
+          setCoreValue3(bp.coreValues?.[2] || "");
+          setStrengthStatement(bp.strengthStatement || "");
+          setTargetPersona(bp.targetPersona || "");
+          setBrandStory(bp.brandStory || "");
+          setCoreMessage(bp.coreMessage || "");
+          setChannelStrategy(bp.channelStrategy || "");
+          setBrandWhy(bp.brandWhy || "");
+          setCoachComment(bp.coachComment || "");
+        }
+      } catch {
+        if (alive) toast({ title: "오류", description: "코칭 세션을 불러오지 못했습니다.", variant: "destructive" });
+      } finally {
+        if (alive) setLoading(false);
+      }
+    })();
+    return () => { alive = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [memberId]);
 
-  // AI 분석 결과(초안) 보증
-  const aiDraft: AIDraft | undefined = session.aiDraft;
+  if (loading || !session) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center text-sm text-slate-400">
+        코칭 세션 불러오는 중…
+      </div>
+    );
+  }
+
+  // AI 자동 초안은 Phase 2(WI-10) — MVP는 코치 수동 작성이므로 undefined
+  const aiDraft: AIDraft | undefined = undefined;
 
   // 질문 매핑 데이터 도우미
   const currentQ = COACHING_QUESTIONS.find((q) => q.id === selectedQId);
   const currentAns = session.answers[selectedQId];
   const currentInsight = aiDraft?.questionInsights.find((qi) => qi.questionId === selectedQId);
 
-  // 문항 메모 실시간 자동 저장
+  // 문항 메모(코치 비공개 필기) — 로컬 저장
   const handleNoteChange = (text: string) => {
-    setLocalNotes((prev) => ({ ...prev, [selectedQId]: text }));
-    if (memberId) {
-      saveCoachNote(memberId, selectedQId, text);
-    }
-  };
-
-  // 프로필 임시 저장 기능
-  const handleSaveDraft = () => {
-    if (!memberId) return;
-
-    const draftProfile: FinalProfile = {
-      oneLiner,
-      coreValues: [coreValue1.trim(), coreValue2.trim(), coreValue3.trim()].filter(Boolean),
-      strengthStatement,
-      targetPersona,
-      brandStory,
-      coreMessage,
-      channelStrategy,
-      brandWhy,
-      coachComment,
-    };
-
-    finalizeCoaching(memberId, draftProfile);
-    // 임시 저장은 상태를 finalized로 바꾸는 대신 finalProfile 객체만 스토어에 싱크하고 status는 유지하게 처리
-    useCoachingStore.setState((state) => {
-      const resp = state.responses[memberId];
-      if (resp) {
-        return {
-          responses: {
-            ...state.responses,
-            [memberId]: {
-              ...resp,
-              status: resp.status === "finalized" ? "finalized" : "analyzed", // 강제 최종완료 변경 방지
-            },
-          },
-        };
+    setLocalNotes((prev) => {
+      const next = { ...prev, [selectedQId]: text };
+      if (memberId) {
+        try { localStorage.setItem(`workspace-notes:${memberId}`, JSON.stringify(next)); } catch { /* ignore */ }
       }
-      return state;
-    });
-
-    toast({
-      title: "임시 저장 완료",
-      description: "작성 중인 브랜드 프로필 내용이 임시 저장되었습니다.",
+      return next;
     });
   };
 
-  // 리포트 최종 승인 및 회원 배포
-  const handleFinalize = () => {
-    if (!memberId) return;
+  const buildProfile = (): FinalProfile => ({
+    oneLiner,
+    coreValues: [coreValue1.trim(), coreValue2.trim(), coreValue3.trim()].filter(Boolean),
+    strengthStatement,
+    targetPersona,
+    brandStory,
+    coreMessage,
+    channelStrategy,
+    brandWhy,
+    coachComment,
+  });
 
+  // 브랜드 프로필을 서버에 저장(finalize=false 임시저장 / true 확정)
+  async function postReport(finalize: boolean): Promise<boolean> {
+    if (!memberId) return false;
+    setSaving(true);
+    try {
+      const res = await fetch(`/api/admin/coaching/${memberId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ brandProfile: buildProfile(), finalize }),
+      });
+      return res.ok;
+    } catch {
+      return false;
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  // 프로필 임시 저장 (DB, 상태 변경 없음)
+  const handleSaveDraft = async () => {
+    const ok = await postReport(false);
+    toast(
+      ok
+        ? { title: "임시 저장 완료", description: "작성 중인 브랜드 프로필이 서버에 저장되었습니다." }
+        : { title: "저장 실패", description: "잠시 후 다시 시도해주세요.", variant: "destructive" },
+    );
+  };
+
+  // 리포트 최종 승인 및 회원 공개 (DB status=finalized)
+  const handleFinalize = async () => {
     if (!oneLiner.trim() || !strengthStatement.trim() || (mode === "build" && !coreValue1.trim())) {
       toast({
         title: "필수 정보 부족",
-        description: mode === "build" 
+        description: mode === "build"
           ? "브랜드 원라이너, 강점 명제문, 핵심 가치는 최종 확정 시 반드시 작성되어야 합니다."
           : "진단 모드에서는 브랜드 원라이너와 강점 명제문이 작성되어야 합니다.",
         variant: "destructive",
@@ -166,23 +186,15 @@ export default function CoachingWorkspace() {
       return;
     }
 
-    const finalProfile: FinalProfile = {
-      oneLiner,
-      coreValues: [coreValue1.trim(), coreValue2.trim(), coreValue3.trim()].filter(Boolean),
-      strengthStatement,
-      targetPersona,
-      brandStory,
-      coreMessage,
-      channelStrategy,
-      brandWhy,
-      coachComment,
-    };
-
-    finalizeCoaching(memberId, finalProfile);
+    const ok = await postReport(true);
+    if (!ok) {
+      toast({ title: "확정 실패", description: "잠시 후 다시 시도해주세요.", variant: "destructive" });
+      return;
+    }
 
     toast({
       title: "코칭 세션 최종 승인",
-      description: `${targetMember.name}님의 브랜드 프로필이 최종 확정되어 대시보드에 리포트가 전송되었습니다.`,
+      description: `${targetMember?.name ?? "회원"}님의 브랜드 프로필이 최종 확정되어 대시보드에 리포트가 공개되었습니다.`,
     });
     navigate("/admin");
   };
@@ -242,7 +254,7 @@ export default function CoachingWorkspace() {
           <h1 className="font-serif text-lg font-bold text-[#1E2D8C] flex items-center gap-2">
             <span>1:1 코칭 워크스페이스</span>
             <span className="text-xs font-sans font-bold bg-[#F0EFFB] text-[#1E2D8C] border border-[#1E2D8C]/15 px-2.5 py-0.5 rounded-full">
-              {targetMember.name} 회원 세션
+              {targetMember?.name ?? "회원"} 회원 세션
             </span>
           </h1>
           <span className="h-4 w-px bg-slate-200" />

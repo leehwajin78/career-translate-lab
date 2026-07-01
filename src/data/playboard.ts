@@ -521,8 +521,8 @@ const SCREENS: Screen[] = [
   // ── C-14 코칭 리포트 ───────────────────────────────────────
   {
     id: 'C-14', name: '코칭 리포트', route: '/coaching/report',
-    proto: 'coaching-report.html', component: 'src/pages/coaching/CoachingReport.tsx',
-    phase: 'current-p1', auth: 'Member', fe: 'partial', be: 'not-started',
+    proto: 'coaching-report.html', component: 'src/screens/coaching/CoachingReport.tsx',
+    phase: 'current-p1', auth: 'Member', fe: 'partial', be: 'partial',
     isMissionCritical: false,
     spec: { purpose: 'Admin finalize 후에만 표시. 브랜드 프로필 + 문항별 인사이트 + PDF 다운로드.', stores: ['coachingStore'], apis: ['GET /functions/v1/coaching-report'], dataContract: { in: {}, out: { status: 'string', profile: 'BrandProfile', insights: 'Insight[]' } } },
     frs: [
@@ -598,8 +598,8 @@ const SCREENS: Screen[] = [
   // ── A-03 코칭 워크스페이스 (Mission-Critical) ───────────────
   {
     id: 'A-03', name: '코칭 워크스페이스', route: '/coaching/workspace/:id',
-    proto: 'workspace.html', component: 'src/pages/coaching/CoachingWorkspace.tsx',
-    phase: 'current-p1', auth: 'Admin', fe: 'partial', be: 'not-started',
+    proto: 'workspace.html', component: 'src/screens/coaching/CoachingWorkspace.tsx',
+    phase: 'current-p1', auth: 'Admin', fe: 'partial', be: 'partial',
     isMissionCritical: true,
     spec: {
       purpose: '42문항 검토 + 코치 메모 + AIDraft 수정 + Finalize. 리포트 공개 Gate.',
@@ -630,12 +630,12 @@ const SCREENS: Screen[] = [
     coverage: {
       auth: 'covered',
       accessControl: 'covered',
-      dataIntegrity: 'gap',    // finalize 트랜잭션 경계 미정의
+      dataIntegrity: 'partial',  // finalize를 $transaction으로 원자화(CHG-027)
       failureRecovery: 'partial',
       observability: 'gap',   // finalize audit log 미정의
       performance: 'na',
     },
-    openIssues: ['ISSUE-05'],
+    openIssues: [],
   },
 
   // ── A-04 알림 시스템 ───────────────────────────────────────
@@ -766,9 +766,9 @@ const ISSUES: Issue[] = [
   },
   {
     id: 'ISSUE-05', screens: ['A-03'],
-    type: 'design', priority: 'medium', status: 'open',
+    type: 'design', priority: 'medium', status: 'deferred',
     title: 'AIDraft 생성 시점 결정',
-    body: '제출(submitted) 즉시 GPT-4o 자동 생성 vs. 코치 수동 트리거 중 선택. 자동: UX 빠름, API 비용 제어 어려움. 수동: 비용 예측 가능, 운영 부하.',
+    body: '제출(submitted) 즉시 GPT-4o 자동 생성 vs. 코치 수동 트리거 중 선택. → 결정(2026-06-27): MVP(WI-09)는 AI 없이 코치가 워크스페이스에서 브랜드 프로필을 수동 작성 → Finalize. AI 자동 초안(생성 시점 포함)은 Phase 2(WI-10, OPENAI_API_KEY 필요)로 연기. 따라서 본 이슈는 Phase 2까지 deferred.',
     blockedBy: [],
     blocks: [],
   },
@@ -837,6 +837,7 @@ const CHANGES: Change[] = [
   { id: 'CHG-024', date: '2026-06-27', screens: [], type: 'arch', description: 'CI 파이프라인 연결: .github/workflows/ci.yml 신설(push main + pull_request) — unit 잡(pnpm test, vitest 16) + e2e 잡(playwright install --with-deps chromium → pnpm test:e2e). 더미 DATABASE_URL/DIRECT_URL/NEXT_PUBLIC_APP_URL env로 prisma generate·next dev 부팅 보장(실 DB 미연결). CI는 html 리포터 + 실패 시 playwright-report 아티팩트 업로드, test-results·playwright-report는 gitignore. CI 모드 로컬 드라이런 2/2 green. WI-08 종료.', source: '기술 결정' },
   { id: 'CHG-025', date: '2026-06-27', screens: ['C-05', 'A-02'], type: 'modify', description: '무료 진단 결과가 관리자 리드 상세(A-02)에 완전히 표시되도록 저장 필드 계약 정렬. WI-07(CHG-020)에서 /api/diagnoses가 free_diagnostics.score를 {totalScore,scores}로 저장했으나 관리자 매핑(lib/leads mapLead)은 {total,type,areas}를 읽어 총점·4영역 점수가 표시되지 않던 버그 수정. 저장 shape을 {total,type,areas}로 정렬(leads.score=total). vitest에 키 계약 검증 추가(총 16 green). 이제 운영자가 총점·유형·4영역·7문항 답변 전문을 모두 조회 가능(main 머지·배포 후 프로덕션 반영). ※배포 후 라이브 검증 완료(응답 type/scores/totalScore 반환 확인).', source: '구현' },
   { id: 'CHG-026', date: '2026-06-27', screens: ['C-03', 'A-01'], type: 'add', description: '무료 진단 제출 시 어드민 신규 리드 알림 메일 발송 추가. /api/diagnoses(서버)에서 리드 생성 후 notifyLead(Web3Forms) 호출 — 카테고리 "무료 진단", 진단 유형·총점·산출물 포함, fire-and-forget try/catch로 제출과 분리. notifyLead에 categoryLabel 옵션 파라미터 추가(기존 상담/신청 호출 무영향). vitest 통합테스트에 notifyLead 모킹 + 발송 검증 추가(총 17 green). ※프로덕션에 NEXT_PUBLIC_LEAD_NOTIFY_KEY 환경변수가 설정돼 있어야 실제 발송됨(미설정 시 graceful skip).', source: '구현' },
+  { id: 'CHG-027', date: '2026-06-27', screens: ['A-03', 'C-14'], type: 'add', description: 'WI-09 코칭 워크스페이스 Finalize + 리포트 공개(MVP). 결정: AI 없이 코치 수동 작성(ISSUE-05 deferred → Phase 2), 완료 알림은 인앱 게이트만(이메일 없음). lib/coaching에 finalizeReport($transaction: coaching_reports upsert + session finalized)·saveReportDraft·getReportForAdmin·getReportForMember(공개 게이트) 추가. API: GET/POST /api/admin/coaching/[memberId](리포트 초안 조회·임시저장·확정) + GET /api/coaching/report(멤버, finalized일 때만 brandProfile). A-03 워크스페이스·C-14 멤버 리포트를 localStorage 스토어→DB로 전환(실제 답변 조회·초안 프리필·Finalize·공개 게이트). vitest 5종(finalize 트랜잭션·초안·공개 게이트) 추가(총 22 green), tsc 신규 에러 0. A-03/C-14 be=partial.', source: '구현' },
 ]
 
 // ============================================================
