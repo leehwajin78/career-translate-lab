@@ -149,6 +149,7 @@ export interface CoachingReportView {
   status: string
   finalizedAt: string | null
   brandProfile: BrandProfile | null
+  questionInsights?: unknown[]
 }
 
 /** 관리자(워크스페이스): 세션 + 리포트 초안(미확정 포함) */
@@ -157,13 +158,38 @@ export async function getReportForAdmin(profileId: string): Promise<CoachingRepo
   if (!session) return { status: 'in-progress', finalizedAt: null, brandProfile: null }
   const report = await prisma.coachingReport.findUnique({
     where: { sessionId: session.id },
-    select: { brandProfile: true, finalizedAt: true },
+    select: { brandProfile: true, finalizedAt: true, questionInsights: true },
   })
   return {
     status: DB_TO_CLIENT[session.status] ?? 'in-progress',
     finalizedAt: report?.finalizedAt?.toISOString() ?? null,
     brandProfile: (report?.brandProfile as unknown as BrandProfile) ?? null,
+    questionInsights: (report?.questionInsights as unknown[]) ?? [],
   }
+}
+
+/** 관리자(WI-10): AI 자동 초안 저장 — brandProfile + questionInsights + 세션 analyzed */
+export async function saveAnalysis(
+  profileId: string,
+  brandProfile: object,
+  questionInsights: unknown[],
+): Promise<boolean> {
+  const session = await getOrCreateSession(profileId)
+  if (!session) return false
+  const bp = brandProfile as unknown as Prisma.InputJsonValue
+  const qi = questionInsights as unknown as Prisma.InputJsonValue
+  await prisma.$transaction([
+    prisma.coachingReport.upsert({
+      where: { sessionId: session.id },
+      update: { brandProfile: bp, questionInsights: qi, modelUsed: 'claude-opus-4-8' },
+      create: { sessionId: session.id, brandProfile: bp, questionInsights: qi, modelUsed: 'claude-opus-4-8' },
+    }),
+    prisma.coachingSession.update({
+      where: { id: session.id },
+      data: { status: 'analyzed', analyzedAt: new Date() },
+    }),
+  ])
+  return true
 }
 
 /** 멤버(C-14): finalized 일 때만 brandProfile 노출(공개 게이트). 세션 생성하지 않음. */

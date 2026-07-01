@@ -503,19 +503,18 @@ const SCREENS: Screen[] = [
 
   // ── C-13 AI 분석 진행 ──────────────────────────────────────
   {
-    id: 'C-13', name: 'AI 분석 진행', route: '/coaching/analyzing',
-    proto: 'coaching-analyzing.html', component: 'src/pages/coaching/CoachingAnalyzing.tsx',
+    id: 'C-13', name: '제출 완료 전환', route: '/coaching/analyzing',
+    proto: 'coaching-analyzing.html', component: 'src/screens/coaching/CoachingAnalyzing.tsx',
     phase: 'current', auth: 'Member', fe: 'partial', be: 'not-started',
     isMissionCritical: false,
-    spec: { purpose: '30초 폴링으로 분석 완료 감지 → /coaching/report 자동 이동.', stores: ['coachingStore'], apis: ['GET /functions/v1/coaching-status'], dataContract: { in: {}, out: { status: 'string' } } },
+    spec: { purpose: '제출 완료 안내 전환 화면 — 애니메이션 후 /coaching(대시보드)로 이동. 실제 제출은 C-12에서 서버 영속화(POST /api/coaching/submit), AI 초안은 코치 트리거(A-03/WI-10)이므로 여기서 AI를 호출하지 않는다.', stores: [], apis: [], dataContract: { in: {}, out: {} } },
     frs: [
-      { id: 'FR-C13-01', title: '분석 연출', detail: '로딩 애니메이션 + 단계 메시지 자동 전환' },
-      { id: 'FR-C13-02', title: '상태 폴링', detail: '30초마다 /functions/v1/coaching-status. analyzed → /coaching/report replace' },
-      { id: 'FR-C13-03', title: '타임아웃', detail: '30분(60회) 초과 → 폴링 중단 + 이메일 알림 안내' },
+      { id: 'FR-C13-01', title: '제출 완료 연출', detail: '로딩 애니메이션 + 단계 메시지 자동 전환' },
+      { id: 'FR-C13-02', title: '대시보드 이동', detail: '연출 종료 후 /coaching 로 이동(리포트 공개 게이트는 C-14가 담당)' },
     ],
-    nfrs: [], edges: [], acceptanceCriteria: ['폴링 30초 간격 확인', '30분 초과 시 폴링 중단'],
+    nfrs: [], edges: [], acceptanceCriteria: ['제출 후 안내 화면 표시', '연출 종료 후 /coaching 이동'],
     coverage: { ...COV_MEMBER_BASE, observability: 'partial' },
-    openIssues: ['ISSUE-08'],
+    openIssues: [],
   },
 
   // ── C-14 코칭 리포트 ───────────────────────────────────────
@@ -604,7 +603,7 @@ const SCREENS: Screen[] = [
     spec: {
       purpose: '42문항 검토 + 코치 메모 + AIDraft 수정 + Finalize. 리포트 공개 Gate.',
       stores: [],
-      apis: ['GET /functions/v1/workspace/{memberId}', 'PATCH /functions/v1/coaching-sessions/{id}', 'POST /functions/v1/send-report-ready [Resend]'],
+      apis: ['GET/POST /api/admin/coaching/{memberId}', 'POST /api/admin/coaching/{memberId}/analyze [claude-opus-4-8]', 'POST /functions/v1/send-report-ready [Resend, WI-11]'],
       dataContract: {
         in: { memberId: 'UUID' },
         out: { answers: 'CoachingAnswer[]', aiDraft: 'AIDraft', finalProfile: 'BrandProfile?' },
@@ -613,9 +612,10 @@ const SCREENS: Screen[] = [
     frs: [
       { id: 'FR-A03-01', title: '42문항 조회', detail: '텍스트 + 음성 재생 (VoicePlayer)' },
       { id: 'FR-A03-02', title: '코치 메모', detail: '문항별 인라인 메모' },
-      { id: 'FR-A03-03', title: 'AIDraft 수정', detail: 'AI 원라이너 3종·핵심 가치·브랜드 프로필 초안 인라인 수정' },
-      { id: 'FR-A03-04', title: 'Finalize', detail: '"최종 확정" → session.status = "finalized" + 멤버 이메일 발송', gate: 'finalize 후 C-14에서 리포트 표시 확인' },
+      { id: 'FR-A03-03', title: 'AIDraft 수정', detail: 'AI 원라이너·핵심 가치·브랜드 프로필 초안 인라인 수정 + 초안대조/복원' },
+      { id: 'FR-A03-04', title: 'Finalize', detail: '"최종 확정" → session.status = "finalized" (멤버 이메일은 WI-11)', gate: 'finalize 후 C-14에서 리포트 표시 확인' },
       { id: 'FR-A03-05', title: '세션 상태 뱃지', detail: 'submitted/analyzed/finalized' },
+      { id: 'FR-A03-06', title: 'AI 자동 초안 생성 (WI-10)', detail: '코치 수동 트리거("AI 초안 생성") → 서버 전용 POST .../analyze → claude-opus-4-8 강제 tool_use 로 8대 브랜드 프로필 초안 생성 후 coaching_reports 저장·status=analyzed. ANTHROPIC_API_KEY(서버 전용) 미설정 시 로컬 규칙기반 Mock 폴백. questionInsights 는 규칙기반 휴리스틱.', gate: 'analyze 후 초안 프리필·문항 인사이트 표시 확인' },
     ],
     nfrs: [{ id: 'NFR-A03-01', detail: 'Finalize는 트랜잭션으로 처리 (status 갱신 + 이메일 발송 원자성)' }],
     edges: [
@@ -692,7 +692,7 @@ const SCREENS: Screen[] = [
 
   // ── Phase 2 로드맵 (10개) ──────────────────────────────────
   ...[
-    { id: 'R-02', name: '마스터 브리프 (F1)',   proto: 'admin-brief.html',      purpose: '42문항 → 8섹션 브리프 자동 생성 (GPT-4o)' },
+    { id: 'R-02', name: '마스터 브리프 (F1)',   proto: 'admin-brief.html',      purpose: '42문항 → 8섹션 브리프 자동 생성 (claude-opus-4-8)' },
     { id: 'R-03', name: '원라이너 3종',         proto: 'admin-oneliner.html',   purpose: '전문성형·공감형·결과형 3종 초안 생성' },
     { id: 'R-04', name: '질문 아키텍처 (F9)',   proto: 'admin-questions.html',  purpose: '42문항 분류·트리거 관리' },
     { id: 'R-05', name: '패턴 분류기 (F10)',    proto: 'admin-patterns.html',   purpose: '답변 → 10개 패턴 자동 분류 (NLP + LLM)' },
@@ -766,11 +766,12 @@ const ISSUES: Issue[] = [
   },
   {
     id: 'ISSUE-05', screens: ['A-03'],
-    type: 'design', priority: 'medium', status: 'deferred',
+    type: 'design', priority: 'medium', status: 'resolved',
     title: 'AIDraft 생성 시점 결정',
-    body: '제출(submitted) 즉시 GPT-4o 자동 생성 vs. 코치 수동 트리거 중 선택. → 결정(2026-06-27): MVP(WI-09)는 AI 없이 코치가 워크스페이스에서 브랜드 프로필을 수동 작성 → Finalize. AI 자동 초안(생성 시점 포함)은 Phase 2(WI-10, OPENAI_API_KEY 필요)로 연기. 따라서 본 이슈는 Phase 2까지 deferred.',
+    body: '제출 즉시 자동 생성 vs. 코치 수동 트리거 중 선택. → 결정(2026-07-01, WI-10): 코치 수동 트리거로 확정. 워크스페이스(A-03) "AI 초안 생성" 버튼 → 서버 전용 POST .../analyze. 제공자는 Anthropic Claude claude-opus-4-8(초기 문서의 "GPT-4o/OpenAI"는 실제 코드와 불일치했음 — Anthropic로 정정). API 키는 서버 전용 ANTHROPIC_API_KEY(NEXT_PUBLIC 금지, 키 유출 방지), 미설정 시 로컬 규칙기반 Mock 폴백.',
     blockedBy: [],
     blocks: [],
+    resolvedBy: 'CHG-028',
   },
   {
     id: 'ISSUE-06', screens: ['C-09', 'A-01'],
@@ -790,11 +791,12 @@ const ISSUES: Issue[] = [
   },
   {
     id: 'ISSUE-08', screens: ['C-13'],
-    type: 'design', priority: 'low', status: 'open',
+    type: 'design', priority: 'low', status: 'resolved',
     title: '상태 감지: 폴링 vs Realtime',
-    body: '30초 폴링 (구현 단순, 지연 최대 30초) vs. Supabase Realtime 구독 (UX 즉각, 추가 채널 관리). MVP는 폴링 권장.',
+    body: '30초 폴링 vs. Supabase Realtime 구독. → 해소(2026-07-01, WI-10): 현 설계에서 제출은 C-12에서 동기 영속화되고 AI 초안은 코치 수동 트리거이므로 C-13에서 상태 폴링이 불필요. C-13은 제출 완료 전환 화면으로 정리, 멤버는 대시보드(C-14 공개 게이트)에서 확정 리포트를 확인. 실시간 상태 갱신이 필요해지면 재검토.',
     blockedBy: [],
     blocks: [],
+    resolvedBy: 'CHG-028',
   },
   {
     id: 'ISSUE-09', screens: ['C-02', 'C-05'],
@@ -838,6 +840,7 @@ const CHANGES: Change[] = [
   { id: 'CHG-025', date: '2026-06-27', screens: ['C-05', 'A-02'], type: 'modify', description: '무료 진단 결과가 관리자 리드 상세(A-02)에 완전히 표시되도록 저장 필드 계약 정렬. WI-07(CHG-020)에서 /api/diagnoses가 free_diagnostics.score를 {totalScore,scores}로 저장했으나 관리자 매핑(lib/leads mapLead)은 {total,type,areas}를 읽어 총점·4영역 점수가 표시되지 않던 버그 수정. 저장 shape을 {total,type,areas}로 정렬(leads.score=total). vitest에 키 계약 검증 추가(총 16 green). 이제 운영자가 총점·유형·4영역·7문항 답변 전문을 모두 조회 가능(main 머지·배포 후 프로덕션 반영). ※배포 후 라이브 검증 완료(응답 type/scores/totalScore 반환 확인).', source: '구현' },
   { id: 'CHG-026', date: '2026-06-27', screens: ['C-03', 'A-01'], type: 'add', description: '무료 진단 제출 시 어드민 신규 리드 알림 메일 발송 추가. /api/diagnoses(서버)에서 리드 생성 후 notifyLead(Web3Forms) 호출 — 카테고리 "무료 진단", 진단 유형·총점·산출물 포함, fire-and-forget try/catch로 제출과 분리. notifyLead에 categoryLabel 옵션 파라미터 추가(기존 상담/신청 호출 무영향). vitest 통합테스트에 notifyLead 모킹 + 발송 검증 추가(총 17 green). ※프로덕션에 NEXT_PUBLIC_LEAD_NOTIFY_KEY 환경변수가 설정돼 있어야 실제 발송됨(미설정 시 graceful skip).', source: '구현' },
   { id: 'CHG-027', date: '2026-06-27', screens: ['A-03', 'C-14'], type: 'add', description: 'WI-09 코칭 워크스페이스 Finalize + 리포트 공개(MVP). 결정: AI 없이 코치 수동 작성(ISSUE-05 deferred → Phase 2), 완료 알림은 인앱 게이트만(이메일 없음). lib/coaching에 finalizeReport($transaction: coaching_reports upsert + session finalized)·saveReportDraft·getReportForAdmin·getReportForMember(공개 게이트) 추가. API: GET/POST /api/admin/coaching/[memberId](리포트 초안 조회·임시저장·확정) + GET /api/coaching/report(멤버, finalized일 때만 brandProfile). A-03 워크스페이스·C-14 멤버 리포트를 localStorage 스토어→DB로 전환(실제 답변 조회·초안 프리필·Finalize·공개 게이트). vitest 5종(finalize 트랜잭션·초안·공개 게이트) 추가(총 22 green), tsc 신규 에러 0. A-03/C-14 be=partial.', source: '구현' },
+  { id: 'CHG-028', date: '2026-07-01', screens: ['A-03', 'C-13'], type: 'add', description: 'WI-10 AI 자동 초안(코치 수동 트리거). 제공자=Anthropic Claude claude-opus-4-8(초기 문서 "GPT-4o"는 실제 코드와 불일치 → 정정), 강제 tool_use(save_brand_profile)로 8대 브랜드 프로필 구조화 JSON 확보. 보안: src/lib/coachingAI.ts 를 서버 전용(import "server-only")으로 재작성 — 구버전이 브라우저에서 NEXT_PUBLIC_ANTHROPIC_API_KEY 로 api.anthropic.com 을 직접 호출(키 유출·CORS)하던 문제 제거. 키는 서버 전용 ANTHROPIC_API_KEY, 미설정/실패 시 로컬 규칙기반 Mock 폴백(무료·결정적). @anthropic-ai/sdk 도입. lib/coaching.saveAnalysis($transaction: coaching_reports upsert(brandProfile+questionInsights,modelUsed) + session analyzed) + getReportForAdmin 이 questionInsights 반환. API: POST /api/admin/coaching/[memberId]/analyze(maxDuration=60). A-03 워크스페이스에 "AI 초안 생성" 버튼 + aiDraft(초안대조/문항 인사이트) DB 로드. C-13 은 서버 전용 모듈 클라이언트 임포트 제거 → 제출 완료 전환 화면으로 정리. vitest 3종(saveAnalysis 트랜잭션·멤버십가드·Mock 폴백 결정성) 추가(총 25 green), next build 통과. ISSUE-05 해결. ※실서비스 AI는 Vercel 서버 환경변수 ANTHROPIC_API_KEY 등록 필요(미등록 시 Mock).', source: 'PM 결정 + 구현' },
 ]
 
 // ============================================================
@@ -845,7 +848,7 @@ const CHANGES: Change[] = [
 // ============================================================
 export const PLAYBOARD: PlayBoardData = {
   version: '2.0',
-  lastUpdated: '2026-06-27',
+  lastUpdated: '2026-07-01',
   screens: SCREENS,
   issues: ISSUES,
   changes: CHANGES,
