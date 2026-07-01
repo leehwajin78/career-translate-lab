@@ -75,8 +75,9 @@ export async function POST(req: NextRequest) {
     // [ISSUE-02] 규칙 기반 분류를 서버에서 계산해 영속화한다.
     // 클라이언트 store(analyzeFree)와 동일 로직을 재사용 → 서버·클라이언트 결과 일치.
     // 분류가 실패해도 제출 자체는 계속(현행 동작 보존).
+    // 저장 shape은 관리자 매핑(lib/leads mapLead)이 읽는 { total, type, areas } 로 맞춘다.
     let scorePayload:
-      | { totalScore: number; type: string; scores: Record<string, number> }
+      | { total: number; type: string; areas: Record<string, number> }
       | null = null
     try {
       const answersByNum: Record<number, string> = {}
@@ -85,7 +86,7 @@ export async function POST(req: NextRequest) {
         if (v) answersByNum[i] = v
       }
       const r = analyzeFree(answersByNum, bonusChecks)
-      scorePayload = { totalScore: r.totalScore, type: r.type, scores: r.scores }
+      scorePayload = { total: r.totalScore, type: r.type, areas: r.scores }
     } catch (classifyErr) {
       console.error('[api/diagnoses] classify', classifyErr)
     }
@@ -115,7 +116,7 @@ export async function POST(req: NextRequest) {
           source: 'free_diagnosis',
           freeDiagnosisId: diagnosis.id,
           status: 'new',
-          score: scorePayload?.totalScore ?? null,
+          score: scorePayload?.total ?? null,
         },
       })
     } catch (leadErr) {
@@ -125,8 +126,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       id: diagnosis.id,
       type: scorePayload?.type ?? 'pending',
-      scores: scorePayload?.scores ?? {},
-      totalScore: scorePayload?.totalScore ?? null,
+      scores: scorePayload?.areas ?? {},
+      totalScore: scorePayload?.total ?? null,
     })
   } catch (err) {
     console.error('[api/diagnoses] error', err)

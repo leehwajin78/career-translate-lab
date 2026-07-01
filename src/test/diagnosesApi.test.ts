@@ -54,10 +54,12 @@ describe("POST /api/diagnoses — 분류 영속화", () => {
     expect(createArg.data.status).toBe("completed");
     expect(createArg.data.score).toMatchObject({
       type: expect.any(String),
-      totalScore: expect.any(Number),
+      total: expect.any(Number),
     });
-    expect(createArg.data.score.scores).toBeTypeOf("object");
+    expect(createArg.data.score.areas).toBeTypeOf("object");
     expect(createArg.data.score.type).not.toBe("pending");
+    // 관리자 매핑(lib/leads mapLead)이 읽는 키 { total, type, areas }와 일치해야 한다.
+    expect(Object.keys(createArg.data.score).sort()).toEqual(["areas", "total", "type"]);
   });
 
   it("leads.score 에 총점을 함께 저장한다", async () => {
@@ -65,7 +67,7 @@ describe("POST /api/diagnoses — 분류 영속화", () => {
     const createArg = fd.create.mock.calls[0][0];
     const leadArg = lead.create.mock.calls[0][0];
     expect(leadArg.data.source).toBe("free_diagnosis");
-    expect(leadArg.data.score).toBe(createArg.data.score.totalScore);
+    expect(leadArg.data.score).toBe(createArg.data.score.total);
   });
 
   it("응답으로 pending 이 아닌 실제 type/scores/totalScore 를 반환한다", async () => {
